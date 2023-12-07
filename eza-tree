@@ -1,0 +1,12 @@
+#! /bin/bash
+
+## deps:
+## brew install inotify-tools
+## brew install eza
+
+clear; eza --tree --level 4 -I="$1"
+
+inotifywait -q -m -r -e 'move,create,delete' $(pwd) | \
+        while read x; do
+                clear; eza --tree --level 4 -I="$1"
+        done
