@@ -4,7 +4,7 @@ import fitz
 import sys
 import math
 
-def remove_yellow_from_pdf(pdf_path, output_path):
+def remove_yellow_from_pdf_v1(pdf_path, output_path):
     # open the pdf
     pdf = fitz.open(pdf_path)
 
@@ -12,7 +12,7 @@ def remove_yellow_from_pdf(pdf_path, output_path):
     page = pdf.load_page(0)
     pixmap = page.get_pixmap()
 
-
+    # bottom section of otta doc, contains otta logo
     footer = math.floor(pixmap.height * 0.9) 
 
     # iterate over each pixel in the page
@@ -38,4 +38,4 @@ def remove_yellow_from_pdf(pdf_path, output_path):
 if __name__ == "__main__":
     pdf_path = sys.argv[1]
     output_path = sys.argv[2]
-    remove_yellow_from_pdf(pdf_path, output_path)
+    remove_yellow_from_pdf_v1(pdf_path, output_path)
