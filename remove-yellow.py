@@ -1,4 +1,4 @@
-# Description: Remove yellow from a pdf, namely Otta CV, so it looks more professional
+# Description: Remove yellow from a pdf
 # PyMuPDF - https://pymupdf.readthedocs.io/en/latest/index.html
 import fitz
 import sys
