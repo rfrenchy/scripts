@@ -10,10 +10,8 @@ w=$(echo $wxh | cut -f 1 -d x)
 h=$(echo $wxh | cut -f 2 -d x)
 x=$((w > h ? w : h))
 
-# create temp white image to composite with original
+# create temp white image and composite
 convert -size ${x}x${x} xc: white-composite.png
-
-# composite them
 composite {$1} white-composite.png ${IMAGE_NAME}-comp.png
 
 # scale to instagram size (1024x1024)
