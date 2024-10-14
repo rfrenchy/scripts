@@ -1,6 +1,10 @@
 #!/bin/bash
 # dependencies: imagemagick - sudo apt install imagemagick
 
+# ${1%.*} TODO
+
+
+
 IMAGE_NAME=$(echo $1 | cut -f 1 -d .)
 
 # get and compare both dimensions and store biggest
