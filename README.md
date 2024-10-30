@@ -21,3 +21,5 @@ resize a given image into insta-friendly sizes:
 - 1080x566 (1.91:1)
 
 ## insta-grab
+
+download images from an instagram url. requires an instagram login
