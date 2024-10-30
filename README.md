@@ -8,7 +8,7 @@ Reprint directory structure on file move|create|delete in given directory. Can p
 
 precommit hook to update svg showing dir structure. Replace asset paths and/or eza ignore path to whatever. *may need to change fill color away from transparent
 
-## remove-yellow
+## remove-
 
 remove the yellow areas from a document
 
