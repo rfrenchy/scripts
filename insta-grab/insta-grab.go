@@ -18,25 +18,34 @@ func main() {
 			ctxx, cancel := chromedp.NewContext(ctx.Context)
 			defer cancel()
 
-			var html string
+			// fmt.Println("hello world")
+
+			var ix string
+			username := os.Getenv("INSTAGRAM_USERNAME")
+			password := os.Getenv("INSTAGRAM_PASSWORD")
+
+			fmt.Println(username)
+
+			// login
 			err := chromedp.Run(ctxx,
-				// todo make param gained from input
-				//	chromedp.Navigate("https://www.instagram.com/p/C04EDoCIahN/"),
-				chromedp.Navigate("www.google.com"),
-				chromedp.OuterHTML("#splash-screen", &html, chromedp.ByQuery),
+				chromedp.Navigate("https://www.instagram.com/p/C04EDoCIahN/"),           // go to url
+				chromedp.Click("._a9--", chromedp.ByQuery),                              // click allow all cookies
+				chromedp.SendKeys("[aria-label~=username]", username, chromedp.ByQuery), // enter username
+				chromedp.SendKeys("[aria-label=Password]", password, chromedp.ByQuery),  // enter password
+				chromedp.OuterHTML("button._acan", &ix, chromedp.ByQuery),               // click login
+				//chromedp.OuterHTML("[aria-label=Password]", &ix, chromedp.ByQuery),      // click login
+				//chromedp.OuterHTML("*", &ix, chromedp.ByQuery),
 			)
 
 			if err != nil {
 				return err
 			}
 
-			fmt.Println(html)
+			fmt.Println(ix)
 
 			return err
 
 			// login to instagram
-
-			// e.g input: a instagram url e.g. https://www.instagram.com/p/DBTa9CtI6lj/?img_index=1
 
 			// pull down all images from url
 		},
