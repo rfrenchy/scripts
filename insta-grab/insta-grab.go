@@ -8,6 +8,7 @@ import (
 	"os"
 
 	"github.com/chromedp/chromedp"
+	"github.com/google/uuid"
 	"github.com/urfave/cli/v2"
 )
 
@@ -16,6 +17,9 @@ func main() {
 		Name:  "insta-grab",
 		Usage: "download images from instagram",
 		Action: func(ctx *cli.Context) error {
+
+			// todo check arg has been given
+			url := ctx.Args().Get(0)
 
 			// HAVE TO SETUP LOGIN THE FIRST TIME THIS IS RAN
 			opts := append(chromedp.DefaultExecAllocatorOptions[:],
@@ -32,27 +36,28 @@ func main() {
 			defer cancel()
 
 			// Find image url
-			var url string
+			var img_url string
 			var sx bool
 			err := chromedp.Run(ctxx,
-				chromedp.Navigate("https://www.instagram.com/p/C04EDoCIahN/"), // go to url
-				chromedp.AttributeValue("img[src*=scontent]", "src", &url, &sx, chromedp.ByQuery),
+				chromedp.Navigate(url), // go to url
+				chromedp.AttributeValue("img[src*=scontent]", "src", &img_url, &sx, chromedp.ByQuery),
 			)
 
 			if err != nil {
 				return err
 			}
 
-			fmt.Println(url)
+			fmt.Println("image found, saving...")
 
 			// save image from url
-			resp, err := http.Get(url)
+			resp, err := http.Get(img_url)
 			if err != nil {
 				return err
 			}
 			defer resp.Body.Close()
 
-			file, err := os.Create("./12312312.png")
+			filename := uuid.New()
+			file, err := os.Create(fmt.Sprintf("%s.png", filename))
 			if err != nil {
 				return err
 			}
@@ -62,6 +67,8 @@ func main() {
 			if err != nil {
 				return err
 			}
+
+			fmt.Printf("%s.png\n", filename)
 
 			return err
 		},
