@@ -27,6 +27,7 @@ func main() {
 			fmt.Println(username)
 
 			// TODO, setup a profile directory to avoid logging in out
+			// https://stackoverflow.com/questions/59287313/load-up-existing-chrome-user-profile-data-with-chromedp
 			chromedp.Flag("profile-directory", "Profile 1")
 			chromedp.UserDataDir("/home/user/.config/chromium/Profile 1")
 			chromedp.Flag("disable-sync", false)
