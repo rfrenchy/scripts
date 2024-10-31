@@ -2,7 +2,9 @@ package main
 
 import (
 	"fmt"
+	"io"
 	"log"
+	"net/http"
 	"os"
 
 	"github.com/chromedp/chromedp"
@@ -12,23 +14,15 @@ import (
 func main() {
 	app := &cli.App{
 		Name:  "insta-grab",
-		Usage: "use to download images from a given instagram url",
+		Usage: "download images from instagram",
 		Action: func(ctx *cli.Context) error {
 
-			var ix string
-			//			username := os.Getenv("INSTAGRAM_USERNAME")
-			//	password := os.Getenv("INSTAGRAM_PASSWORD")
-
-			//			fmt.Println(username)
-
-			// TODO, setup a profile directory to avoid logging in out
-			// https://stackoverflow.com/questions/59287313/load-up-existing-chrome-user-profile-data-with-chromedp
-
+			// HAVE TO SETUP LOGIN THE FIRST TIME THIS IS RAN
 			opts := append(chromedp.DefaultExecAllocatorOptions[:],
-				chromedp.Flag("profile-directory", "Profile 1"),
-				chromedp.UserDataDir("/home/ryan/.config/google-chrome/Profile 1"),
+				chromedp.Flag("profile-directory", "Scraper"),
+				chromedp.UserDataDir("/home/ryan/.config/google-chrome/Scraper"),
 				chromedp.Flag("disable-sync", false),
-				chromedp.Flag("headless", false),
+				//chromedp.Flag("headless", false),
 			)
 
 			e_ctx, cancel := chromedp.NewExecAllocator(ctx.Context, opts...)
@@ -37,29 +31,39 @@ func main() {
 			ctxx, cancel := chromedp.NewContext(e_ctx, chromedp.WithLogf(log.Printf))
 			defer cancel()
 
-			// login
+			// Find image url
+			var url string
+			var sx bool
 			err := chromedp.Run(ctxx,
 				chromedp.Navigate("https://www.instagram.com/p/C04EDoCIahN/"), // go to url
-				chromedp.OuterHTML("img[src*=scontent]", &ix, chromedp.ByQuery),
-			//	chromedp.Click("._a9--", chromedp.ByQuery),                              // click allow all cookies
-			//	chromedp.SendKeys("[aria-label~=username]", username, chromedp.ByQuery), // enter username
-			//	chromedp.SendKeys("[aria-label=Password]", password, chromedp.ByQuery),  // enter password
-			//	chromedp.OuterHTML("button._acan", &ix, chromedp.ByQuery),               // click login
-			//chromedp.OuterHTML("[aria-label=Password]", &ix, chromedp.ByQuery),      // click login
-			//chromedp.OuterHTML("*", &ix, chromedp.ByQuery),
+				chromedp.AttributeValue("img[src*=scontent]", "src", &url, &sx, chromedp.ByQuery),
 			)
 
 			if err != nil {
 				return err
 			}
 
-			fmt.Println(ix)
+			fmt.Println(url)
+
+			// save image from url
+			resp, err := http.Get(url)
+			if err != nil {
+				return err
+			}
+			defer resp.Body.Close()
+
+			file, err := os.Create("./12312312.png")
+			if err != nil {
+				return err
+			}
+			defer file.Close()
+
+			_, err = io.Copy(file, resp.Body)
+			if err != nil {
+				return err
+			}
 
 			return err
-
-			// login to instagram
-
-			// pull down all images from url
 		},
 	}
 
