@@ -26,6 +26,11 @@ func main() {
 
 			fmt.Println(username)
 
+			// TODO, setup a profile directory to avoid logging in out
+			chromedp.Flag("profile-directory", "Profile 1")
+			chromedp.UserDataDir("/home/user/.config/chromium/Profile 1")
+			chromedp.Flag("disable-sync", false)
+
 			// login
 			err := chromedp.Run(ctxx,
 				chromedp.Navigate("https://www.instagram.com/p/C04EDoCIahN/"),           // go to url
