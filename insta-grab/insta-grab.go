@@ -12,6 +12,8 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
+// convert to this because chromedp unreliable https://github.com/gocolly/colly
+
 func main() {
 	app := &cli.App{
 		Name:  "insta-grab",
@@ -26,7 +28,7 @@ func main() {
 				chromedp.Flag("profile-directory", "Scraper"),
 				chromedp.UserDataDir("/home/ryan/.config/google-chrome/Scraper"),
 				chromedp.Flag("disable-sync", false),
-				//chromedp.Flag("headless", false),
+				chromedp.Flag("headless", false),
 			)
 
 			e_ctx, cancel := chromedp.NewExecAllocator(ctx.Context, opts...)
