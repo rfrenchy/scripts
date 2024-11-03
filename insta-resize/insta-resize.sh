@@ -2,16 +2,17 @@
 # dependencies: imagemagick - sudo apt install imagemagick
 # usage: ./insta-resize.sh image-name.png
 
-
 # MISC split by word for each line. at each word index for each line, find max word length at index, and fill all the others with spaces to max word length for that index
 
 # convert image into square instagramable image
 square() {
-    # Get original height and width
+    echo "square mode (1:1)"
+    
     wx=$(identify "$1" | awk '{print $3}' | cut -f 1 -d x) 
     hx=$(identify "$1" | awk '{print $3}' | cut -f 2 -d x)
 
-    # Find biggest dimension of the two, 
+
+    # Find biggest dimension of either width or either, 
     # then use to make 1:1 dimension string
     dx=$((wx > hx ? wx : hx))                             
     dxx="${dx}x${dx}"                                     
@@ -30,8 +31,20 @@ square() {
 }
 
 portrait() {
-    echo "portrait"
-    
+    echo "portrait mode (5:4)"
+    wx=1080 # default width to instagram portrait width
+    hx=1350 # default height to instagram portrait height
+
+    echo $1
+
+    # if either width/height is less than instagrams 1080x1350 or a ratio is less that 1080x1350, make that the minimum and multiple the other
+    if [ "$1" -lt $wx ]; then
+        echo "less than $wx"
+    fi
+
+    # continue
+
+
     # n_wx=$((($2 / 5) * 4))    
     # convert ${IMAGE_NAME}-comp.png -resize "1080x1350" ${IMAGE_NAME}-insta-portrait.png
 }
@@ -43,10 +56,16 @@ landscape() {
     # convert ${IMAGE_NAME}-comp.png -resize "1080x566" ${IMAGE_NAME}-insta-landscape.png
 }
 
+
+# Get original height and width
+# TODO GET WORKING 
+# wx=$(identify "$1" | awk '{print $3}' | cut -f 1 -d x) 
+# hx=$(identify "$1" | awk '{print $3}' | cut -f 2 -d x)
+
 case "$1" in 
-    square) square "$2" ;;
-    portrait) portrait "$2" ;;
-    landscape) landscape "$2" ;;
+    square) square "$1" ;;
+    portrait) portrait "$wx" "$hx" ;;
+    landscape) landscape "$wx" "$hx" ;;
 esac
 
 
