@@ -23,7 +23,10 @@ func main() {
 			imagick.Initialize()
 			defer imagick.Terminate()
 
-			mw := imagick.NewMagickWand()
+			//imagick.Initialize()
+			//defer imagick.Terminate()
+
+			//			_ = imagick.NewMagickWand()
 
 			return nil
 		},
