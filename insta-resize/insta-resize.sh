@@ -2,6 +2,10 @@
 # dependencies: imagemagick - sudo apt install imagemagick
 # usage: ./insta-resize.sh image-name.png
 
+
+# MISC split by word for each line. at each word index for each line, find max word length at index, and fill all the others with spaces to max word length for that index
+
+# convert image into square instagramable image
 square() {
     # Get original height and width
     wx=$(identify "$1" | awk '{print $3}' | cut -f 1 -d x) 
@@ -22,17 +26,21 @@ square() {
     composite "$1" white-composite.png "$IMAGE_OUTPUT_NAME"-comp.png
 
     # Scale composited image to instagram's square measurements
-    convert "$IMAGE_OUTPUT_NAME"-comp.png -resize "1080x1080" "$IMAGE_OUTPUT_NAME"-insta-square.png
-
-    # MISC split by word for each line. at each word index for each line, find max word length at index, and fill all the others with spaces to max word length for that index
+    convert "$IMAGE_OUTPUT_NAME"-comp.png -resize "1080x1080" "$IMAGE_OUTPUT_NAME"-insta-square.png    
 }
 
 portrait() {
     echo "portrait"
+    
+    # n_wx=$((($2 / 5) * 4))    
+    # convert ${IMAGE_NAME}-comp.png -resize "1080x1350" ${IMAGE_NAME}-insta-portrait.png
 }
 
 landscape() {
     echo "landscape"    
+
+    # n_wx=$(echo "print(int($2 * 1.91))" | python3)
+    # convert ${IMAGE_NAME}-comp.png -resize "1080x566" ${IMAGE_NAME}-insta-landscape.png
 }
 
 case "$1" in 
