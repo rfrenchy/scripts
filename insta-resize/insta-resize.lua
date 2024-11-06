@@ -7,7 +7,7 @@ local square = {
         -- use whatever measurement is biggest  
         local d = height > width and height or width;
         -- create 1:1 string of biggest measurement e.g. 1230x1230
-        return string.gsub("%sx%s", "%s", d)
+        return d
     end,
 
     -- return instagram specific 1:1 measurement 
@@ -30,6 +30,6 @@ local landscape = {
     instasize = function () return "" end
 }
 
-local main = {}
+print(square.dimension(200, 199))
 
-print(main[arg[1]])
+-- print(main[arg[1]])
