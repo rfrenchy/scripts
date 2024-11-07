@@ -1,10 +1,14 @@
 
 require 'luarocks.loader'
 
-print(package.path)
-print(package.loaded)
+-- print(package.path)
+-- print(package.loaded)
+
+-- require("cffi-lua")
 
 local magick = require("magick")
+
+magick.thumb("004.bmp", "100x100", "output.bmp")
 
 -- object for creating a square image for instagram
 local square = {
