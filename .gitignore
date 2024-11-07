@@ -1,6 +1,6 @@
 otta.*
 ryan-cv.*
-insta-grab/*.png
-insta-resize/*.png
+insta-grab/**/*.png
+insta-resize/**/*.png
 *.kra*
 *.png~

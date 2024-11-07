@@ -1,4 +1,10 @@
 
+require 'luarocks.loader'
+
+print(package.path)
+print(package.loaded)
+
+local magick = require("magick")
 
 -- object for creating a square image for instagram
 local square = {
@@ -30,6 +36,5 @@ local landscape = {
     instasize = function () return "" end
 }
 
-print(square.dimension(200, 199))
-
+-- print(square.dimension(200, 199))
 -- print(main[arg[1]])
