@@ -7,6 +7,7 @@ install:
 	sudo apt install luajit -y
 	sudo apt install libmagickwand-dev -y
 	sudo luarocks install magick 
+	# TODO may need to build from source on windows for cffi-lua because of meson issues
 	sudo luarocks install cffi-lua
 
 run:
