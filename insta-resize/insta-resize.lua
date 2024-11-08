@@ -1,19 +1,42 @@
+-- docs: https://github.com/leafo/magick
 
-require 'luarocks.loader'
+-- todo import ffi
+-- create c bindings to the functions i need from imagemagick (composite, convert, height, width)
 
--- print(package.path)
--- print(package.loaded)
+-- require "luarocks.loader"
+local ffi = require("ffi")
 
--- require("cffi-lua")
+ffi.cdef([[ 
+    typedef void MagickWand;
+    typedef void PixelWand;
 
-local magick = require("magick")
+    typedef int MagickBooleanType;
+    typedef int ExceptionType;
+    typedef int ssize_t;
+    typedef int CompositeOperator;
+    
 
-magick.thumb("004.bmp", "100x100", "output.bmp")
+    void MagickWandGenesis();
+    MagickWand* NewMagickWand();
+
+    char* MagickGetException(const MagickWand*, ExceptionType*);
+
+    int MagickGetImageWidth(MagickWand*);
+    int MagickGetImageHeight(MagickWand*);
+
+    MagickBooleanType MagickCompositeImage(MagickWand *wand,
+        const MagickWand *source_wand,const CompositeOperator compose,
+        const ssize_t x,const ssize_t y);
+
+    MagickBooleanType MagickScaleImage(MagickWand *wand,
+        const size_t columns,const size_t rows);
+]])
+
 
 -- object for creating a square image for instagram
 local square = {
     -- return a 1:1 dimension string of image
-    dimension = function (height, width)
+    dimension = function (width, height)
         -- use whatever measurement is biggest  
         local d = height > width and height or width;
         -- create 1:1 string of biggest measurement e.g. 1230x1230
@@ -40,5 +63,26 @@ local landscape = {
     instasize = function () return "" end
 }
 
+
+-- local magick = require "magick.gmwand"
+
+
+-- local img = assert(magick.load_image(arg[1]))
+ 
+
+print "test"
+
+-- local x = square.dimension(img:get_height(), img:get_width())
+
+
+
+
+
+-- magick.load_image.blank_image(x, x, "white")
+
+-- print(img)
+
+-- local p = img:blank_image(x, x, "white")
+
+-- print(x)
 -- print(square.dimension(200, 199))
--- print(main[arg[1]])

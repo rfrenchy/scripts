@@ -1,0 +1,23 @@
+{
+    "editor.minimap.enabled": false,
+    "window.zoomLevel": 2,
+    "workbench.colorTheme": "Default Dark+ Experimental",
+    "explorer.confirmDragAndDrop": false,
+    "workbench.activityBar.location": "hidden",
+    "git.openRepositoryInParentFolders": "never",
+    "[json]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "extensions.ignoreRecommendations": true,
+    "workbench.startupEditor": "none",
+    "[go]": {
+        "editor.insertSpaces": false,
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": "explicit"
+        }
+    },
+    "Lua.workspace.library": [
+        "/usr/local/share/lua/5.1/magick"
+    ]
+}
