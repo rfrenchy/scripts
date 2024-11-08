@@ -1,9 +1,7 @@
--- docs: https://github.com/leafo/magick
 
--- todo import ffi
 -- create c bindings to the functions i need from imagemagick (composite, convert, height, width)
+-- http://luajit.org/ext_ffi.html
 
--- require "luarocks.loader"
 local ffi = require("ffi")
 
 ffi.cdef([[ 
