@@ -13,7 +13,6 @@ ffi.cdef([[
     typedef int ssize_t;
     typedef int CompositeOperator;
     
-
     void MagickWandGenesis();
     MagickWand* NewMagickWand();
 
