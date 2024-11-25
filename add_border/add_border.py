@@ -7,6 +7,12 @@ from PIL import Image, ImageOps
 # command line argument set up
 argp = argparse.ArgumentParser("add_border")
 argp.add_argument("image_url")
+
+# gradient args,Todo make gradient args a tuple?
+argp.add_argument("gradient_start", "-gs")
+argp.add_argument("gradient_end", "-ge")
+argp.add_argument("steps", "-st")
+
 args = argp.parse_args()
 
 # open the image for processing
