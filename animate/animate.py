@@ -1,9 +1,12 @@
 
-# usage: python3 animate.py directory-name
-# description: gif together images in a directory
+# usage: python3 animate.py config-path.json directory-name
+# description: gif together images from a directory
 import argparse
 import glob
 import json
+
+import matplotlib.pyplot as plt
+import numpy as np
 
 from PIL import Image
 
@@ -14,7 +17,7 @@ argp.add_argument("directory")
 args = argp.parse_args()
 
 images = []
-# get all images in given directory
+# get all .jpg's in given directory
 for f in glob.glob(args.directory + "/*.jpg"):
     images.append((f, Image.open(f)))
 
@@ -27,22 +30,39 @@ for i in sorted_images:
     images.append(i[1])
 
 
-def json_to_gif(json_path, images):
-    # read json
+def shot_to_gif(shot, images):
+    M = []  # preallocate 24 spaces in array?
 
-    M = []
+    for i, frame in enumerate(shot):
+        for _ in range(shot[frame]):
+            M.append(images[i])
 
-    with open(json_path) as second:
-        sj = json.load(second)
-        for i, frame in enumerate(sj):
-            for _ in range(sj[frame]):
-                M.append(images[i])
-
+    # TODO 25 frames? issue? how to test?
     M[0].save("arms-config-test.gif",
               save_all=True,
               append_images=M[1:],
               duration=1,
               loop=0)
+
+
+def shot_to_plot(shot):
+    """ Plots timings
+        @param json - the config for the frame
+    """
+    # x coords (frame/time?)
+    x = np.array([])
+    xi = 1
+
+    # todo, fix, should be same size as x, all 1s
+    y = np.array([1, 1, 1, 1, 1, 1, 1, 1, 1])
+
+    for sketch_number, frame in enumerate(shot):
+        shot[frame]
+        x = np.append(x, xi)
+        xi += shot[frame]
+
+    plt.scatter(x, y)
+    plt.savefig("timing.jpg", bbox_inches="tight")
 
 
 def write_in_ones(images):
@@ -109,7 +129,11 @@ def write_in_halfs(images):
                       loop=0)
 
 
-json_to_gif("in-halves.json", images)
+with open("in-halves.json") as shot_json:
+    shot = json.load(shot_json)
+
+    shot_to_gif(shot, images)
+    shot_to_plot(shot)
 
 # write_in_halves(images)
 

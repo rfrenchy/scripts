@@ -5,3 +5,5 @@ insta-resize/**/*.png
 *.kra*
 *.png~
 *.bmp
+*.jpg
+*.jpg~
