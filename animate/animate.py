@@ -1,11 +1,11 @@
 
 # usage: python3 animate.py directory-name
-# description: stitch together images in a directory into a gif
-import numpy as np
+# description: gif together images in a directory
 import argparse
 import glob
+import json
 
-from PIL import Image, ImageOps
+from PIL import Image
 
 # command line argument set up
 argp = argparse.ArgumentParser("animate")
@@ -13,7 +13,6 @@ argp.add_argument("directory")
 
 args = argp.parse_args()
 
-# images: tuple[Any, ImageFile] = []
 images = []
 # get all images in given directory
 for f in glob.glob(args.directory + "/*.jpg"):
@@ -26,6 +25,24 @@ sorted_images = sorted(images)
 images = []
 for i in sorted_images:
     images.append(i[1])
+
+
+def json_to_gif(json_path, images):
+    # read json
+
+    M = []
+
+    with open(json_path) as second:
+        sj = json.load(second)
+        for i, frame in enumerate(sj):
+            for _ in range(sj[frame]):
+                M.append(images[i])
+
+    M[0].save("arms-config-test.gif",
+              save_all=True,
+              append_images=M[1:],
+              duration=1,
+              loop=0)
 
 
 def write_in_ones(images):
@@ -92,8 +109,10 @@ def write_in_halfs(images):
                       loop=0)
 
 
-write_in_halfs(images)
+json_to_gif("in-halves.json", images)
 
+# write_in_halves(images)
 
-# arm specific settings
-# inbetween in halfs?
+# write_in_thrids
+
+# write_in_quarters
