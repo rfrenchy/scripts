@@ -5,22 +5,29 @@ import argparse
 import glob
 import json
 
-import numpy as np
-import matplotlib.pyplot as plt
-
 from PIL import Image
 from commands import FromConfig
 
 # command line argument set up
 argp = argparse.ArgumentParser("animate")
-argp.add_argument("directory")
-argp.add_argument("json-path")
+
+argp.add_argument("-g", "--glob", default="./*.jpg")
+argp.add_argument("-j", "--json", required=False)
+argp.add_argument("-o", "--output", default="animate.gif")
 
 args = argp.parse_args()
 
+commands = []
+
+if args.glob:
+    print(args.glob)
+
+if args.json:
+    print(args.json)
+
 images = []
 # get all .jpg's in given directory
-for f in glob.glob(args.directory + "/*.jpg"):
+for f in glob.glob(args.glob):
     # for f in glob.glob(args.directory + "/*.png"):
     images.append((f, Image.open(f)))
 
