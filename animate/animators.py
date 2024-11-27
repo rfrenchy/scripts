@@ -1,7 +1,8 @@
+import numpy as np
 
 from PIL import ImageFile
 
-type Config = dict[str]
+type Config = dict[str, str]
 
 
 class InTwos:
@@ -87,3 +88,21 @@ class FromConfig:
                   append_images=M[1:],
                   duration=1,
                   loop=0)
+
+
+class Scatter:
+    def Do(self, shot):
+        """ Plots timings
+            @param json - the config for the frame
+        """
+        # x coords (frame/time?)
+        x = np.array([])
+        xi = 1
+
+        # todo, fix, should be same size as x, all 1s
+        y = np.array([1, 1, 1, 1, 1, 1, 1, 1, 1])
+
+        for sketch_number, frame in enumerate(shot):
+            shot[frame]
+            x = np.append(x, xi)
+            xi += shot[frame]

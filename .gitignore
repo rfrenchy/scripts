@@ -7,3 +7,6 @@ insta-resize/**/*.png
 *.bmp
 *.jpg
 *.jpg~
+
+**/__pycache__/
+*.pyc
