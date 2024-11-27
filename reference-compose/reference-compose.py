@@ -4,7 +4,6 @@ import argparse
 import glob
 import math
 
-
 from PIL import Image
 
 # command line argument set up
@@ -34,9 +33,6 @@ for i, x in enumerate(image_globs):
     # calculate where to stitch into main image
     x = (i % columns) * pixels
     y = (i // columns) * pixels
-
-    # print(x)
-    # print(y)
 
     # pase into main image
     stitched_image.paste(img, (x, y))

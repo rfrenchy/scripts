@@ -9,6 +9,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 from PIL import Image
+from animators import FromConfig
 
 # command line argument set up
 argp = argparse.ArgumentParser("animate")
@@ -19,8 +20,8 @@ args = argp.parse_args()
 
 images = []
 # get all .jpg's in given directory
-# for f in glob.glob(args.directory + "/*.jpg"):
-for f in glob.glob(args.directory + "/*.png"):
+for f in glob.glob(args.directory + "/*.jpg"):
+    # for f in glob.glob(args.directory + "/*.png"):
     images.append((f, Image.open(f)))
 
 # sort the images by file name
@@ -30,23 +31,6 @@ sorted_images = sorted(images)
 images = []
 for i in sorted_images:
     images.append(i[1])
-
-
-def shot_to_gif(shot, images):
-    M = []  # preallocate 24 spaces in array?
-
-    print(len(images))
-
-    for i, frame in enumerate(shot):
-        for _ in range(shot[frame]):
-            M.append(images[i])
-
-    # TODO 25 frames? issue? how to test?
-    M[0].save("arms-config-test.gif",
-              save_all=True,
-              append_images=M[1:],
-              duration=1,
-              loop=0)
 
 
 def shot_to_plot(shot):
@@ -69,79 +53,9 @@ def shot_to_plot(shot):
     plt.savefig("timing.jpg", bbox_inches="tight")
 
 
-def write_in_ones(images):
-    """ Write gif in ones
-
-        @param images, a sorted array of singular drawings
-    """
-
-    images[0].save("arm-in-ones.gif",
-                   save_all=True,
-                   append_images=images[1:],
-                   duration=1,
-                   loop=0)
-
-
-def write_in_twos(images):
-    """ Write gif of images with each drawing repeated twice over 1 second
-
-        @param images, a sorted array of images
-    """
-
-    in_twos = []
-    for i in images:
-        in_twos.append(i)
-        in_twos.append(i)
-
-    in_twos[0].save("arm-in-twos.gif",
-                    save_all=True,
-                    append_images=in_twos[1:],
-                    duration=1,
-                    loop=0)
-
-
-def write_in_halfs(images):
-    """ Write gif with halves timing (specific to arms animation for now)
-
-        @param images, a sorted array of images
-    """
-    in_halves = []
-
-    for i in range(4):
-        in_halves.append(images[0])  # frame 1
-    for i in range(3):
-        in_halves.append(images[1])  # frame 2
-    for i in range(3):
-        in_halves.append(images[2])  # frame 3
-    for i in range(2):
-        in_halves.append(images[3])  # frame 4
-    for i in range(1):
-        in_halves.append(images[4])  # frame 5
-    for i in range(2):
-        in_halves.append(images[5])  # frame 6
-    for i in range(3):
-        in_halves.append(images[6])  # frame 7
-    for i in range(3):
-        in_halves.append(images[7])  # frame 8
-    for i in range(4):
-        in_halves.append(images[8])  # frame 9
-
-    in_halves[0].save("arm-in-halves.gif",
-                      save_all=True,
-                      append_images=in_halves[1:],
-                      duration=1,
-                      loop=0)
-
-
-with open("in-twos.json") as shot_json:
+with open("in-halves.json") as shot_json:
     shot = json.load(shot_json)
 
-    shot_to_gif(shot, images)
+    fc = FromConfig()
+    fc.ToGIF(shot, images)
     shot_to_plot(shot)
-
-
-# write_in_halves(images)
-
-# write_in_thrids
-
-# write_in_quarters
