@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib.pyplot as plt
 
 from PIL import ImageFile
 
@@ -106,3 +107,6 @@ class Scatter:
             shot[frame]
             x = np.append(x, xi)
             xi += shot[frame]
+
+        plt.scatter(x, y)
+        plt.savefig("timing.jpg", bbox_inches="tight")

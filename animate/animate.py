@@ -5,11 +5,11 @@ import argparse
 import glob
 import json
 
-import matplotlib.pyplot as plt
 import numpy as np
+import matplotlib.pyplot as plt
 
 from PIL import Image
-from animators import FromConfig
+from commands import FromConfig
 
 # command line argument set up
 argp = argparse.ArgumentParser("animate")
@@ -32,30 +32,8 @@ images = []
 for i in sorted_images:
     images.append(i[1])
 
-
-def shot_to_plot(shot):
-    """ Plots timings
-        @param json - the config for the frame
-    """
-    # x coords (frame/time?)
-    x = np.array([])
-    xi = 1
-
-    # todo, fix, should be same size as x, all 1s
-    y = np.array([1, 1, 1, 1, 1, 1, 1, 1, 1])
-
-    for sketch_number, frame in enumerate(shot):
-        shot[frame]
-        x = np.append(x, xi)
-        xi += shot[frame]
-
-    plt.scatter(x, y)
-    plt.savefig("timing.jpg", bbox_inches="tight")
-
-
 with open("in-halves.json") as shot_json:
     shot = json.load(shot_json)
 
     fc = FromConfig()
     fc.ToGIF(shot, images)
-    shot_to_plot(shot)
