@@ -2,39 +2,37 @@
 # usage: python3 reference-compose.py config-path.json directory-name
 import argparse
 import glob
-import math
 
 from PIL import Image
 
 # command line argument set up
 argp = argparse.ArgumentParser("reference-compose")
-argp.add_argument("directory")
+
+argp.add_argument("directory")  # todo change to glob
+# argp.add_argument("-g", "--glob", default="./*.jpg")
+argp.add_argument("-r", "--rows", default=5)
+argp.add_argument("-c", "--columns", default=6)
+argp.add_argument("-o", "--output", default="pinboard.png")
 
 args = argp.parse_args()
 
 # assumes 1:1 dimensions for each image
-
 image_globs = glob.glob(args.directory + "/*.jpg")
-
-# stiched image properties
 pixels = 800  # size of each image
-rows = 5
-columns = math.ceil(len(image_globs) / rows)
 
 # main image all the other images will be stitched into
-stitched_image = Image.new("RGB", (columns * pixels, rows * pixels))
+pinboard = Image.new("RGB", (args.columns * pixels, args.rows * pixels))
 
-# print(len(image_globs))
-for i, x in enumerate(image_globs):
+for i, m in enumerate(image_globs):
     # open and resize image
-    img = Image.open(x)
+    img = Image.open(m)
     img.thumbnail((pixels, pixels))
 
-    # calculate where to stitch into main image
-    x = (i % columns) * pixels
-    y = (i // columns) * pixels
+    # calculate where to stitch into pinboard
+    x = (i % args.columns) * pixels
+    y = (i // args.columns) * pixels
 
-    # pase into main image
-    stitched_image.paste(img, (x, y))
+    # paste into pinboard image
+    pinboard.paste(img, (x, y))
 
-stitched_image.save("stiched_image.png")
+pinboard.save(args.output)
