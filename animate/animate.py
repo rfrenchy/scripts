@@ -13,12 +13,14 @@ from PIL import Image
 # command line argument set up
 argp = argparse.ArgumentParser("animate")
 argp.add_argument("directory")
+argp.add_argument("json-path")
 
 args = argp.parse_args()
 
 images = []
 # get all .jpg's in given directory
-for f in glob.glob(args.directory + "/*.jpg"):
+# for f in glob.glob(args.directory + "/*.jpg"):
+for f in glob.glob(args.directory + "/*.png"):
     images.append((f, Image.open(f)))
 
 # sort the images by file name
@@ -32,6 +34,8 @@ for i in sorted_images:
 
 def shot_to_gif(shot, images):
     M = []  # preallocate 24 spaces in array?
+
+    print(len(images))
 
     for i, frame in enumerate(shot):
         for _ in range(shot[frame]):
@@ -129,11 +133,12 @@ def write_in_halfs(images):
                       loop=0)
 
 
-with open("in-halves.json") as shot_json:
+with open("in-twos.json") as shot_json:
     shot = json.load(shot_json)
 
     shot_to_gif(shot, images)
     shot_to_plot(shot)
+
 
 # write_in_halves(images)
 
