@@ -83,7 +83,7 @@ class FromConfig:
             for _ in range(shot[frame]):
                 M.append(images[i])
 
-        # TODO 25 frames? issue? how to test?
+        # TODO try .apng 
         M[0].save("arms-config-test.gif",
                   save_all=True,
                   append_images=M[1:],
@@ -101,7 +101,8 @@ class Scatter:
         xi = 1
 
         # todo, fix, should be same size as x, all 1s
-        y = np.array([1, 1, 1, 1, 1, 1, 1, 1, 1])
+        
+        y = np.ones(9)
 
         for sketch_number, frame in enumerate(shot):
             shot[frame]
