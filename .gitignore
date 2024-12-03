@@ -1,12 +1,13 @@
 otta.*
 ryan-cv.*
-insta-grab/**/*.png
-insta-resize/**/*.png
+*.png
 *.kra*
 *.png~
 *.bmp
 *.jpg
 *.jpg~
+
+run.sh
 
 **/__pycache__/
 *.pyc
