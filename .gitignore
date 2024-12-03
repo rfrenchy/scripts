@@ -7,7 +7,5 @@ ryan-cv.*
 *.jpg
 *.jpg~
 
-run.sh
-
 **/__pycache__/
 *.pyc
