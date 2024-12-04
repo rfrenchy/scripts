@@ -10,14 +10,12 @@ import matplotlib.animation as animation
 argp = argparse.ArgumentParser("parabola")
 
 argp.add_argument("--pow", default=1, type=int)
-argp.add_argument("-o", "--output", default="ball.png")
+argp.add_argument("-o", "--output", default="ball.gif")
 args = argp.parse_args()
 
-# # axis data
-# plt.xlabel("frames")
+# axis data
 x = np.array([0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24])
 
-# plt.ylabel("distance-fallen")
 y_start = np.array([0, -0.1, -0.19, -0.3, -0.575, -0.825, -1.225,
                     -1.650, -2.19, -2.75, -3.41, -4.125, -4.825])
 
@@ -29,8 +27,15 @@ y_pow = -y_pow if args.pow % 2 == 0 else y_pow
 y_final = y_pow
 
 fig, ax = plt.subplots()
-ax.set_xlim([0, 24])
-ax.set_ylim([-5, 5])
+
+ax.set_xlim([-5, 30])
+
+
+# assumes negatives
+y_lim_start = np.min(y_final) - (np.min(y_final) % 5)
+ax.set_ylim([y_lim_start, 5])
+
+ax.grid()
 
 scat = ax.scatter(1, 0)
 
@@ -41,12 +46,12 @@ def animate(i):
 
 
 ani = animation.FuncAnimation(fig, animate, repeat=True,
-                              frames=len(x) - 1, interval=50)
+                              frames=len(x) - 1, interval=100)
 
 writer = animation.PillowWriter(fps=12, metadata=dict(artist="ry"),
                                 bitrate=1800)
 
-ani.save('scatter.gif', writer=writer)
+ani.save(args.output, writer=writer)
 
 # plt.show()
 

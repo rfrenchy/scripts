@@ -1,5 +1,5 @@
-python3 parabola.py                       
-xdg-open scatter.gif
+python3 parabola.py --pow 2                      
+xdg-open ball.gif 
 
 # python3 parabola.py --pow 2 -o ball-p2.png
 # python3 parabola.py --pow 3 -o ball-p3.png

@@ -6,6 +6,10 @@ ryan-cv.*
 *.bmp
 *.jpg
 *.jpg~
+*.gif
+
+.ipynb_checkpoints/
+
 
 **/__pycache__/
 *.pyc
