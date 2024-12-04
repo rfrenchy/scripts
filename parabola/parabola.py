@@ -30,12 +30,17 @@ fig, ax = plt.subplots()
 
 ax.set_xlim([-5, 30])
 
+# ax.set_aspect('equal')
+# ax.set_xticklabels('')
+# ax.set_yticklabels('')
+
+ax.axis('off')
 
 # assumes negatives
 y_lim_start = np.min(y_final) - (np.min(y_final) % 5)
 ax.set_ylim([y_lim_start, 5])
 
-ax.grid()
+# ax.grid()
 
 scat = ax.scatter(1, 0)
 
@@ -50,6 +55,9 @@ ani = animation.FuncAnimation(fig, animate, repeat=True,
 
 writer = animation.PillowWriter(fps=12, metadata=dict(artist="ry"),
                                 bitrate=1800)
+
+
+# start normalising?
 
 ani.save(args.output, writer=writer)
 
