@@ -26,27 +26,39 @@ y_pow = np.power(y_start, args.pow)
 y_pow = -y_pow if args.pow % 2 == 0 else y_pow
 y_final = y_pow
 
-fig, ax = plt.subplots()
+fig, ax = plt.subplots(width_ratios=[1], height_ratios=[1])
 
 ax.set_xlim([-5, 30])
 
-# ax.set_aspect('equal')
-# ax.set_xticklabels('')
-# ax.set_yticklabels('')
-
-ax.axis('off')
+# ax.axis('off')
+# ax.set_aspect('equal', 'box')
+ax.grid()
 
 # assumes negatives
 y_lim_start = np.min(y_final) - (np.min(y_final) % 5)
 ax.set_ylim([y_lim_start, 5])
 
-# ax.grid()
 
 scat = ax.scatter(1, 0)
 
+ny = np.array([])
+
+y_work = y_final
+
+ymin = np.abs(min(y_work))
+
+if ymin < 0:
+    y_work = np.add(y_work, ymin)
+
+for d in y_work:
+    v = (d - min(y_work)) / (max(y_work) - min(y_work))
+    ny = np.append(ny, v)
+
+ax.set_ylim([0, 1])
+
 
 def animate(i):
-    scat.set_offsets((x[i], y_final[i]))
+    scat.set_offsets((x[i], ny[i]))
     return scat,
 
 
@@ -57,13 +69,4 @@ writer = animation.PillowWriter(fps=12, metadata=dict(artist="ry"),
                                 bitrate=1800)
 
 
-# start normalising?
-
 ani.save(args.output, writer=writer)
-
-# plt.show()
-
-# plot
-# plt.scatter(x, y_final)
-# plt.grid()
-# plt.savefig(args.output)

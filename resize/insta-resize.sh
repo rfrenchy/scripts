@@ -6,7 +6,7 @@
 
 # convert image into square instagramable image
 square() {
-    echo "square mode (1:1)"
+    # echo "square mode (1:1)"
     
     wx=$(identify "$1" | awk '{print $3}' | cut -f 1 -d x) 
     hx=$(identify "$1" | awk '{print $3}' | cut -f 2 -d x)
@@ -27,7 +27,7 @@ square() {
     composite "$1" white-composite.png "$IMAGE_OUTPUT_NAME"-comp.png
 
     # Scale composited image to instagram's square measurements
-    convert "$IMAGE_OUTPUT_NAME"-comp.png -resize "1080x1080" "$IMAGE_OUTPUT_NAME"-insta-square.png    
+    convert "$IMAGE_OUTPUT_NAME"-1x1.png -resize "1080x1080" "$IMAGE_OUTPUT_NAME"-insta-square.png    
 }
 
 portrait() {
