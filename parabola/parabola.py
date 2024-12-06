@@ -24,9 +24,12 @@ def Plotter(pow=1, output="ball.gif") -> tuple[plt.Figure, animation.FuncAnimati
 
     ax.set_xlim([-5, 30])
 
+    ax.spines.get('top').set_visible(False)
+    ax.spines.get('right').set_visible(False)
+
     # ax.axis('off')
     # ax.set_aspect('equal', 'box')
-    ax.grid()
+    # ax.grid()
 
     # assumes negatives
     y_lim_start = np.min(y_final) - (np.min(y_final) % 5)
