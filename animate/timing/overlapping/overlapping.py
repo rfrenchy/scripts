@@ -15,6 +15,8 @@ def overlap(frames=14):
     mv = np.append(np.linspace(0, 1, math.ceil(frames / 2)),
                    np.linspace(1, 0, math.ceil(frames / 2)))
 
+    # TODO slow-in-slow-out
+
     # initial data points
     x = np.array([0, 1, 2, 3, 4])
 
