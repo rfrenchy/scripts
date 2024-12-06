@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 
 
-def Plotter(pow=1, output="ball.gif") -> animation.FuncAnimation:
+def Plotter(pow=1, output="ball.gif") -> tuple[plt.Figure, animation.FuncAnimation]:
 
     # axis data
     x = np.array([0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24])
@@ -56,4 +56,4 @@ def Plotter(pow=1, output="ball.gif") -> animation.FuncAnimation:
     ani = animation.FuncAnimation(fig, animate, repeat=True,
                                   frames=len(x) - 1, interval=100)
 
-    return ani
+    return (fig, ani)

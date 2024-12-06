@@ -11,7 +11,7 @@ argp.add_argument("--pow", default=1, type=int)
 argp.add_argument("-o", "--output", default="ball.gif")
 args = argp.parse_args()
 
-anim = Plotter(args.pow, args.output)
+_, anim = Plotter(args.pow, args.output)
 
 writer = animation.PillowWriter(fps=12, metadata=dict(artist="ry"),
                                 bitrate=1800)
