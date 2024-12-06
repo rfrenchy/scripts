@@ -1,46 +1,111 @@
+import numpy as np
+import matplotlib.pyplot as plt
 
-# usage: python3 animate.py config-path.json directory-name
-# description: gif together images from a directory
-import argparse
-import glob
-import json
+from PIL import ImageFile
 
-from PIL import Image
-from commands import FromConfig
 
-# command line argument set up
-argp = argparse.ArgumentParser("animate")
+class InTwos:
+    def ToGIF(self, images: list[ImageFile.ImageFile]):
+        """ Write gif of images with each drawing repeated twice over 1 second
 
-argp.add_argument("-g", "--glob", default="./*.jpg")
-argp.add_argument("-j", "--json", required=False)
-argp.add_argument("-o", "--output", default="animate.gif")
+            @param images, a sorted array of images
+        """
 
-args = argp.parse_args()
+        in_twos = []
+        for i in images:
+            in_twos.append(i)
+            in_twos.append(i)
 
-commands = []
+        in_twos[0].save("arm-in-twos.gif",
+                        save_all=True,
+                        append_images=in_twos[1:],
+                        duration=1,
+                        loop=0)
 
-if args.glob:
-    print(args.glob)
 
-if args.json:
-    print(args.json)
+class InOnes:
+    def ToGIF(self, images: list[ImageFile.ImageFile]):
+        """ Write gif in ones
 
-images = []
-# get all .jpg's in given directory
-for f in glob.glob(args.glob):
-    # for f in glob.glob(args.directory + "/*.png"):
-    images.append((f, Image.open(f)))
+            @param images, a sorted array of singular drawings
+        """
 
-# sort the images by file name
-sorted_images = sorted(images)
+        images[0].save("arm-in-ones.gif",
+                       save_all=True,
+                       append_images=images[1:],
+                       duration=1,
+                       loop=0)
 
-# extract just the images now they are ordered
-images = []
-for i in sorted_images:
-    images.append(i[1])
 
-with open("in-halves.json") as shot_json:
-    shot = json.load(shot_json)
+class InHalves:
+    def ToGIF(self, images: list[ImageFile.ImageFile]):
+        """ Write gif with halves timing (specific to arms animation for now)
 
-    fc = FromConfig()
-    fc.ToGIF(shot, images)
+            @param images, a sorted array of images
+        """
+        in_halves = []
+
+        for _ in range(4):
+            in_halves.append(images[0])  # frame 1
+        for _ in range(3):
+            in_halves.append(images[1])  # frame 2
+        for _ in range(3):
+            in_halves.append(images[2])  # frame 3
+        for _ in range(2):
+            in_halves.append(images[3])  # frame 4
+        for _ in range(1):
+            in_halves.append(images[4])  # frame 5
+        for _ in range(2):
+            in_halves.append(images[5])  # frame 6
+        for _ in range(3):
+            in_halves.append(images[6])  # frame 7
+        for _ in range(3):
+            in_halves.append(images[7])  # frame 8
+        for _ in range(4):
+            in_halves.append(images[8])  # frame 9
+
+        in_halves[0].save("arm-in-halves.gif",
+                          save_all=True,
+                          append_images=in_halves[1:],
+                          duration=1,
+                          loop=0)
+
+
+class FromConfig:
+    def ToGIF(self, shot, images: list[ImageFile.ImageFile]):
+        M = []  # preallocate 24 spaces in array?
+
+        # print(len(images))
+
+        for i, frame in enumerate(shot):
+            for _ in range(shot[frame]):
+                M.append(images[i])
+
+        # TODO try .apng
+        M[0].save("arms-config-test.gif",
+                  save_all=True,
+                  append_images=M[1:],
+                  duration=1,
+                  loop=0)
+
+
+class Scatter:
+    def Do(self, shot):
+        """ Plots timings
+            @param json - the config for the frame
+        """
+        # x coords (frame/time?)
+        x = np.array([])
+        xi = 1
+
+        # todo, fix, should be same size as x, all 1s
+
+        y = np.ones(9)
+
+        for sketch_number, frame in enumerate(shot):
+            shot[frame]
+            x = np.append(x, xi)
+            xi += shot[frame]
+
+        plt.scatter(x, y)
+        plt.savefig("timing.jpg", bbox_inches="tight")

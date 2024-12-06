@@ -1,8 +1,8 @@
 # python3 parabola.py --pow 1 -o ballp1.gif                      
-python3 parabola.py --pow 2 -o ballp2.gif                      
-python3 parabola.py --pow 3 -o ballp3.gif                      
-python3 parabola.py --pow 4 -o ballp4.gif                      
-python3 parabola.py --pow 5 -o ballp5.gif                      
+python3 cli.py --pow 2 -o ballp2.gif                      
+python3 cli.py --pow 3 -o ballp3.gif                      
+python3 cli.py --pow 4 -o ballp4.gif                      
+python3 cli.py --pow 5 -o ballp5.gif                      
 
 
 
