@@ -18,7 +18,10 @@ def key_coordintes_v1(i, frames):
 
 def move_coordinates_v2():
     # halves timing
-    return np.array([1, 0.95, 0.925, 0.9, 0.875, 0.75, 0.5, 0.25, 0.125, 0.1, 0.05, 0])
+    m = np.array([1, 0.95, 0.925, 0.9, 0.875, 0.75,
+                 0.5, 0.25, 0.125, 0.1, 0.05, 0])
+
+    return np.append(m, m[::-1])
 
 
 def overlap(frames=14):
@@ -33,8 +36,8 @@ def overlap(frames=14):
 
     # may need to remove 1 back down to 0, which means
     # have to change for loop go back down when over 7
-    mv = move_coordinates_v1(frames)
-    # mv = move_coordinates_v2()
+    # mv = move_coordinates_v1(frames)
+    mv = move_coordinates_v2()
 
     # numpy.interp
     # arg 1: coordinate/key whose value needs to be interpolated
