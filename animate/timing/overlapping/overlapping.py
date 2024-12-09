@@ -65,7 +65,7 @@ def overlap(frames=14):
 
         c, e, r = key_coordintes_v1(i, frames)
 
-        # calculate new y positions for each ball based on current frame
+        # calculate new axis position for each ball based on current frame
         z = np.array([mv[r], mv[r], mv[c], mv[r], mv[e]])
 
         # new plotted data
