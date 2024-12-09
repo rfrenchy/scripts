@@ -9,6 +9,9 @@ def overlap(frames=14):
     # build plot
     fig, ax = plt.subplots()
 
+    # https://matplotlib.org/stable/gallery/mplot3d/2dcollections3d.html#sphx-glr-gallery-mplot3d-2dcollections3d-py
+    # fig.add_subplot(projection="3d")
+
     math.ceil(frames / 2)
 
     # movement data points (along y-axis)
@@ -38,8 +41,11 @@ def overlap(frames=14):
         # calculate new y positions for each ball based on current frame
         y = np.array([mv[r], mv[r], mv[c], mv[r], mv[e]])
 
+        z = np.zeros(5)
+
         # new plotted data
         return ax.scatter(x, y)
+        # return ax.scatter(x, y, z)
 
     # animation function for matplotlib
     anim = animation.FuncAnimation(fig, animate, repeat=True,
