@@ -82,7 +82,7 @@ def fig_two():
         # reset visuals
         ax.grid()
         ax.set_xlim(np.min(x), np.max(x) + 1)
-        ax.set_ylim(0, np.max(y) + 1)
+        ax.set_ylim(0.5, np.max(y) + 1)
         ax.set_xticklabels([])
         ax.set_yticklabels([])
 
