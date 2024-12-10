@@ -4,6 +4,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 
+# TODO slow-in-fast-out ?
+
 
 def Plotter(pow=1, output="ball.gif") -> tuple[plt.Figure, animation.FuncAnimation]:
 

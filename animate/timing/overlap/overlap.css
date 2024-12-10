@@ -1,0 +1,29 @@
+
+body {
+    width: 95%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+section {
+    width: 100%;
+}
+
+#overlapping-actions {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    gap: 16px;
+    width: 40%;
+}
+
+
+#halves-overlap-plot {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

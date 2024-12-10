@@ -1,0 +1,17 @@
+
+#parabola {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+#inanimate-objects {
+}
+
+#ball-figure {
+    display: flex;
+    flex-direction: column;
+
+}
