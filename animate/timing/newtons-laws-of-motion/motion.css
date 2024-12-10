@@ -1,0 +1,9 @@
+#ball-motion {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+figure {
+    text-align: center;
+}

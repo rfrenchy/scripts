@@ -1,0 +1,11 @@
+#! /bin/bash
+
+# get all directory names of programs in the animate/timing folder
+find ~/dev/scripts/animate/timing -maxdepth 1 -type d -exec basename {} \;
+
+# now use a python script for string manip and README modifications, or just spit out a big template string?
+
+# todo generate README docs for each python script
+# grep: filename of python file, (get rid of extension) usage and description, 
+#   ignore cli.py, only core file, means I have to enfore a structure to the code i might not want yet?
+# 
