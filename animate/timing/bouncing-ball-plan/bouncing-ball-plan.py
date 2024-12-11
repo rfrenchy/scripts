@@ -46,24 +46,23 @@ x = np.array([])
 x_shrink_factor = 0.66
 
 mi = 0     # min
-ma = 5     # max
+ma = 10     # max
 st = 15    # steps
 sc = 0.66  # scale
 
-x1 = np.linspace(mi, ma, st)
-print(x1)
-for i in range(6):
-    print("mi", mi, "ma", ma)
-    m = np.array([x1])
-    ma = ((ma * i + 1) * sc) + (ma - mi)
-    mi = ma
-    print(x1)
-    # print("ma", ma)
-    x1 = np.linspace(mi, ma, st)
+# x1 0 5 - x2 5 9 - x3 9 12 - x4 12 14 - x5 14 15
+# TODO
+# https://www.csun.edu/~ayk38384/notes/mod11/Parabolas.html
 
-    # print(x1)
+for i in range(6):
+    x1 = np.linspace(mi, ma, st)
+    tmp = mi
+    mi = ma
+    ma = ma + ((ma - tmp) - 1)
+
     x = np.concatenate((x, x1))
 
+print(x)
 
 # need to plot line of arc straight away / repeatedly?
 
