@@ -4,6 +4,7 @@
 find ~/dev/scripts/animate/timing -maxdepth 1 -type d -exec basename {} \;
 
 # now use a python script for string manip and README modifications, or just spit out a big template string?
+# OR use/'learn' perl? 
 
 # todo generate README docs for each python script
 # grep: filename of python file, (get rid of extension) usage and description, 
