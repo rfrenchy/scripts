@@ -43,25 +43,38 @@ fig.set_figheight(1 * 4)
 
 # vertex x = -(b/2a)
 
+# quadratic has to move from negative to the positive to plot as a curve?
+# only curves at this inflexion point?
+
 
 # https://www.csun.edu/~ayk38384/notes/mod11/Parabolas.html
 
 a = -1  # parabola steepeness- negative a makes upwards parabolas
 b = 0   # controls position along x
-c = 0   # controls the y-intercept
+c = 0   # controls the y-intercept, the max y?
 
 vertex_x = -(b / 2*a)
 # print(vertex_x) # so you know where the parabola is going to flip back down
 
-steps = 100
-x = np.linspace(-2, 2, steps)
+steps = 24
+x1 = np.linspace(-5, 5, steps)
+# need to repeat for
 y = np.array([])
 
 for i in range(steps):
-    y = np.append(y, ((a * (x[i]**2)) + (b * x[i]) + c))  # parabola forumla
+    y = np.append(y, ((a * (x1[i]**2)) + (b * x1[i]) + 0))  # parabola forumla
 
+# x2 = np.linspace(-4, 4, steps)
+for i in range(steps):
+    y = np.append(y, ((a * (x1[i]**2)) + (b * x1[i]) + 0))  # parabola forumla
 
-print(y)
+for i in range(steps):
+    y = np.append(y, ((a * (x1[i]**2)) + (b * x1[i]) + 0))  # parabola forumla
+
+# x = x2
+x = np.concatenate((x1, x1 + 10, x1 + 20))
+
+# print(y)
 
 
 def animate(i):
@@ -77,19 +90,19 @@ def animate(i):
     # ax.set_xlim(np.min(x), np.max(x) + 1)
     # ax.set_ylim(0, np.max(y) + 1)
 
-    ax.set_xlim(-20, 20)
+    ax.set_xlim(min(x) - 1, max(x) + 1)
     ax.set_ylim(min(y) - 1, max(y) + 1)
 
-    ax.set_xticklabels([])
-    ax.set_yticklabels([])
+    # ax.set_xticklabels([])
+    # ax.set_yticklabels([])
 
     # plot new point
     ax.plot(x, y)
-    ax.scatter(x[i], y[i], s=500)
+    ax.scatter(x[i], y[i], s=100)
 
 
 anim = animation.FuncAnimation(fig, animate, repeat=True,
-                               frames=len(x) - 1, interval=100)
+                               frames=len(y) - 1, interval=100)
 writer = animation.PillowWriter(fps=24, metadata=dict(artist="ry"),
                                 bitrate=2000)
 anim.save(args.output, writer=writer)
