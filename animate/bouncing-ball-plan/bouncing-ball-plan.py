@@ -17,13 +17,13 @@ args = argp.parse_args()
 fig, ax = plt.subplots()
 
 # set fig dimensions (landscape aspect ratio)
-fig.set_figwidth(1.91 * 10)
-fig.set_figheight(1 * 10)
+# fig.set_figwidth(1.91 * 10)
+# fig.set_figheight(1 * 10)
+
+fig.set_figwidth(6)
+fig.set_figheight(3)
 
 # COORD PLANNING PHASE
-
-# TODO
-
 
 # y = (a * pow(x,2)) + (b * x) + c
 # the 'vertex' of a parabola represents the turning point,
@@ -49,60 +49,68 @@ fig.set_figheight(1 * 10)
 
 # https://www.csun.edu/~ayk38384/notes/mod11/Parabolas.html
 
-a = -1  # parabola steepeness- negative a makes upwards parabolas
+a = -5  # parabola steepeness- negative a makes upwards parabolas
 b = 0   # controls position along x
-c = 0   # controls the y-intercept, the max y?
+c = 0  # controls the y-intercept, the max y?
 
-vertex_x = -(b / 2*a)
-# print(vertex_x) # so you know where the parabola is going to flip back down
 
-steps = 24
-x1 = np.linspace(-5, 5, steps)
-# need to repeat for
+def parabola(x = [], a = -1 , b = 0, c = 0):
+    y = np.array([])
+
+    for i in range(len(x)):
+        yi = ((a * (x[i]**2)) + (b* x[i]) + c)
+        if yi < 0:
+            yi = 0
+        y = np.append(y, yi) 
+
+    return y
+
+
+
+
+x = np.array([])
 y = np.array([])
 
-for i in range(steps):
-    y = np.append(y, ((a * (x1[i]**2)) + (b * x1[i]) + 0))  # parabola forumla
+steps = 24
+x1 = np.linspace(-3, 3, steps)
+c = 40
+for i in range(10):
+    x = np.append(x, x1 + (5 * (i+1)))     
+    y = np.append(y, parabola(x1, -5, 0, c))
+    c = c * (2/3)
 
-# x2 = np.linspace(-4, 4, steps)
-for i in range(steps):
-    y = np.append(y, ((a * (x1[i]**2)) + (b * x1[i]) + 0))  # parabola forumla
 
-for i in range(steps):
-    y = np.append(y, ((a * (x1[i]**2)) + (b * x1[i]) + 0))  # parabola forumla
 
-# x = x2
-x = np.concatenate((x1, x1 + 10, x1 + 20))
 
-# print(y)
+#x2 = np.linspace(-3, 3, steps)
+#y2 = parabola(x2, -5, 0, 40 * (2/3))
 
+# x = np.concatenate((x1 + 3, x1 + 9))
+#y = np.concatenate((y1, y2))
+
+# chop off a golden section amount each time?
+
+# increase in a, decrease in c, reduction in range in x
+# c coefficent influenced by x coords?
+
+# y = (a * pow(x,2)) + (b * x) + c
+# can i find x from this?
 
 def animate(i):
     # clear grid data
     ax.cla()
 
-    # print(i)
-    # m = np.interp(i, x, y)
-    # print("interp value: " + m)
-
     # reset visuals
     ax.grid()
-    # ax.set_xlim(np.min(x), np.max(x) + 1)
-    # ax.set_ylim(0, np.max(y) + 1)
+    ax.set_xlim(0, 60)
+    ax.set_ylim(0, 60)
 
-    ax.set_xlim(min(x) - 1, max(x) + 1)
-    ax.set_ylim(min(y) - 1, max(y) + 1)
-
-    # ax.set_xticklabels([])
-    # ax.set_yticklabels([])
-
-    # plot new point
     ax.plot(x, y)
-    ax.scatter(x[i], y[i], s=100)
+    # ax.scatter(x[i], y[i], s=100)
 
 
 anim = animation.FuncAnimation(fig, animate, repeat=True,
-                               frames=len(y) - 1, interval=100)
+                               frames=len(x) - 1, interval=100)
 writer = animation.PillowWriter(fps=24, metadata=dict(artist="ry"),
                                 bitrate=2000)
 anim.save(args.output, writer=writer)

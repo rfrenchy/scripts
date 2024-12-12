@@ -1,11 +1,10 @@
-# usage: add_border.py my_image.png
 import numpy as np
 import argparse
 
 from PIL import Image, ImageOps
 
 # command line argument set up
-argp = argparse.ArgumentParser("add_border")
+argp = argparse.ArgumentParser("add_border", description="adds a border to an image", usage="add_border.py -i van-dyck.jpg --size 89 -o bordered-van-dyck.jpg")
 argp.add_argument(
     "-i", "--input", help="the url of the image you want to add a border to", type=str)
 argp.add_argument("-o", "--output", help="name of output", type=str)
@@ -13,7 +12,7 @@ argp.add_argument("-o", "--output", help="name of output", type=str)
 WHITE = np.array([255, 255, 255])
 
 argp.add_argument("--size", help="border size to apply", default=25, type=int)
-argp.add_argument("-gs", "--gradientstart", default=WHITE)
+argp.add_argument("-gs", "--gradientstart", default=WHITE, help="" )
 argp.add_argument("-ge", "--gradientend", default=WHITE)
 argp.add_argument("-st", "--steps", default=1)
 
