@@ -17,8 +17,8 @@ args = argp.parse_args()
 fig, ax = plt.subplots()
 
 # set fig dimensions (landscape aspect ratio)
-fig.set_figwidth(1.91 * 4)
-fig.set_figheight(1 * 4)
+fig.set_figwidth(1.91 * 10)
+fig.set_figheight(1 * 10)
 
 # COORD PLANNING PHASE
 
