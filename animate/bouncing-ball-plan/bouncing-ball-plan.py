@@ -22,49 +22,46 @@ fig.set_figheight(1 * 4)
 
 # COORD PLANNING PHASE
 
-y1 = np.array(
-    [1, 2, 3, 4, 5, 6, 6.25, 6.5, 6.25, 6, 5, 4, 3, 2, 1])
-y_scale_factor = 0.66
-y2 = y1 * y_scale_factor
-y3 = y2 * y_scale_factor
-y4 = y3 * y_scale_factor
-y5 = y4 * y_scale_factor
-y6 = y5 * y_scale_factor
-
-# work with one arc
-# x range 0 - 5, horizontal of one arc, therefore 2.5x is y's peak
-
-# y needs to peak half way between x coords in the arc
-
-y = np.concatenate((y1, y2, y3, y4, y5, y6))
-# x = np.array(range(0, len(y)))
-
-# x1 = np.array([0, 1, 2, 3, 4, 5])
-
-x = np.array([])
-# x1 = np.linspace(0, 5, 15)
-x_shrink_factor = 0.66
-
-mi = 0     # min
-ma = 10     # max
-st = 15    # steps
-sc = 0.66  # scale
-
-# x1 0 5 - x2 5 9 - x3 9 12 - x4 12 14 - x5 14 15
 # TODO
+
+
+# y = (a * pow(x,2)) + (b * x) + c
+# the 'vertex' of a parabola represents the turning point,
+# it is often the max or min value of the quadratic equaiton
+# reprsenting the parabola
+# CRUCIAL for understanding the shape and position of a parabola
+
+# All quadratic functions are shaped like parabolas
+# the key features of a parabola depend on the coefficients a, b and c
+
+# the 'a' coefficient controls the steepness of the curve
+# larger a, narrower curver, smaller a, wider curve
+
+# the 'b' coeffienct controls the position along the x-axis
+# the 'c' coefficient controls the 'y-intercept',
+# it moves the parabola up or down, without affecting its curvature
+
+# vertex x = -(b/2a)
+
+
 # https://www.csun.edu/~ayk38384/notes/mod11/Parabolas.html
 
-for i in range(6):
-    x1 = np.linspace(mi, ma, st)
-    tmp = mi
-    mi = ma
-    ma = ma + ((ma - tmp) - 1)
+a = -1  # parabola steepeness- negative a makes upwards parabolas
+b = 0   # controls position along x
+c = 0   # controls the y-intercept
 
-    x = np.concatenate((x, x1))
+vertex_x = -(b / 2*a)
+# print(vertex_x) # so you know where the parabola is going to flip back down
 
-print(x)
+steps = 100
+x = np.linspace(-2, 2, steps)
+y = np.array([])
 
-# need to plot line of arc straight away / repeatedly?
+for i in range(steps):
+    y = np.append(y, ((a * (x[i]**2)) + (b * x[i]) + c))  # parabola forumla
+
+
+print(y)
 
 
 def animate(i):
@@ -77,8 +74,12 @@ def animate(i):
 
     # reset visuals
     ax.grid()
-    ax.set_xlim(np.min(x), np.max(x) + 1)
-    ax.set_ylim(0, np.max(y) + 1)
+    # ax.set_xlim(np.min(x), np.max(x) + 1)
+    # ax.set_ylim(0, np.max(y) + 1)
+
+    ax.set_xlim(-20, 20)
+    ax.set_ylim(min(y) - 1, max(y) + 1)
+
     ax.set_xticklabels([])
     ax.set_yticklabels([])
 

@@ -6,7 +6,7 @@ import glob
 import json
 
 from PIL import Image
-from animate.animate import FromConfig
+from animate.timing.animate import FromConfig
 
 # command line argument set up
 argp = argparse.ArgumentParser("animate")
