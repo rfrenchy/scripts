@@ -1,6 +1,6 @@
 
+# A
 # usage: python3 parabola.py
-
 
 import argparse
 
@@ -15,10 +15,6 @@ args = argp.parse_args()
 
 # ball bouncing
 fig, ax = plt.subplots()
-
-# set fig dimensions (landscape aspect ratio)
-# fig.set_figwidth(1.91 * 10)
-# fig.set_figheight(1 * 10)
 
 fig.set_figwidth(6)
 fig.set_figheight(3)
@@ -53,7 +49,7 @@ a = -5  # parabola steepeness- negative a makes upwards parabolas
 b = 0   # controls position along x
 c = 0  # controls the y-intercept, the max y?
 
-
+# create a parabola definition
 def parabola(x = [], a = -1 , b = 0, c = 0):
     y = np.array([])
 
@@ -65,36 +61,20 @@ def parabola(x = [], a = -1 , b = 0, c = 0):
 
     return y
 
-
-
-
 x = np.array([])
 y = np.array([])
 
 steps = 24
 x1 = np.linspace(-3, 3, steps)
 c = 40
-for i in range(10):
-    x = np.append(x, x1 + (5 * (i+1)))     
+m = 10
+
+# create 'm' parabolas
+for i in range(m):
+    translate_x = 5 * (i+1) * (2/3)
+    x = np.append(x, x1 + translate_x)     
     y = np.append(y, parabola(x1, -5, 0, c))
     c = c * (2/3)
-
-
-
-
-#x2 = np.linspace(-3, 3, steps)
-#y2 = parabola(x2, -5, 0, 40 * (2/3))
-
-# x = np.concatenate((x1 + 3, x1 + 9))
-#y = np.concatenate((y1, y2))
-
-# chop off a golden section amount each time?
-
-# increase in a, decrease in c, reduction in range in x
-# c coefficent influenced by x coords?
-
-# y = (a * pow(x,2)) + (b * x) + c
-# can i find x from this?
 
 def animate(i):
     # clear grid data
