@@ -10,6 +10,7 @@ import cv2 as cv
 # import matplotlib.pyplot as plt
 # import matplotlib.animation as animation
 
+# https://docs.opencv.org/4.x/d6/d00/tutorial_py_root.html
 
 argp = argparse.ArgumentParser("track-arc")
 argp.add_argument("-i", "--input", default="./daffodil/1265.png")
