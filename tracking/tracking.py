@@ -64,7 +64,7 @@ def animate(i):
 anim = animation.FuncAnimation(fig, animate, repeat=True,
                                    frames=(frames - 1), interval=100)
 
-writer = animation.PillowWriter(fps=12, metadata=dict(artist="ry"),
+writer = animation.PillowWriter(fps=24, metadata=dict(artist="ry"),
                                 bitrate=1800)
 
 anim.save("tracking.gif", writer=writer)
