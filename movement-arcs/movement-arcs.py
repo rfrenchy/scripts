@@ -18,12 +18,8 @@ def rotation(theta):
 
 fig, ax = plt.subplots()
 
-# (x, y)
 a = np.array([0, 0])# circle center
-# (x, y)(x, y)
 p = np.array([a, [-1, 0]])
-
-
 
 # TODO fix a and p side-effect variables (or leave it?)
 

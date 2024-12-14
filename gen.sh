@@ -1,1 +1,2 @@
-grep -r --include=\*.py description ./
+grep -r --include=\*.py '# README ME' ./ | \
+awk '{print $1}'
