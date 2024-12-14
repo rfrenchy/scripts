@@ -61,3 +61,5 @@ writer = animation.PillowWriter(fps=24, metadata=dict(artist="ry"),
 anim.save(args.output, writer=writer)
 
 plt.show()
+
+# TODO combine with movement-arc projectile?
