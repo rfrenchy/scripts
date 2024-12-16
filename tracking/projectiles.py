@@ -77,33 +77,46 @@ def threepronged(frames, ax):
     a = np.array([0.5, 0.5])# x cords?
     p = np.array([[0.5, 0.5], [0.5, 0]]) # point brancing off circle center
 
-    # x ??
-    # a = np.array([0.5, 0.8])# cicle center
-    # p = np.array([0.5, 0.5], [0.8, 0.3]) # point brancing off circle center
-    # y = rotation(np.pi / 4 ) @ np.linspace(0, 1, 24)
+    # [0.5, 0.5] - [[0.5, 0.5], [0.5, 0]]
+    # have to try and remember matrix maths...
 
-    # on 2's?
 
-    # print(rotation(np.pi / 4))
-    # print(np.linspace(0, 1, 24))
-    # print(y)
+    # i have my center points and end points,
+    # linear space algorithm between?
+    # TODO how to to do a linear space algorithm?
 
+    # TODO RADIANS
+
+    # first projectile 
     rot1 = p
-    rot2 = rotation(np.pi / 4) @ (p - a) + a
-    rot3 = rotation((-np.pi / 4)) @ (p - a) + a
+    ani_rot1_x = np.linspace(rot1[0][0], rot1[0][1], frames) # x path points
+    ani_rot1_y = np.linspace(rot1[1][0], rot1[1][1], frames) # y path points
 
-    print(rot2)
+    # second projectile
+    rot2 = rotation(np.pi / 6) @ (p - a) + a
+    ani_rot2_x = np.linspace(rot2[0][0], rot2[0][1], frames) # x path points
+    ani_rot2_y = np.linspace(rot2[1][0], rot2[1][1], frames) # y path points
 
-    # plot a straight line with rotation applied
-    # pre calculate path coords
-    def animate(_):
+    # third projectile
+    rot3 = rotation((-np.pi / 6)) @ (p - a) + a
+    ani_rot3_x = np.linspace(rot3[0][0], rot3[0][1], frames) # x path points
+    ani_rot3_y = np.linspace(rot3[1][0], rot3[1][1], frames) # y path points
+
+    def withpath():
+        # plots the path of the projectiles
         ax.plot(rot1[0], rot1[1])
         ax.plot(rot2[0], rot2[1])
         ax.plot(rot3[0], rot3[1])
+
+    def animate(i):
+        # plots the movement of projectile along path
+        ax.scatter(ani_rot1_x[i], ani_rot1_y[i])
+        ax.scatter(ani_rot2_x[i], ani_rot2_y[i])
+        ax.scatter(ani_rot3_x[i], ani_rot3_y[i])
+
     
     return animate
          
-
 fig, ax = plt.subplots()
 frames = 24 # total frames to animate
 
@@ -116,21 +129,30 @@ match args.type:
 
             def m(i):
                 ax.cla()
+                ax.grid()
                 ax.set_xlim([-0.25, 1.25])
                 ax.set_ylim([-0.25, 1.25])
 
-                a1(i)
+                a1(i), a2(i)
+
+            animate = m
+    case "three-pronged":
+            a2 = threepronged(frames, ax)
+            def m(i):
+                ax.cla()
+                ax.grid()
+                ax.set_xlim([-0.25, 1.25])
+                ax.set_ylim([-0.25, 1.25])
+
                 a2(i)
 
             animate = m
-    case "three-pronged-projectile":
-            a2 = threepronged(frames, ax)
 
 # write the file image 
 anim = animation.FuncAnimation(fig, animate, repeat=True,
                                    frames=(frames - 1), interval=100)
 
-writer = animation.PillowWriter(fps=24, metadata=dict(artist="ry"),
+writer = animation.PillowWriter(fps=12, metadata=dict(artist="ry"),
                                 bitrate=1800)
 
 anim.save(args.output, writer=writer)
