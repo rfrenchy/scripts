@@ -1,5 +1,4 @@
 # README ME
-# usage: python3 movement-arcs.py
 
 import argparse
 
@@ -8,9 +7,13 @@ import matplotlib.pyplot as plt
 # import matplotlib.animation as animation
 
 argp = argparse.ArgumentParser("movement-arcs", 
-                               description="3 projectile path rotated from central point")
+        description="3 projectile path rotated from central point",
+        usage="movement-arcs.py")
+
 argp.add_argument("-i", "--input", default="")
 argp.add_argument("-o", "--output", default="")
+
+args = argp.parse_args()
 
 def rotation(theta):
     return np.array([[ np.cos(theta), -np.sin(theta)   ],

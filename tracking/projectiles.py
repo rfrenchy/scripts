@@ -9,7 +9,8 @@ import matplotlib.animation as animation
 
 # cli argument handling
 argp = argparse.ArgumentParser("projectiles", 
-            description="module of differing projectiles")
+            description="module of differing projectiles",)
+            # usage="python3 --type simple-tracking")
 argp.add_argument("-i", "--input", default="")
 argp.add_argument("-t", "--type", default="simple-tracking")
 argp.add_argument("-o", "--output", default="strategy.gif")
@@ -73,13 +74,16 @@ def simpletracking(frames, ax):
 
     return animate
 
-def threepronged(frames, ax):
-    a = np.array([0.5, 0.5])# x cords?
-    p = np.array([[0.5, 0.5], [0.5, 0]]) # point brancing off circle center
+def threepronged(frames, ax, translate = [0, 0]):
+    # translate = np.array([0.5, 0.5]) # arbitrary translation
+    a = np.array([0, 0]) + translate# x cords?
+    p = np.array([[0, 0], [0, -1]]) + translate # point brancing off circle center
+
+    # i only have to pre calc once, then add translatiosn 
+    # when needed?
 
     # [0.5, 0.5] - [[0.5, 0.5], [0.5, 0]]
     # have to try and remember matrix maths...
-
 
     # i have my center points and end points,
     # linear space algorithm between?
@@ -114,7 +118,6 @@ def threepronged(frames, ax):
         ax.scatter(ani_rot2_x[i], ani_rot2_y[i])
         ax.scatter(ani_rot3_x[i], ani_rot3_y[i])
 
-    
     return animate
          
 fig, ax = plt.subplots()
@@ -125,7 +128,7 @@ animate = None
 match args.type: 
     case "simple-tracking":
             a1 = simpletracking(frames, ax)
-            a2 = threepronged(frames, ax)
+            a2 = threepronged(frames, ax, np.array([0.5, 0.5]))
 
             def m(i):
                 ax.cla()

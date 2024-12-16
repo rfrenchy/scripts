@@ -7,7 +7,8 @@ import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 
 argp = argparse.ArgumentParser("tracking", 
-                               description="simulate tracking a player with a projectile")
+                               description="simulate tracking a player with a projectile",
+                               usage="tracking.py -o simple-tracking.gif")
 argp.add_argument("-i", "--input", default="")
 argp.add_argument("-o", "--output", default="simple-tracking.gif")
 
