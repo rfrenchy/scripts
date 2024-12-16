@@ -9,7 +9,7 @@ import matplotlib.animation as animation
 argp = argparse.ArgumentParser("tracking", 
                                description="simulate tracking a player with a projectile")
 argp.add_argument("-i", "--input", default="")
-argp.add_argument("-o", "--output", default="tracking.gif")
+argp.add_argument("-o", "--output", default="simple-tracking.gif")
 
 args = argp.parse_args()
 
@@ -63,3 +63,8 @@ anim.save(args.output, writer=writer)
 plt.show()
 
 # TODO combine with movement-arc projectile?
+# means exporting coordinates?
+# single file exporting 'enemies'/'projectiles'?
+# def tracking-projectile():
+# def three-pronged-projectile():
+# main file to animate 'scene'?
