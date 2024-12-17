@@ -2,6 +2,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 
+import time
+
 # build plot
 fig, ax = plt.subplots()
 
@@ -37,11 +39,13 @@ def growingcircle(scale = 1):
     # probably a better way to plot a circle than 
     # this, curve function?
 
-    ax.cla()
+    # ax.cla()
     ax.axis("equal")
+    ax.set_title("frame " + str(scale + 1))
     ax.set_xlim(-50, 50)
     ax.set_ylim(-50, 50)
     ax.plot(circle_x, circle_y)
+
 
 # growingcircle(ax, frames)
 
@@ -59,3 +63,7 @@ writer = animation.PillowWriter(fps=12, metadata=dict(artist="ry"),
                                  bitrate=1800)
 
 anim.save("circle.gif", writer=writer)
+
+
+with open("vid.txt", "w") as text_file:
+    text_file.write(anim.to_html5_video())

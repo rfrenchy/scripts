@@ -1,44 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="./multiple-projectile.css" />
-    <title>Multiple-Projectile</title>
-</head>
-
-<body class="centered-column-layout">
-    <h1>Projectile Tracking</h1>
-    <summary>Simulations</summary>
-    <div class="image-base-container">
-        <div class="simple-tracking-container ">
-            <h2 style="margin-bottom: 0;">Simple Tracking</h2>
-            <img src="./simple-tracking.gif">
-            <p>
-                Blue ball simple simulation of a player's movement going from left to right.
-                Orange ball spawns, on frame 8 tracks the players current coordiante, then heads in that direction.
-            </p>
-        </div>
-        <div class="multiple-projectile-container ">
-            <h2 style="margin-bottom: 0;">Projectile Paths</h2>
-            <img src="./multiple-v1.gif">
-            <p>
-                Blue and Orange ball function the same as above.
-                Paths plotted for another projectile, rotating off from a center point.
-            </p>
-        </div>
-        <div class="multiple-projectile-container ">
-            <h2 style="margin-bottom: 0;">Moving Projectiles</h2>
-            <img src="./with-three-prong.gif">
-            <p>
-                Same as above, but projectiles moving along paths
-            </p>
-        </div>
-        <div class="multiple-projectile-container ">
-            <h2 style="margin-bottom: 0;">Growing Circle</h2>
-            <video muted autoplay loop>
-                <source type="video/mp4" src="data:video/mp4;base64,AAAAIGZ0eXBNNFYgAAACAE00ViBpc29taXNvMmF2YzEAAAAIZnJlZQAANCdtZGF0AAACrwYF//+r
+<video width="640" height="480" controls autoplay>
+  <source type="video/mp4" src="data:video/mp4;base64,AAAAIGZ0eXBNNFYgAAACAE00ViBpc29taXNvMmF2YzEAAAAIZnJlZQAANCdtZGF0AAACrwYF//+r
 3EXpvebZSLeWLNgg2SPu73gyNjQgLSBjb3JlIDE2NCByMzEwOCAzMWUxOWY5IC0gSC4yNjQvTVBF
 Ry00IEFWQyBjb2RlYyAtIENvcHlsZWZ0IDIwMDMtMjAyMyAtIGh0dHA6Ly93d3cudmlkZW9sYW4u
 b3JnL3gyNjQuaHRtbCAtIG9wdGlvbnM6IGNhYmFjPTEgcmVmPTMgZGVibG9jaz0xOjA6MCBhbmFs
@@ -291,13 +252,5 @@ AaEAAAJVAAACWgAAAe4AAAH6AAACDQAAAWoAAAAUc3RjbwAAAAAAAAABAAAAMAAAAGJ1ZHRhAAAA
 Wm1ldGEAAAAAAAAAIWhkbHIAAAAAAAAAAG1kaXJhcHBsAAAAAAAAAAAAAAAALWlsc3QAAAAlqXRv
 bwAAAB1kYXRhAAAAAQAAAABMYXZmNjAuMTYuMTAw
 ">
-                Your browser does not support the video tag.
-            </video>
-            <p>
-                a circle scaled progressively
-            </p>
-        </div>
-    </div>
-</body>
-
-</html>
+  Your browser does not support the video tag.
+</video>
