@@ -11,8 +11,6 @@ def rotation(theta):
     return np.array([[ np.cos(theta), -np.sin(theta)   ],
                      [ np.sin(theta),  np.cos(theta)   ]])
 
-
-
 def growingcircle(scale = 1):
     a = np.array([0, 0]) # circle center
     b = np.array([0, 1])
@@ -39,7 +37,10 @@ def growingcircle(scale = 1):
     # probably a better way to plot a circle than 
     # this, curve function?
 
-    
+    ax.cla()
+    ax.axis("equal")
+    ax.set_xlim(-50, 50)
+    ax.set_ylim(-50, 50)
     ax.plot(circle_x, circle_y)
 
 # growingcircle(ax, frames)
@@ -47,9 +48,9 @@ def growingcircle(scale = 1):
 # fig.savefig("circle.jpg")
 
 
-ax.axis("equal")
-ax.set_xlim(-24, 24)
-ax.set_ylim(-24, 24)
+# ax.axis("equal")
+# ax.set_xlim(-24, 24)
+# ax.set_ylim(-24, 24)
 
 anim = animation.FuncAnimation(fig, growingcircle, repeat=False,
                                 frames=24, interval=100)
