@@ -1,13 +1,23 @@
 # usage: python3 parabola.py
 
+import math
 import numpy as np
+import argparse
+
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 
-# TODO slow-in-fast-out ?
+argp = argparse.ArgumentParser("parabola",
+		description="varying parabola shapes and sizes",
+		usage="parabola -o parabola-x1000.gif") 
 
+argp.add_argument("-o", "--output",
+	default="parabola.gif",
+    help="name of output image", type=str)
 
-def Plotter(pow=1, output="ball.gif") -> tuple[plt.Figure, animation.FuncAnimation]:
+args = argp.parse_args()
+
+def Plotter(pow=1, output="ball.gif"):
 
 	# axis data
 	x = np.array([0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24])
@@ -64,10 +74,8 @@ def Plotter(pow=1, output="ball.gif") -> tuple[plt.Figure, animation.FuncAnimati
 	return (fig, ani)
 
 
-def parabolav2():
+def parabolav2(frames):
 	fig, ax = plt.subplots()
-
-	frames = 100
 
 	x = np.linspace(-1, 1, frames)
 	y = np.array([])
@@ -82,19 +90,64 @@ def parabolav2():
 
 	def animate(i):
 		ax.cla()
+		ax.set_xlim([-10, 10])
 		ax.axis("equal")
 		ax.plot(x, y)
 		ax.scatter(x[i], y[i])
 
-	# write the file image 
-	anim = animation.FuncAnimation(fig, animate, repeat=True,
-									frames=(frames - 1), interval=100)
+	return fig, animate
 
-	writer = animation.PillowWriter(fps=12, metadata=dict(artist="ry"),
+def parabolav3(frames):
+	fig, ax = plt.subplots()
+
+	x = np.array([])
+	y = np.array([])
+	vertex_x = 0
+	vertex_y = 5
+	a = -5 # defines where the start and end curves on the y-axis
+		   # vertex is always on 0 because defined as such
+
+	parabolas = 2 # the amount of parabolas to draw
+	fpp = math.floor(frames / parabolas) # frames per parabola
+
+	scale_factor = 0.8
+	for i in range(parabolas):
+		# y = a * (x - h)** 2 + k
+		x2 = np.linspace(-1, 1, fpp)
+		y2 = np.array([])
+		for j in range(len(x2)):
+			y2 = np.append(y2, a * (x2[j] - vertex_x)**2 + vertex_y)
+
+		x2 = x2 + (2 * i)
+		y = np.append(y, y2 * scale_factor) 
+		x = np.append(x, x2 * scale_factor)
+
+		# scale_factor = scale_factor - 0.2
+
+	def animate(i):
+		ax.cla()
+		ax.grid()
+		ax.axis("equal")
+		# ax.set_xlim([-1, 15])
+		ax.set_ylim([-1, 10])
+		
+		ax.plot(x, y)
+		ax.scatter(x[i], y[i])
+
+	return fig, animate
+
+# amount of frames
+# frames = 100
+frames = 100
+
+# fig, animate = parabolav2(frames)
+fig, animate = parabolav3(frames)
+
+# write file
+anim = animation.FuncAnimation(fig, animate, repeat=True,
+									frames=frames, interval=100)
+
+writer = animation.PillowWriter(fps=24, metadata=dict(artist="ry"),
 									bitrate=1800)
 
-	anim.save("parabolav2.gif", writer=writer)
-
-	# fig.savefig("parabolav2.jpg")
-
-parabolav2()
+anim.save(args.output, writer=writer)

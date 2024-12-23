@@ -11,6 +11,10 @@ argp.add_argument("-o", "--output", help="name of output", type=str)
 
 WHITE = np.array([255, 255, 255])
 
+# start and end colours for border gradient
+# lambent = np.array([165, 229, 255])
+# storm = np.array([0, 71, 100])
+
 argp.add_argument("--size", help="border size to apply", default=25, type=int)
 argp.add_argument("-gs", "--gradientstart", default=WHITE, help="" )
 argp.add_argument("-ge", "--gradientend", default=WHITE)
@@ -20,10 +24,6 @@ args = argp.parse_args()
 
 # open the image for processing
 img = Image.open(args.input)
-
-# start and end colours for border gradient
-# lambent = np.array([165, 229, 255])
-# storm = np.array([0, 71, 100])
 
 # number of interpolations
 N = args.steps
