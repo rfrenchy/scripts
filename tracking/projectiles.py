@@ -6,27 +6,23 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 
+import math
 
 # cli argument handling
 argp = argparse.ArgumentParser("projectiles", 
             description="module of differing projectiles",)
             # usage="python3 --type simple-tracking")
 argp.add_argument("-i", "--input", default="")
-argp.add_argument("-t", "--type", default="simple-tracking")
+argp.add_argument("-t", "--type", default="wave")
 argp.add_argument("-o", "--output", default="strategy.gif")
 
 # simple-tracking needs to be multiple? comma seperated?
 
 args = argp.parse_args()
 
-# helpers, seperate into top level module?
-def rotation(theta):
-    return np.array([[ np.cos(theta), -np.sin(theta)   ],
-                     [ np.sin(theta),  np.cos(theta)   ]])
-
 # projectile movement definitions 
 # TODO
-def simpleplayerhorizontalmovement(frames, ax):
+def horizontalmovement(frames, ax):
     # player simulated coordatinates
     # go smoothly across left to right on y = 0
     plyr_x = np.linspace(0, 1, frames)
@@ -38,7 +34,7 @@ def simpleplayerhorizontalmovement(frames, ax):
     return animate
 
 # def simpletracking(frames, ax, player_cords):
-def simpletracking(frames, ax):
+def tracking(frames, ax):
     # need to pass player coords as an arg?
     # on twos, (too complicated for me to think with other calc for now)
     # on_twos = int(frames / 2)
@@ -74,8 +70,40 @@ def simpletracking(frames, ax):
 
     return animate
 
-def threepronged(frames, ax, translate = [0, 0]):
-    # translate = np.array([0.5, 0.5]) # arbitrary translation
+def wave(frames, ax):
+    plyr_x = np.linspace(0, 1, frames)
+    
+    theta = np.pi / 2
+    up = np.array([0, 1])
+
+    # rotation_matrix = np.array([[np.cos(theta), -np.sin(theta)],
+    #                             [np.sin(theta), np.cos(theta)]])
+
+    
+    # print(np.cos(degreestoradians(0)))
+    # print(np.cos(degreestoradians(90)))
+    # print(np.cos(degreestoradians(180)))
+    # print(np.cos(degreestoradians(270)))
+    # print(np.cos(degreestoradians(360)))
+
+
+
+    # print(up @ rotation(theta))
+    
+
+     # unit circle
+     # radius = 1 
+
+def degreestoradians(degrees):
+     return degrees * (np.pi / 180)
+
+def rotation(theta):
+    return np.array([[ np.cos(theta), -np.sin(theta)   ],
+                     [ np.sin(theta),  np.cos(theta)   ]])
+
+def triad(frames, ax, translate = [0, 0]):
+    # translate = 
+    # np.array([0.5, 0.5]) # arbitrary translation
     a = np.array([0, 0]) + translate# x cords?
     p = np.array([[0, 0], [0, -1]]) + translate # point brancing off circle center
 
@@ -127,8 +155,8 @@ frames = 24 # total frames to animate
 animate = None
 match args.type: 
     case "simple-tracking":
-            a1 = simpletracking(frames, ax)
-            a2 = threepronged(frames, ax, np.array([0.5, 0.5]))
+            a1 = tracking(frames, ax)
+            a2 = triad(frames, ax, np.array([0.5, 0.5]))
 
             def m(i):
                 ax.cla()
@@ -140,7 +168,7 @@ match args.type:
 
             animate = m
     case "three-pronged":
-            a2 = threepronged(frames, ax)
+            a2 = triad(frames, ax)
             def m(i):
                 ax.cla()
                 ax.grid()
@@ -150,6 +178,10 @@ match args.type:
                 a2(i)
 
             animate = m
+    case "wave":
+          # print("wave")
+            wave(frames, ax)
+            exit()
 
 # write the file image 
 anim = animation.FuncAnimation(fig, animate, repeat=True,

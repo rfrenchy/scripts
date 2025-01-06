@@ -12,6 +12,7 @@ argp = argparse.ArgumentParser("tracking",
 argp.add_argument("-i", "--input", default="")
 argp.add_argument("-o", "--output", default="simple-tracking.gif")
 
+
 args = argp.parse_args()
 
 fig, ax = plt.subplots()

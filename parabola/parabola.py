@@ -116,13 +116,16 @@ def parabolav3(frames):
 		x2 = np.linspace(-1, 1, fpp)
 		y2 = np.array([])
 		for j in range(len(x2)):
-			y2 = np.append(y2, a * (x2[j] - vertex_x)**2 + vertex_y)
+			y2 = np.append(y2, a * (x2[j] - vertex_x)**2 + vertex_y) 
 
 		x2 = x2 + (2 * i)
 		y = np.append(y, y2 * scale_factor) 
 		x = np.append(x, x2 * scale_factor)
 
 		# scale_factor = scale_factor - 0.2
+
+	# ann khalaeva
+	# contemporary artist
 
 	def animate(i):
 		ax.cla()
