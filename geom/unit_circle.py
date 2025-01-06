@@ -22,7 +22,7 @@ def print_rads_table(total_rotations = 16):
 
     print("-" * len(th.expandtabs()))
 
-def plot_circle_rads(ax, total_rotations = 16):
+def plot_circle_rads(ax: plt.Axes, total_rotations = 16):
     # unit vector line
     v = np.array([[0, 1], [0, 0]])
 
@@ -31,13 +31,14 @@ def plot_circle_rads(ax, total_rotations = 16):
     for i in range(total_rotations):
         # note, the order you multiple matrics important
         vv = rot(r * (i+1)) @ v 
-        plt.plot(vv[0], vv[1])
+        ax.plot(vv[0], vv[1])
 
 
 # plot a point along each degree of edge of circle
-def plot_unit_circle(ax, xtranslate = 0, color = 'b'):
-    # unit vector line
+def unit_circle(xtranslate = 0):
     total = 360 # 
+
+    # unit vector line
     v = np.array([[0, 1], [0, 0]])
     r = (math.pi * 2) / total
 
@@ -48,17 +49,5 @@ def plot_unit_circle(ax, xtranslate = 0, color = 'b'):
         p = rot(r * (i+1)) @ v
         cx[i] = p[0][1] + xtranslate # grab x value
         cy[i] = p[1][1] # grab y value
-       
-
-    plt.plot(cx, cy, color)
     
-# create plot
-fig, ax = plt.subplots()
-ax.axis("auto")
-ax.grid()
-# add data to plot
-# plot_circle_rads(ax)
-plot_unit_circle(ax)
-
-# show plot
-# plt.show()
+    return (cx, cy)

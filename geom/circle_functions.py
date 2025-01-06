@@ -2,7 +2,7 @@ import math
 import numpy as np
 import matplotlib.pyplot as plt
 
-from unit_circle import plot_unit_circle
+from unit_circle import unit_circle
 
 # what is within the sin function?
 
@@ -15,16 +15,6 @@ def print_table(v, sv, cv):
 
     for i in range(len(v)):
         print(f"{v[i]:.4f}\t\t{sv[i]:.4f}\t\t{cv[i]:.4f}\t")
-
-
-# ax is plot, rest are values
-def plot_sin(ax, v, sv):
-    for i in range(len(v)):
-        plt.plot(v, sv, 'orange')
-
-def plot_cos(ax, v, cv):
-    for i in range(len(v)):
-        plt.plot(v, cv, 'g')
 
 # generate plot data
 total = 100
@@ -47,11 +37,12 @@ ax.axis("equal")
 ax.grid()
 
 # add data to plot
-plot_sin(ax, v, sv)
-plot_cos(ax, v, cv)
+plt.plot(v, sv, 'orange')
+plt.plot(v, cv, 'green')
 
 for i in range(total_unit_circles):
-    plot_unit_circle(ax, i * 2)
+    cx, cy = unit_circle(i * 2)
+    plt.plot(cx, cy, 'b')
 
 # show plot 
 plt.show()
