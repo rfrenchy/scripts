@@ -2,8 +2,8 @@ import math
 import numpy as np
 import matplotlib.pyplot as plt
 
-from circle_functions import rot, unit_circle
-from triangle_functions import unit_triangle
+from circle_functions import rot, unit_circle, unit_circlev2
+from triangle_functions import unit_triangle, unit_trianglev2
 
 
 """
@@ -45,5 +45,14 @@ def spyrograph(t_rotations = 16, x_translate = 0):
 
 # plt.show()
 
+fig, ax = plt.subplots()
+ax.grid()
+ax.axis("equal")
 
-spyrograph(2)
+ucx, ucy = unit_circlev2()
+plt.plot(ucx, ucy)
+
+# utx, uty = unit_trianglev2()
+# plt.plot(utx, uty)
+plt.show()
+#spyrograph(2)

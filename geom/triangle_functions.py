@@ -11,7 +11,15 @@ def unit_triangle():
 
     return (x1, y1)
 
+def unit_trianglev2():
+    a = ([0, 1], [0, 0])
+    b = ([0, 0], [0, 0.5])
+    c = ([[0, 1], [0.5, 0]])
 
+    x1 = np.concatenate((a[0], b[0], c[0]))
+    y1 = np.concatenate((a[1], b[1], c[1]))
+
+    return (x1, y1)
 
 def trig_data():
     # generate plot data

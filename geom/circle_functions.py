@@ -61,3 +61,17 @@ def unit_circle(xtranslate = 0):
         cy[i] = p[1][1] # grab y value
     
     return (cx, cy)
+
+def unit_circlev2():
+    t_points = 90
+    
+    seg = (np.pi * 2) / t_points
+
+    cx = np.zeros(t_points)
+    cy = np.zeros(t_points)
+
+    for i in range(t_points):
+        cx[i] = np.cos(seg * i)
+        cy[i] = np.sin(seg * i)
+
+    return (cx, cy)
