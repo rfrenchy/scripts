@@ -2,10 +2,6 @@ import math
 import numpy as np
 import matplotlib.pyplot as plt
 
-from unit_circle import unit_circle
-
-# what is within the sin function?
-
 def print_table(v, sv, cv):
     th = "v\t\tsv\t\tcv\t"
 
@@ -16,33 +12,52 @@ def print_table(v, sv, cv):
     for i in range(len(v)):
         print(f"{v[i]:.4f}\t\t{sv[i]:.4f}\t\t{cv[i]:.4f}\t")
 
-# generate plot data
-total = 100
-total_unit_circles = 3
-unit_circle_translate = 2 # how much to translate circle by along x
-ranges = (-2, total_unit_circles * unit_circle_translate)
+def rot(theta):
+    return np.array([[np.cos(theta), -np.sin(theta)],
+                    [np.sin(theta), np.cos(theta)]])
 
-v = np.linspace(ranges[0], ranges[1], total) # linear walk
-sv = np.zeros(total) # sin values
-cv = np.zeros(total) # cos values
+# print rads numeric values around a circle
+def print_rads_table(total_rotations = 16):
+    full_circle = math.pi * 2
+    x = full_circle / total_rotations
 
-# generate values from linear walk
-for i in range(len(v)):
-    sv[i] = math.sin(v[i])
-    cv[i] = math.cos(v[i])
+    th = "div\tval\tunit"
 
-# create plot
-fig, ax = plt.subplots()
-ax.axis("equal")
-ax.grid()
+    print("-" * len(th.expandtabs()))
+    print(th)
+    print("-" * len(th.expandtabs()))
 
-# add data to plot
-plt.plot(v, sv, 'orange')
-plt.plot(v, cv, 'green')
+    for i in range(total_rotations):
+        print(f"{i+1}/{total_rotations}\t{x * (i + 1):.4f}\trads")
 
-for i in range(total_unit_circles):
-    cx, cy = unit_circle(i * 2)
-    plt.plot(cx, cy, 'b')
+    print("-" * len(th.expandtabs()))
 
-# show plot 
-plt.show()
+def plot_circle_rads(ax: plt.Axes, total_rotations = 16):
+    # unit vector line
+    v = np.array([[0, 1], [0, 0]])
+
+    # how much to rotate each line
+    r = (math.pi * 2) / total_rotations
+    for i in range(total_rotations):
+        # note, the order you multiple matrics important
+        vv = rot(r * (i+1)) @ v 
+        ax.plot(vv[0], vv[1])
+
+
+# plot a point along each degree of edge of circle
+def unit_circle(xtranslate = 0):
+    total = 360 # 
+
+    # unit vector line
+    v = np.array([[0, 1], [0, 0]])
+    r = (math.pi * 2) / total
+
+    cx = np.zeros(total)
+    cy = np.zeros(total)
+
+    for i in range(total):
+        p = rot(r * (i+1)) @ v
+        cx[i] = p[0][1] + xtranslate # grab x value
+        cy[i] = p[1][1] # grab y value
+    
+    return (cx, cy)
