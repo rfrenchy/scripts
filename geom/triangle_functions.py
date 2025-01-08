@@ -23,7 +23,7 @@ def unit_trianglev2():
 
 def trig_data():
     # generate plot data
-    total = 100
+    total = 360
     total_unit_circles = 3
     unit_circle_translate = 2 # how much to translate circle by along x
     ranges = (-2, total_unit_circles * unit_circle_translate)
@@ -38,6 +38,21 @@ def trig_data():
         cv[i] = math.cos(v[i])
 
     return v, sv, cv
+
+def print_trig_data():
+    v, sv, cv = trig_data()
+
+    th = "i\trad\tsin\tcos"
+
+    print("-" * len(th.expandtabs()))
+    print(th)
+    print("-" * len(th.expandtabs()))
+
+
+    for i in range(len(v)):
+        print(f"{i}\t{v[i]:.4f}\t{sv[i]:.4f}\t{cv[i]:.4f}")
+
+    print("-" * len(th.expandtabs()))
 
 def rot(theta):
     return np.array([[np.cos(theta), -np.sin(theta)],

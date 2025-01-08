@@ -14,7 +14,7 @@ def print_table(v, sv, cv):
 
 def rot(theta):
     return np.array([[np.cos(theta), -np.sin(theta)],
-                    [np.sin(theta), np.cos(theta)]])
+                     [np.sin(theta), np.cos(theta)]])
 
 # print rads numeric values around a circle
 def print_rads_table(total_rotations = 16):
@@ -62,6 +62,9 @@ def unit_circle(xtranslate = 0):
     
     return (cx, cy)
 
+"""
+    points for a unit circle, uses cos and sin functions to gen
+"""
 def unit_circlev2():
     t_points = 90
     
