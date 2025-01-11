@@ -2,16 +2,16 @@ import math
 import numpy as np
 import matplotlib.pyplot as plt
 
-from triangle_functions import sierpinski_gasket
+from triangle_functions import sierpinski_gasket_v2
 from circle_functions import unit_circlev2
 
 def plot_sierpinkski_gasket(n = 0):
-    x, y = sierpinski_gasket(n)
+    x, y = sierpinski_gasket_v2(n)
     plt.plot(x, y)
     plt.show()
 
 
-def cheeky_fractal():
+def simple_fractal():
     # plot aesthetics
     plt.axis("equal")
 
@@ -28,12 +28,8 @@ def cheeky_fractal():
     # what is the size of the point?
     plt.scatter(ox, oy, color="red")    
 
-
-
-
-
-
     plt.show()
 
+plot_sierpinkski_gasket(3)
 
-cheeky_fractal()
+# it looks the same after 2/3?

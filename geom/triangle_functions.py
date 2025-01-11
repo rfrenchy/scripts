@@ -85,6 +85,10 @@ def trig_data():
 def sierpinski_gasket(n = 1):
     sgx, sgy = equilateral_triangle()
 
+    # todo, print ranges of each triangle at each level of n
+    # check for anomalies for expected and not expected range?
+    # create a recursive version? to allow print? TrAdeOfF?
+
     for i in range(n):
         if (i == 0):
             continue
@@ -100,7 +104,36 @@ def sierpinski_gasket(n = 1):
         sgy = np.concatenate((sgy, c1y, c1y))
 
     return (sgx, sgy)
-        
+
+"""
+    recursive function approach  
+"""
+def sierpinski_gasket_v2(n = 1):
+    sgx, sgy = equilateral_triangle()
+
+    def sgn(n, sgx, sgy):
+            if n == 0:
+                return (sgx, sgy)
+
+            xrange = np.max(sgx) - np.min(sgx)
+            yrange = np.max(sgy) - np.min(sgy)
+
+            c1x = sgx + (xrange / 2)
+            c2x = sgx - (xrange / 2) 
+            c1y = sgy - yrange
+
+            sgx = np.concatenate((sgx, c1x, c2x))
+            sgy = np.concatenate((sgy, c1y, c1y))
+            
+            return sgn(n - 1, sgx, sgy)
+    
+    return sgn(n, sgx, sgy)
+
+    # any properties of this 'algorithm' which means it can be recursive and
+    # other functions not?
+
+
+
 def rot(theta):
     return np.array([[np.cos(theta), -np.sin(theta)],
                     [np.sin(theta), np.cos(theta)]])
