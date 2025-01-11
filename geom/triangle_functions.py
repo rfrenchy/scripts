@@ -1,6 +1,8 @@
 import math
 import numpy as np
 
+import matplotlib.pyplot as plt
+
 def unit_triangle():
     a = ([0, 1], [0, 0])
     b = ([1, 1], [0, 1])
@@ -15,6 +17,16 @@ def unit_trianglev2():
     a = ([0, 1], [0, 0])
     b = ([0, 0], [0, 0.5])
     c = ([[0, 1], [0.5, 0]])
+
+    x1 = np.concatenate((a[0], b[0], c[0]))
+    y1 = np.concatenate((a[1], b[1], c[1]))
+
+    return (x1, y1)
+
+def equilateral_triangle():
+    a = ([0, 0.5], [0, 1])
+    b = ([0.5, 1], [1, 0])
+    c = ([[1, 0], [0, 0]])
 
     x1 = np.concatenate((a[0], b[0], c[0]))
     y1 = np.concatenate((a[1], b[1], c[1]))
@@ -54,6 +66,47 @@ def print_trig_data():
 
     print("-" * len(th.expandtabs()))
 
+"""
+        # two copies of previous
+        # translate y 1 whole of other
+        # translate x half on positive, the other half on negative
+
+        breaks at values >= 3
+"""
+def sierpinski_gasket(n = 1):
+    fig, ax = plt.subplots()
+
+    plot = lambda x, y: ax.plot(x, y, color="blue")
+
+    sgx, sgy = equilateral_triangle()
+    for i in range(n):
+        if (i == 0):
+            plot(sgx, sgy)
+            continue
+        
+        xrange = np.max(sgx) - np.min(sgx)
+        yrange = np.max(sgy) - np.min(sgy)
+
+        if (i == 3):
+            print("sgx", sgx)
+            print("sgy", sgy)
+        
+        print("xrange", xrange)
+        print("yrange", yrange)
+
+        c1x = sgx + (xrange / 2)
+        c2x = sgx - (xrange / 2) 
+        c1y = sgy - yrange
+
+        sgx = np.concatenate((sgx, c1x, c2x))
+        sgy = np.concatenate((sgy, c1y, c1y))
+
+        plot(sgx, sgy)
+        
 def rot(theta):
     return np.array([[np.cos(theta), -np.sin(theta)],
                     [np.sin(theta), np.cos(theta)]])
+
+sierpinski_gasket(4)
+
+plt.show()
