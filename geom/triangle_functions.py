@@ -74,25 +74,14 @@ def print_trig_data():
         breaks at values >= 3
 """
 def sierpinski_gasket(n = 1):
-    fig, ax = plt.subplots()
-
-    plot = lambda x, y: ax.plot(x, y, color="blue")
-
     sgx, sgy = equilateral_triangle()
+
     for i in range(n):
         if (i == 0):
-            plot(sgx, sgy)
             continue
         
         xrange = np.max(sgx) - np.min(sgx)
         yrange = np.max(sgy) - np.min(sgy)
-
-        if (i == 3):
-            print("sgx", sgx)
-            print("sgy", sgy)
-        
-        print("xrange", xrange)
-        print("yrange", yrange)
 
         c1x = sgx + (xrange / 2)
         c2x = sgx - (xrange / 2) 
@@ -101,12 +90,8 @@ def sierpinski_gasket(n = 1):
         sgx = np.concatenate((sgx, c1x, c2x))
         sgy = np.concatenate((sgy, c1y, c1y))
 
-        plot(sgx, sgy)
+    return (sgx, sgy)
         
 def rot(theta):
     return np.array([[np.cos(theta), -np.sin(theta)],
                     [np.sin(theta), np.cos(theta)]])
-
-sierpinski_gasket(4)
-
-plt.show()

@@ -60,6 +60,10 @@ def unit_circle(xtranslate = 0):
         cx[i] = p[0][1] + xtranslate # grab x value
         cy[i] = p[1][1] # grab y value
     
+    # add finish point (aka the start)
+    cx = np.append(cx, cx[0])
+    cy = np.append(cy, cy[0])
+
     return (cx, cy)
 
 """
@@ -76,5 +80,25 @@ def unit_circlev2():
     for i in range(t_points):
         cx[i] = np.cos(seg * i)
         cy[i] = np.sin(seg * i)
+
+    # add finish point (aka the start)
+    cx = np.append(cx, cx[0])
+    cy = np.append(cy, cy[0])
+
+    return (cx, cy)
+
+def spiral(oscilations = 1):
+    t_points = 90
+
+    for i in range(oscilations):    
+        seg = (np.pi * 2) / t_points
+
+        cx = np.zeros(t_points)
+        cy = np.zeros(t_points)
+
+        for i in range(t_points):
+            cx[i] = np.cos(seg * i) * 1.1
+            cy[i] = np.sin(seg * i) * 0.9
+
 
     return (cx, cy)

@@ -2,7 +2,7 @@ import math
 import numpy as np
 import matplotlib.pyplot as plt
 
-from circle_functions import rot, unit_circlev2
+from circle_functions import rot, unit_circlev2, spiral
 from triangle_functions import unit_triangle, print_trig_data
 
 
@@ -31,17 +31,9 @@ def spyrograph(t_rotations = 16, x_translate = 0):
     # show plot
     plt.show()
 
+cx, cy = spiral(5)
 
-print_trig_data()
+plt.axis("equal")
+plt.plot(cx, cy)
+plt.show()
 
-# fig, ax = plt.subplots()
-# ax.grid()
-# ax.axis("equal")
-
-# ucx, ucy = unit_circlev2()
-# plt.plot(ucx, ucy)
-
-# utx, uty = unit_trianglev2()
-# plt.plot(utx, uty)
-# plt.show()
-#spyrograph(2)
