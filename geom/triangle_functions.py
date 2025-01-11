@@ -33,6 +33,30 @@ def equilateral_triangle():
 
     return (x1, y1)
 
+# decorator example
+# return as a function
+def print_trig_data(my_function):
+    def wrapper():
+        v, sv, cv = my_function()
+
+        if not v.any() or not sv.any() or not cv.any():
+            return
+
+        th = "i\trad\tsin\tcos"
+
+        print("-" * len(th.expandtabs()))
+        print(th)
+        print("-" * len(th.expandtabs()))
+
+
+        for i in range(len(v)):
+            print(f"{i}\t{v[i]:.4f}\t{sv[i]:.4f}\t{cv[i]:.4f}")
+
+        print("-" * len(th.expandtabs()))
+
+    return wrapper
+
+@print_trig_data
 def trig_data():
     # generate plot data
     total = 360
@@ -50,21 +74,6 @@ def trig_data():
         cv[i] = math.cos(v[i])
 
     return v, sv, cv
-
-def print_trig_data():
-    v, sv, cv = trig_data()
-
-    th = "i\trad\tsin\tcos"
-
-    print("-" * len(th.expandtabs()))
-    print(th)
-    print("-" * len(th.expandtabs()))
-
-
-    for i in range(len(v)):
-        print(f"{i}\t{v[i]:.4f}\t{sv[i]:.4f}\t{cv[i]:.4f}")
-
-    print("-" * len(th.expandtabs()))
 
 """
         # two copies of previous

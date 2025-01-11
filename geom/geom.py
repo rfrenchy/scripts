@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 from circle_functions import rot, unit_circlev2, spiral
-from triangle_functions import unit_triangle, print_trig_data
+from triangle_functions import unit_triangle, trig_data
 
 
 """
@@ -33,7 +33,10 @@ def spyrograph(t_rotations = 16, x_translate = 0):
 
 cx, cy = spiral(5)
 
+trig_data()
+
 plt.axis("equal")
 plt.plot(cx, cy)
 plt.show()
+
 
