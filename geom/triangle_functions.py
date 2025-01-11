@@ -111,6 +111,16 @@ def sierpinski_gasket(n = 1):
 def sierpinski_gasket_v2(n = 1):
     sgx, sgy = equilateral_triangle()
 
+    def withplot(my_function):
+        def wrapper(*args):
+            _, sgx, sgy = args
+            plt.plot(sgx, sgy)
+
+            return my_function(*args)
+
+        return wrapper
+
+    @withplot    
     def sgn(n, sgx, sgy):
             if n == 0:
                 return (sgx, sgy)
@@ -131,8 +141,6 @@ def sierpinski_gasket_v2(n = 1):
 
     # any properties of this 'algorithm' which means it can be recursive and
     # other functions not?
-
-
 
 def rot(theta):
     return np.array([[np.cos(theta), -np.sin(theta)],

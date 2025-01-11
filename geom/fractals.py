@@ -6,8 +6,7 @@ from triangle_functions import sierpinski_gasket_v2
 from circle_functions import unit_circlev2
 
 def plot_sierpinkski_gasket(n = 0):
-    x, y = sierpinski_gasket_v2(n)
-    plt.plot(x, y)
+    sierpinski_gasket_v2(n)
     plt.show()
 
 
