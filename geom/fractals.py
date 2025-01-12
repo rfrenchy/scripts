@@ -11,32 +11,52 @@ def plot_sierpinkski_gasket(n = 0):
 c=3 # cubed
 
 def assert_carpet_range():
-    print("todo")
+    print("or dont")
 
 # plot carpet segment
+# INCORRECT
 def carpet_segment(n, sg = unit_square()):
-    sgx, sgy = sg
     # exit recursion
     if n == 0:
         return
-    
-    x2, y2 = c*sgx, c*sgy
-    x1, y1 = sgx, sgy
 
-    rng = np.max(x1) - np.min(x1)  # x1 will have the same range as y1
-    x1 = x1 + rng # translate x to middle of carpet segment
-    y1 = y1 + rng # translate y to middle of carpet segment
+    sgx, sgy = sg 
 
-    # paint
-    plt.plot(x2, y2) # paint main square
-    plt.plot(x1, y1) # paint inner whtie square
+    x2, y2 = (1/c)*sgx, (1/c)*sgy         
+    tr_rng = (np.max(x2) - np.min(x2)) 
 
-    # recurse
-    sgx = np.concatenate((x2, x1))
-    sgy = np.concatenate((y2, y1))
-    carpet_segment(n-1, (sgx, sgy))
+    ux, uy = unit_square()
 
-carpet_segment(2)
+    if np.array_equal(sgx, ux) or np.array_equal(sgy, uy):
+        x1, y1 = sgx - tr_rng, sgy - tr_rng
+
+        # paint
+        plt.plot(x2, y2) # paint inner square
+        plt.plot(x1, y1) # paint inner whtie square
+
+        carpet_segment(n-1, (x2,y2))
+
+    else:
+        plt.plot(sgx, sgy)
+        # (0,0),(1,0),(2,0)
+
+
+
+        carpet_segment(n-1, (x2, y2))     
+        carpet_segment(n-1, (x2-tr_rng, y2))
+        carpet_segment(n-1, (x2-(tr_rng*2), y2))
+
+        # (0,1),(1,1),(2,1)
+        carpet_segment(n-1, (x2, y2-tr_rng))
+        carpet_segment(n-1, (x2-tr_rng, y2-tr_rng))
+        carpet_segment(n-1, (x2-(tr_rng*2), y2-tr_rng))
+
+        # (0,2),(1,2),(2,2)
+        carpet_segment(n-1, (x2, y2-(tr_rng*2)))      
+        carpet_segment(n-1, (x2-tr_rng, y2-(tr_rng*2)))
+        carpet_segment(n-1, (x2-(tr_rng*2), y2-(tr_rng*2)))
+
+carpet_segment(3)
 
 # plot setup
 plt.summer()
