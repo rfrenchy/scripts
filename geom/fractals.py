@@ -2,33 +2,46 @@ import math
 import numpy as np
 import matplotlib.pyplot as plt
 
-from triangle_functions import sierpinski_gasket_v2
-from circle_functions import unit_circlev2
+from triangle_functions import sierpinski_gasket_v2, unit_square
 
 def plot_sierpinkski_gasket(n = 0):
     sierpinski_gasket_v2(n)
     plt.show()
 
+c=3 # cubed
 
-def simple_fractal():
-    # plot aesthetics
-    plt.axis("equal")
+def assert_carpet_range():
+    print("todo")
 
-    # unit circle 'dimension'? D
-    cx, cy = unit_circlev2()
-    plt.plot(cx, cy)
+# plot carpet segment
+def carpet_segment(n, sg = unit_square()):
+    sgx, sgy = sg
+    # exit recursion
+    if n == 0:
+        return
+    
+    x2, y2 = c*sgx, c*sgy
+    x1, y1 = sgx, sgy
 
-    # area of a circle so i can know if growth point is
-    # outside of it?
-     
-    ox = [0]
-    oy = [0]
+    rng = np.max(x1) - np.min(x1)  # x1 will have the same range as y1
+    x1 = x1 + rng # translate x to middle of carpet segment
+    y1 = y1 + rng # translate y to middle of carpet segment
 
-    # what is the size of the point?
-    plt.scatter(ox, oy, color="red")    
+    # paint
+    plt.plot(x2, y2) # paint main square
+    plt.plot(x1, y1) # paint inner whtie square
 
-    plt.show()
+    # recurse
+    sgx = np.concatenate((x2, x1))
+    sgy = np.concatenate((y2, y1))
+    carpet_segment(n-1, (sgx, sgy))
 
-plot_sierpinkski_gasket(3)
+carpet_segment(2)
 
-# it looks the same after 2/3?
+# plot setup
+plt.summer()
+plt.grid()
+plt.axis("equal")
+
+# show plot
+plt.show()

@@ -3,6 +3,18 @@ import numpy as np
 
 import matplotlib.pyplot as plt
 
+def withdebugplot(my_function):
+    def wrapper(*args):
+        x, y = my_function(*args)
+
+        plt.plot(x, y)
+        plt.axis("equal")
+        plt.grid()
+        # plt.show()
+
+        return (x, y)
+    return wrapper
+
 def unit_triangle():
     a = ([0, 1], [0, 0])
     b = ([1, 1], [0, 1])
@@ -22,6 +34,19 @@ def unit_trianglev2():
     y1 = np.concatenate((a[1], b[1], c[1]))
 
     return (x1, y1)
+
+""" 
+    square constructred from two triangles,
+    very jank implementation
+"""
+def unit_square(scale = 1):
+    x1, y1 = unit_trianglev2()
+    x2, y2 = unit_trianglev2() 
+
+    x = np.concatenate((x1, (x2 * -1) + 1))
+    y = np.concatenate((y1, (y2 * -1) + 0.5)) * 2
+
+    return (x * scale, y * scale)
 
 def equilateral_triangle():
     a = ([0, 0.5], [0, 1])
@@ -76,19 +101,21 @@ def trig_data():
     return v, sv, cv
 
 """
-        # two copies of previous
-        # translate y 1 whole of other
-        # translate x half on positive, the other half on negative
+    # two copies of previous
+    # translate y 1 whole of other
+    # translate x half on positive, the other half on negative
 
-        breaks at values >= 3
+    breaks at values >= 3
+
+    magnified version?
+    todo reduction/subdivision version?
+    single function works for both?
 """
 def sierpinski_gasket(n = 1):
     sgx, sgy = equilateral_triangle()
 
     # todo, print ranges of each triangle at each level of n
     # check for anomalies for expected and not expected range?
-    # create a recursive version? to allow print? TrAdeOfF?
-
     for i in range(n):
         if (i == 0):
             continue
@@ -122,20 +149,20 @@ def sierpinski_gasket_v2(n = 1):
 
     @withplot    
     def sgn(n, sgx, sgy):
-            if n == 0:
-                return (sgx, sgy)
+        if n == 0:
+            return (sgx, sgy)
 
-            xrange = np.max(sgx) - np.min(sgx)
-            yrange = np.max(sgy) - np.min(sgy)
+        xrange = np.max(sgx) - np.min(sgx)
+        yrange = np.max(sgy) - np.min(sgy)
 
-            c1x = sgx + (xrange / 2)
-            c2x = sgx - (xrange / 2) 
-            c1y = sgy - yrange
+        c1x = sgx + (xrange / 2)
+        c2x = sgx - (xrange / 2) 
+        c1y = sgy - yrange
 
-            sgx = np.concatenate((sgx, c1x, c2x))
-            sgy = np.concatenate((sgy, c1y, c1y))
+        sgx = np.concatenate((sgx, c1x, c2x))
+        sgy = np.concatenate((sgy, c1y, c1y))
             
-            return sgn(n - 1, sgx, sgy)
+        return sgn(n - 1, sgx, sgy)
     
     return sgn(n, sgx, sgy)
 
