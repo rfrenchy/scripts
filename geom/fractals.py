@@ -8,21 +8,22 @@ def plot_sierpinkski_gasket(n = 0):
     sierpinski_gasket_v2(n)
     plt.show()
 
-c=3 # cubed
-
-def assert_carpet_range():
-    print("or dont")
-
 # 'secret to fractals is its relationships to power laws'
-# todo, try using logarithms/powers to magnify or reduce the fractal
 
 def carpet_initiator():
     return unit_square()
 
-def carpet_generator(scale = 1):
+epow=3**-1
+
+def epow(scale = -1):
+    return 3 ** scale
+
+def carpet_generator(scale = -1):
     ix, iy = carpet_initiator()
 
-    x3, y3 = (1/c)*ix, (1/c)*iy     
+    print(scale)
+
+    x3, y3 = ix*epow(scale), iy*epow(scale)    
     tx = (np.max(x3) - np.min(x3)) 
 
     x3=x3+tx
@@ -30,8 +31,21 @@ def carpet_generator(scale = 1):
 
     return [(ix,iy),(x3, y3)]
 
-def carpet_d():
-    print("todo")
+def carpet_d(n = 1):
+
+    N = np.linspace(-1, n*-1, n)
+    # print(N)
+
+    for i in range(len(N)):
+        carpet = carpet_generator(N[i])
+
+        plt.plot(carpet[0][0], carpet[0][1])
+        plt.plot(carpet[1][0], carpet[1][1])
+    
+    #print("3**-1", 3**-1)
+    #print("3**-2", 3**-2)
+    #print("3**-2 * 9", (3**-2) * 9)
+
 
 # plot carpet segment
 # Fails at n > 2
@@ -87,10 +101,13 @@ def carpet_segment(n, sg = unit_square()):
 # carpet_segment(n)
 
 
-carpet = carpet_generator()
+def plot_carpet_generator(carpet_generator):
+    carpet = carpet_generator()
 
-plt.plot(carpet[0][0], carpet[0][1])
-plt.plot(carpet[1][0], carpet[1][1])
+    plt.plot(carpet[0][0], carpet[0][1])
+    plt.plot(carpet[1][0], carpet[1][1])
+
+carpet_d(3)
 
 plt.grid()
 plt.axis("equal")
