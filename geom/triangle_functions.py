@@ -1,7 +1,24 @@
+import json
 import math
 import numpy as np
 
 import matplotlib.pyplot as plt
+
+def tojson(my_function):
+    def wrapper(*args):
+        # Call the original function and get the result
+        result = my_function(*args)
+        
+        # Generate a random filename
+        filename = ''.join(random.choices(string.ascii_lowercase + string.digits, k=8)) + '.json'
+        
+        # Save the result to a JSON file
+        with open(filename, 'w') as f:
+            json.dump(result, f)
+        
+        print(f"Data saved to {filename}")
+        return result
+    return wrapper
 
 def withdebugplot(my_function):
     def wrapper(*args):
@@ -58,8 +75,6 @@ def equilateral_triangle():
 
     return (x1, y1)
 
-# decorator example
-# return as a function
 def print_trig_data(my_function):
     def wrapper():
         v, sv, cv = my_function()

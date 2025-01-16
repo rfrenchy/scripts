@@ -16,7 +16,6 @@ def rot(theta):
     return np.array([[np.cos(theta), -np.sin(theta)],
                      [np.sin(theta), np.cos(theta)]])
 
-# print rads numeric values around a circle
 def print_rads_table(total_rotations = 16):
     full_circle = math.pi * 2
     x = full_circle / total_rotations
@@ -43,8 +42,6 @@ def plot_circle_rads(ax: plt.Axes, total_rotations = 16):
         vv = rot(r * (i+1)) @ v 
         ax.plot(vv[0], vv[1])
 
-
-# plot a point along each degree of edge of circle
 def unit_circle(xtranslate = 0):
     total = 360 # 
 

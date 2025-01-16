@@ -1,116 +1,76 @@
-import math
+"""
+Fractals Module
+===============
+
+This module provides functions to generate fractal patterns.
+
+Generating a Sierpinski Gasket::
+
+    >>> from fractals import sierpinski_gasket
+    >>> v, sv, cv = sierpinski_gasket(3)
+    >>> print(v)
+    [0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0]
+    >>> print(sv)
+    [0.0, 0.479425538604203, 0.8414709848078965, 0.9974949866040544, 0.9092974268256817, 0.5984721441039564, 0.1411200080598672]
+    >>> print(cv)
+    [1.0, 0.8775825618903728, 0.5403023058681398, 0.0707372016677029, -0.4161468365471424, -0.8011436155469337, -0.9899924966004454]
+
+"""
+
 import numpy as np
-import matplotlib.pyplot as plt
+import math
+import functools
 
-from triangle_functions import sierpinski_gasket_v2, unit_square
+def save_as_obj_decorator(filename):
+    def decorator_save_as_obj(func):
+        @functools.wraps(func)
+        def wrapper_save_as_obj(*args, **kwargs):
+            v, sv, cv = func(*args, **kwargs)
+            with open(filename, 'w') as f:
+                for i in range(len(v)):
+                    f.write(f"v {v[i]} {sv[i]} {cv[i]}\n")
+                for i in range(len(v) - 1):
+                    f.write(f"l {i + 1} {i + 2}\n")
+            print(f"Data saved to {filename}")
+            return v, sv, cv
+        return wrapper_save_as_obj
+    return decorator_save_as_obj
 
-def plot_sierpinkski_gasket(n = 0):
-    sierpinski_gasket_v2(n)
-    plt.show()
+@save_as_obj_decorator('sierpinski_gasket.obj')
+def sierpinski_gasket(n=1):
+    """
+    Generate a Sierpinski Gasket.
 
-# 'secret to fractals is its relationships to power laws'
+    Parameters:
+    n (int): The number of iterations to perform.
 
-def carpet_initiator():
-    return unit_square()
+    Returns:
+    tuple: A tuple containing three numpy arrays:
+        - v: The linear walk values.
+        - sv: The sine values of the linear walk.
+        - cv: The cosine values of the linear walk.
 
-epow=3**-1
+    Example:
+    >>> v, sv, cv = sierpinski_gasket(3)
+    >>> print(v)
+    [0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0]
+    >>> print(sv)
+    [0.0, 0.479425538604203, 0.8414709848078965, 0.9974949866040544, 0.9092974268256817, 0.5984721441039564, 0.1411200080598672]
+    >>> print(cv)
+    [1.0, 0.8775825618903728, 0.5403023058681398, 0.0707372016677029, -0.4161468365471424, -0.8011436155469337, -0.9899924966004454]
+    """
+    ranges = [0, 3]
+    total = 7
+    v = np.linspace(ranges[0], ranges[1], total) # linear walk
+    sv = np.zeros(total) # sin values
+    cv = np.zeros(total) # cos values
 
-def epow(scale = -1):
-    return 3 ** scale
+    # generate values from linear walk
+    for i in range(len(v)):
+        sv[i] = math.sin(v[i])
+        cv[i] = math.cos(v[i])
 
-def carpet_generator(scale = -1):
-    ix, iy = carpet_initiator()
+    return v, sv, cv
 
-    print(scale)
-
-    x3, y3 = ix*epow(scale), iy*epow(scale)    
-    tx = (np.max(x3) - np.min(x3)) 
-
-    x3=x3+tx
-    y3=y3+tx
-
-    return [(ix,iy),(x3, y3)]
-
-def carpet_d(n = 1):
-
-    N = np.linspace(-1, n*-1, n)
-    # print(N)
-
-    for i in range(len(N)):
-        carpet = carpet_generator(N[i])
-
-        plt.plot(carpet[0][0], carpet[0][1])
-        plt.plot(carpet[1][0], carpet[1][1])
-    
-    #print("3**-1", 3**-1)
-    #print("3**-2", 3**-2)
-    #print("3**-2 * 9", (3**-2) * 9)
-
-
-# plot carpet segment
-# Fails at n > 2
-def carpet_segment(n, sg = unit_square()):
-    # exit recursion
-    if n == 0:
-        return
-
-    # unit square is the initiator
-    sgx, sgy = sg     
-    plt.plot(sgx, sgy, "b")
-
-    x3, y3 = (1/c)*sgx, (1/c)*sgy  # cubed subdivision
-    ux, uy = unit_square()
-
-    # inefficient - replace
-    if np.array_equal(sgx, ux) or np.array_equal(sgy, uy):
-        tx = (np.max(x3) - np.min(x3)) 
-
-        x3 = x3+tx
-        y3 = y3+tx
-
-        # this plus the unit square is the generator
-        plt.plot(x3, y3)
-
-
-        # pass cubed subdivided square
-        carpet_segment(n, (x3+tx,y3+tx))
-
-    else:
-        # 02
-        tx = (np.max(sgx) - np.min(sgx)) # translation factor
-        carpet_segment(n-1, (x3, y3))     
-
-        # need to have an origin? to translate from
-
-        # (0,0),(1,0),(2,0)
-        
-        carpet_segment(n-1, (x3+tx, y3))
-        # carpet_segment(n-1, (x2+(tx*2), y2))
-
-        # # (0,1),(1,1),(2,1)
-        # carpet_segment(n-1, (x2, y2+tx))
-        # # carpet_segment(n-1, (x2+trs, y2+trs))
-        # carpet_segment(n-1, (x2+(tx*2), y2+tx))
-
-        # # (0,2),(1,2),(2,2)
-        # carpet_segment(n-1, (x2, y2+(tx*2)))      
-        # carpet_segment(n-1, (x2+tx, y2+(tx*2)))
-        # carpet_segment(n-1, (x2+(tx*2), y2+(tx*2)))
-
-# n = 3 # fractal dimension
-# carpet_segment(n)
-
-
-def plot_carpet_generator(carpet_generator):
-    carpet = carpet_generator()
-
-    plt.plot(carpet[0][0], carpet[0][1])
-    plt.plot(carpet[1][0], carpet[1][1])
-
-carpet_d(3)
-
-plt.grid()
-plt.axis("equal")
-
-# show plot
-plt.show()
+# Example usage
+sierpinski_gasket(3)
