@@ -5,7 +5,7 @@ from PIL import ImageFile
 
 
 class InTwos:
-    def ToGIF(self, images: list[ImageFile.ImageFile]):
+    def ToGIF(self, images):
         """ Write gif of images with each drawing repeated twice over 1 second
 
             @param images, a sorted array of images
@@ -24,7 +24,7 @@ class InTwos:
 
 
 class InOnes:
-    def ToGIF(self, images: list[ImageFile.ImageFile]):
+    def ToGIF(self, images):
         """ Write gif in ones
 
             @param images, a sorted array of singular drawings
@@ -38,7 +38,7 @@ class InOnes:
 
 
 class InHalves:
-    def ToGIF(self, images: list[ImageFile.ImageFile]):
+    def ToGIF(self, images):
         """ Write gif with halves timing (specific to arms animation for now)
 
             @param images, a sorted array of images

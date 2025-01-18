@@ -30,7 +30,7 @@ def print_power_laws(n):
     print("-" * len(th.expandtabs()))
 
     for i in range(len(x)):
-        print()
+        print(i)
         # plt.plot(x[i], n ** (i*-1))
 
 

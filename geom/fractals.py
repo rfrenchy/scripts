@@ -1,76 +1,82 @@
-"""
-Fractals Module
-===============
-
-This module provides functions to generate fractal patterns.
-
-Generating a Sierpinski Gasket::
-
-    >>> from fractals import sierpinski_gasket
-    >>> v, sv, cv = sierpinski_gasket(3)
-    >>> print(v)
-    [0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0]
-    >>> print(sv)
-    [0.0, 0.479425538604203, 0.8414709848078965, 0.9974949866040544, 0.9092974268256817, 0.5984721441039564, 0.1411200080598672]
-    >>> print(cv)
-    [1.0, 0.8775825618903728, 0.5403023058681398, 0.0707372016677029, -0.4161468365471424, -0.8011436155469337, -0.9899924966004454]
-
-"""
-
-import numpy as np
 import math
-import functools
+import numpy as np
 
-def save_as_obj_decorator(filename):
-    def decorator_save_as_obj(func):
-        @functools.wraps(func)
-        def wrapper_save_as_obj(*args, **kwargs):
-            v, sv, cv = func(*args, **kwargs)
-            with open(filename, 'w') as f:
-                for i in range(len(v)):
-                    f.write(f"v {v[i]} {sv[i]} {cv[i]}\n")
-                for i in range(len(v) - 1):
-                    f.write(f"l {i + 1} {i + 2}\n")
-            print(f"Data saved to {filename}")
-            return v, sv, cv
-        return wrapper_save_as_obj
-    return decorator_save_as_obj
+import matplotlib.pyplot as plt
 
-@save_as_obj_decorator('sierpinski_gasket.obj')
-def sierpinski_gasket(n=1):
-    """
-    Generate a Sierpinski Gasket.
+from functools import lru_cache
+from triangle_functions import sierpinski_gasket_v2, unit_square
 
-    Parameters:
-    n (int): The number of iterations to perform.
+rotate = lambda m, theta: np.array(([np.cos(theta), -np.sin(theta)], 
+                                    [np.sin(theta),  np.cos(theta)])) @ m
 
-    Returns:
-    tuple: A tuple containing three numpy arrays:
-        - v: The linear walk values.
-        - sv: The sine values of the linear walk.
-        - cv: The cosine values of the linear walk.
+def plot_sierpinkski_gasket(n = 0):
+    sierpinski_gasket_v2(n)
+    plt.show()
 
-    Example:
-    >>> v, sv, cv = sierpinski_gasket(3)
-    >>> print(v)
-    [0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0]
-    >>> print(sv)
-    [0.0, 0.479425538604203, 0.8414709848078965, 0.9974949866040544, 0.9092974268256817, 0.5984721441039564, 0.1411200080598672]
-    >>> print(cv)
-    [1.0, 0.8775825618903728, 0.5403023058681398, 0.0707372016677029, -0.4161468365471424, -0.8011436155469337, -0.9899924966004454]
-    """
-    ranges = [0, 3]
-    total = 7
-    v = np.linspace(ranges[0], ranges[1], total) # linear walk
-    sv = np.zeros(total) # sin values
-    cv = np.zeros(total) # cos values
+# 'secret to fractals is its relationships to power laws'
+def carpet_initiator():
+    return unit_square()
 
-    # generate values from linear walk
-    for i in range(len(v)):
-        sv[i] = math.sin(v[i])
-        cv[i] = math.cos(v[i])
+def exp(scale = -1):
+    return 3 ** scale # need to chan
 
-    return v, sv, cv
+### TODO make recursable
+#### has to use data from previous output in recurse chain
+def gen(n = -1, carpet = carpet_initiator()):
+    ix, iy = carpet
+    
+    # how to know how much to translate N**e?
+    # translation
+    x3, y3 = ix*exp(n), iy*exp(n) # memoize function here
+    tx = (np.max(x3) - np.min(x3)) # memoize function here  
+    x3=x3+tx
+    y3=y3+tx
 
-# Example usage
-sierpinski_gasket(3)
+    return (x3, y3)
+
+def e(carpet, c = 1/3):
+    ix, iy = carpet
+    return(ix*c, iy*c)
+
+@lru_cache(maxsize=None)
+def dim(x1):
+    dx = np.array(x1)
+    return np.max(dx) - np.min(dx)
+
+
+# D?
+def carpet_d(n = 1):
+    N = np.linspace(-1, n*-1, n)
+    cube2=3**2
+    
+    # generation
+    x1, y1 = carpet_initiator()
+    plt.plot(x1, y1) 
+
+    x1, y1 = e((x1, y1)) 
+    tx = dim(tuple(x1))
+    plt.plot(x1+tx, y1+tx)
+
+    # do 9 times
+    theta = np.linspace(0, np.pi*2, cube2)
+
+    # recurse from (n+1)
+    for i in range(len(N)):
+        x1, y1 = e((x1, y1))
+#        plt.plot(x1, y1)
+        # x1, y1 = gen(N[i], (x1, y1))
+
+        # for j in range(cube2):
+        #     print("translate 9 times")
+        #     print("shrink")
+        #     # recurse?
+
+# TODO make carpet_d no side effects
+def withplot(my_function):
+    carpet = my_function
+
+carpet_d(3)
+
+plt.grid()
+plt.axis("equal")
+plt.show()
