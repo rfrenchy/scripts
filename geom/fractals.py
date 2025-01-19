@@ -3,10 +3,12 @@ import numpy as np
 
 import matplotlib.pyplot as plt
 
-from functools import lru_cache
-from triangle_functions import sierpinski_gasket_v2, unit_square
+from functools import lru_cache # TODO move to fractals_cache.py)
+from triangle_functions import sierpinski_gasket_v2, unit_square, rot
 
-rotate = lambda m, theta: np.array(([np.cos(theta), -np.sin(theta)], 
+import square_functions as square 
+
+rotate = lambda m, theta: np.array(([np.cos(theta), -np.sin(theta)],
                                     [np.sin(theta),  np.cos(theta)])) @ m
 
 def plot_sierpinkski_gasket(n = 0):
@@ -24,11 +26,11 @@ def exp(scale = -1):
 #### has to use data from previous output in recurse chain
 def gen(n = -1, carpet = carpet_initiator()):
     ix, iy = carpet
-    
+
     # how to know how much to translate N**e?
     # translation
     x3, y3 = ix*exp(n), iy*exp(n) # memoize function here
-    tx = (np.max(x3) - np.min(x3)) # memoize function here  
+    tx = (np.max(x3) - np.min(x3)) # memoize function here
     x3=x3+tx
     y3=y3+tx
 
@@ -43,33 +45,47 @@ def dim(x1):
     dx = np.array(x1)
     return np.max(dx) - np.min(dx)
 
-
 # D?
+cube1=3**1
+cube2=3**2
+
 def carpet_d(n = 1):
-    N = np.linspace(-1, n*-1, n)
-    cube2=3**2
-    
     # generation
-    x1, y1 = carpet_initiator()
-    plt.plot(x1, y1) 
+    x1, y1 = carpet_initiator()     # init
+    x2, y2 = e((x1, y1))            # shrink
+    TX = np.max(x2) - np.min(x2)    # find translate
+    x2, y2 = x2+TX, y2+TX           # apply translate
 
-    x1, y1 = e((x1, y1)) 
-    tx = dim(tuple(x1))
-    plt.plot(x1+tx, y1+tx)
+    # plot
+    plt.plot(x1, y1)
+    plt.plot(x2, y2) 
+    
+    # recurse
+    carpet_recurse(n-1, x2, y2, TX)
 
-    # do 9 times
-    theta = np.linspace(0, np.pi*2, cube2)
+def carpet_recurse(n, x2, y2, TX):
+    # return from recursion
+    if n <= 0: return
 
-    # recurse from (n+1)
-    for i in range(len(N)):
-        x1, y1 = e((x1, y1))
-#        plt.plot(x1, y1)
-        # x1, y1 = gen(N[i], (x1, y1))
+    # shrink
+    x2, y2 = x2/cube1, y2/cube1
 
-        # for j in range(cube2):
-        #     print("translate 9 times")
-        #     print("shrink")
-        #     # recurse?
+    def do(x, y):
+        plt.plot(x, y, 'b')
+        carpet_recurse(n -1, x, y, TX)
+    
+    # plot in each segment of carpet
+    for i in range(cube2):
+        if i == 0: do(x2, y2)
+        if i == 1: do(x2, y2+TX) 
+        if i == 2: do(x2, y2+TX+TX)
+        if i == 3: do(x2+TX, y2)
+        # if i == 4: do nothing
+        if i == 5: do(x2+TX, y2+TX+TX)
+        if i == 6: do(x2+TX+TX, y2)
+        if i == 7: do(x2+TX+TX, y2+TX)
+        if i == 8: do(x2+TX+TX, y2+TX+TX)
+
 
 # TODO make carpet_d no side effects
 def withplot(my_function):
