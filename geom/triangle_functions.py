@@ -53,19 +53,6 @@ def unit_trianglev2():
 
     return (x1, y1)
 
-""" 
-    square constructred from two triangles,
-    very jank implementation
-"""
-def unit_square(scale = 1):
-    x1, y1 = unit_trianglev2()
-    x2, y2 = unit_trianglev2() 
-
-    x = np.concatenate((x1, (x2 * -1) + 1))
-    y = np.concatenate((y1, (y2 * -1) + 0.5)) * 2
-
-    return (x * scale, y * scale)
-
 def equilateral():
     a = ([0, 0.5], [0, 1])
     b = ([0.5, 1], [1, 0])
@@ -115,10 +102,6 @@ def trig_data():
         cv[i] = math.cos(v[i])
 
     return v, sv, cv
-
-
-    # any properties of this 'algorithm' which means it can be recursive and
-    # other functions not?
 
 def rot(theta):
     return np.array([[np.cos(theta), -np.sin(theta)],

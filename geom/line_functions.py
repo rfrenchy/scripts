@@ -3,6 +3,8 @@ import numpy as np
 
 import matplotlib.pyplot as plt
 
+def right():
+    return (0,1), (0,0)
 
 def line():
     x = np.linspace(0, 10, 10)
@@ -36,6 +38,6 @@ def print_power_laws(n):
 
 # plot a triangle on a line to find an angle?
 
-print_power_laws(3)
+# print_power_laws(3)
 
-plt.show()
+# plt.show()
