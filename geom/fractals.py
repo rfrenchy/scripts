@@ -1,11 +1,11 @@
 import random
 
 import numpy                as np
+import pandas               as pd
 import matplotlib.pyplot    as plt
 import triangle_functions   as triangle
 import circle_functions     as circle
 import square_functions     as square
-import line_functions       as line
 
 
 ### "The secret to fractals is its relationships to power laws"
@@ -15,19 +15,13 @@ CUBE_1  = 3**1      # 3
 CUBE_2  = 3**2      # 9
 CUBE_N1 = 3**-1     # 0.333
 
-def sierpinski_gasket_v2(n = 1):
+def gasket_side_effects(n, x, y): 
+    plt.plot(x, y, 'b')
+    print(pd.DataFrame({'n': n, 'x': x, 'y': y}))
+
+def sierpinski_gasket_v2(n = 1, side_effects = gasket_side_effects):
     sgx, sgy = triangle.equilateral()
 
-    def withplot(my_function):
-        def wrapper(*args):
-            _, sgx, sgy = args
-            plt.plot(sgx, sgy)
-
-            return my_function(*args)
-
-        return wrapper
-
-    @withplot    
     def sgn(n, sgx, sgy):
         if n == 0:
             return (sgx, sgy)
@@ -41,23 +35,29 @@ def sierpinski_gasket_v2(n = 1):
 
         sgx = np.concatenate((sgx, c1x, c2x))
         sgy = np.concatenate((sgy, c1y, c1y))
-            
+        
+        side_effects(n, sgx, sgy)
+
         return sgn(n - 1, sgx, sgy)
     
     return sgn(n, sgx, sgy)
 
+def carpet_side_effects(n, x, y): 
+    plt.plot(x, y, 'b')
+    print(pd.DataFrame({'n': n, 'x': x, 'y': y}))
+
 ### DONE - Shrink
 ### TODO - Magnify
-def sierpinski_carpet(n = 1):
+def sierpinski_carpet(n = 1, side_effects = carpet_side_effects):
     # generation
-    x1, y1 = square.unit_square()   # init
-    x2, y2 = x1*CUBE_N1, y1*CUBE_N1 # shrink
-    TX = np.max(x2) - np.min(x2)    # find translate
-    x2, y2 = x2+TX, y2+TX           # apply translate
+    x1, y1  = square.unit_square()      # init
+    x2, y2  = x1*CUBE_N1, y1*CUBE_N1    # shrink
+    TX      = np.max(x2) - np.min(x2)   # find translate
+    x2, y2  = x2+TX, y2+TX              # apply translate
 
-    # plot
-    plt.plot(x1, y1, 'b')
-    plt.plot(x2, y2, 'b') 
+    # side effects e.g. print
+    side_effects(n, x1, y1)
+    side_effects(n, x2, y2)
     
     # define recursion
     def carpet_recurse(n, x2, y2, TX):
@@ -69,7 +69,7 @@ def sierpinski_carpet(n = 1):
 
         # plot and recurse
         def do(x, y):
-            plt.plot(x, y, 'b')
+            side_effects(n, x, y)
             carpet_recurse(n -1, x, y, TX)
         
         # recurse for each carpet segment
@@ -87,7 +87,12 @@ def sierpinski_carpet(n = 1):
     # recurse
     carpet_recurse(n-1, x2, y2, TX)
 
-def fractal_tree(n = 1):
+def fractal_side_effects(x, y): 
+    plt.plot(x, y, 'b')
+    print(pd.DataFrame({'x': x, 'y': y}))
+
+def fractal_tree(n = 1, side_effects = fractal_side_effects):
+
     T = 10 # Amount of parts in a tree line
     random_rotation = lambda : circle.rot(random.uniform(0, np.pi*2)) 
 
@@ -101,23 +106,17 @@ def fractal_tree(n = 1):
         
     x = np.linspace(0, 1, T)
 
-    plt.plot(x, branch)
+    fractal_side_effects(x, branch)
 
     def recurse(n, origin):
         if n == 0: return
 
-        print("in recurse")
-        ox, oy = origin
-        # x,_ = random_rotation() @ line.right()
-        # branch = np.linspace(x[0], x[1], T)
+        xlin    = np.linspace(0, 1, T)
+        branch  = np.linspace(0, 1, T)
+        ox, oy  = origin
 
-        x = np.linspace(0, 1, T)
-
-        # x = random_rotation() @ np.linspace(0, 1, T) 
-        branch = np.linspace(0, 1, T)
-
-        x = x + ox
-        branch = branch + oy
+        xlin    = xlin + ox
+        branch  = branch + oy
         
         # scramble branch
         for i in range(len(branch)):
@@ -125,10 +124,10 @@ def fractal_tree(n = 1):
             if rand > 0.666: branch[i] = branch[i]+1
             if rand < 0.333: branch[i] = branch[i]-1
 
-        plt.plot(x, branch)        
+        side_effects(xlin, branch)
 
         rp = random.randint(0,T-1)
-        ox = x[rp]
+        ox = xlin[rp]
         oy = branch[rp] 
 
         recurse(n-1, (ox, oy))
@@ -141,10 +140,8 @@ def fractal_tree(n = 1):
     recurse(n-1, (ox, oy))
 
 def scatter(data):
-    # x, y = data
     plt.grid()
     plt.axis("equal")
-    # plt.plot(x, y)
     plt.show()
 
 
@@ -153,5 +150,7 @@ def show():
     plt.axis("equal")
     plt.show()
 
-scatter(fractal_tree(3))
+# scatter(fractal_tree(3))
+# scatter(sierpinski_gasket_v2(3))
+scatter(sierpinski_carpet(3))
 # show()
