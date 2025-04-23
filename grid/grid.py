@@ -31,36 +31,24 @@ w, h = img.size
 if args.debug:
 	print(f"Image width: {w}, height: {h}")
 
+DIVISIONS = 4
 
-# draw vertical line through the iddle
-wx = w / 2
-drw.line([(wx, 0), (wx, h)], fill=(0, 0, 50, 50), width=16)
+dw = w / DIVISIONS
+dh = h / DIVISIONS
 
-for i in range(4):
-	hx = h / 4 * i
-	drw.line([(0, hx), (w, hx)], fill=(0, 0, 50, 50), width=16)
+dwx = dw
+dhx = dh
 
-# draw vertical line through middle
+for i in range(DIVISIONS):
+	drw.line([(0, dwx), (w, dwx)], fill=(0,0,50,50), width=16) # across
+	drw.line([(dhx, 0),(dhx, h)], fill=(0,0,50,50), width=16) # down
+	
+	dwx = dwx + dw
+	dhx = dhx + dh
+
+# for i in range(DIVISIONS):
+#     wx = w / DIVISIONS * i
+# 		# drw.line([(wx, 0), (wx, h)], fill=(0, 0, 50, 50), width=16)
 
 
 img.save(args.output)
-
-# create a new image with the same size as the original
-# add grid lines
-# 
-
-# composite grid on top of the image
-
-    # border_img = ImageOps.expand(img,
-    #                              border=args.size,
-    #                              fill=fill)
-
-
-
-# border_img.save(args.output)
-
-
-# use numpy to add border
-
-# save and close image
-
