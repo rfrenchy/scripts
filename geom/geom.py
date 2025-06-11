@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 
 from circle_functions import rot, unit_circlev2, spiral
 from triangle_functions import unit_triangle, trig_data
+import square_functions
 
 
 """
@@ -31,11 +32,15 @@ def spyrograph(t_rotations = 16, x_translate = 0):
     # show plot
     plt.show()
 
-cx, cy = spiral(5)
+def temp():
+    cx, cy = spiral(5)
 
-trig_data()
+    trig_data()
 
-plt.axis("equal")
-plt.plot(cx, cy)
-plt.show()
+    plt.axis("equal")
+    plt.plot(cx, cy)
+    plt.show()
 
+def test():
+    def square():
+        print("geom square")

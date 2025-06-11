@@ -1,17 +1,13 @@
 import vedo
-# import pyvista
-
-import square_functions
-
-
-# vedo
+import adaptors.vedo
 
 # earth
 def cube():
-    points = [(0,0,0),(1,0,0),(1,1,0),(0,1,0)]
-    square = vedo.Line(square_functions.unit_square_3d(), closed=True)
-    print(square_functions.unit_square_3d())
-    # print(points)
+    points = adaptors.vedo.square()
+    square = vedo.Line(points, closed=True)
+
+    # print(square_functions.unit_square_3d())
+
     vedo.show(square, axes=1).close()
 
 # fire
@@ -26,6 +22,7 @@ def octahedron():
 def icosahedron():
     print("icosahedron")
 
+# cosmos
 def dodecahedron():
     print("dodecahedron")
 
