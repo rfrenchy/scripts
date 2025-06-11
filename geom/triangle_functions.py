@@ -1,6 +1,7 @@
 import json
 import math
 import random
+import string
 import numpy as np
 
 import matplotlib.pyplot as plt
@@ -43,6 +44,7 @@ def unit_triangle():
 
     return (x1, y1)
 
+# built fot pyplot
 def unit_trianglev2():
     a = ([0, 1], [0, 0])
     b = ([0, 0], [0, 0.5])
@@ -106,3 +108,16 @@ def trig_data():
 def rot(theta):
     return np.array([[np.cos(theta), -np.sin(theta)],
                     [np.sin(theta), np.cos(theta)]])
+
+# built fot vedo
+def unit_trianglev3():
+    x = (1, 0, 0)
+    y = (0, 1, 0)
+    z = (0, 0, 0)
+
+    return [(x[0],y[0],z[0]), (x[1],y[1],z[1]), (x[2],y[2],z[2])]
+
+    x1 = np.concatenate((x[0], y[0], z[0]))
+    y1 = np.concatenate((x[1], y[1], z[1]))
+
+    return (x1, y1)
