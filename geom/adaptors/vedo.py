@@ -1,8 +1,22 @@
 import numpy as np
 import triangle_functions as tr
 
-def square(scale = 1):
-    return tr.unit_trianglev3()
+def triangle(scale = 1):
+    tr1 = tr.unit_trianglev3()
+    return tr1
+    tr2 = tr.unit_trianglev3() @ rotate(90,0,0).T
+
+    print(tr1)
+    print(tr2)
+
+    return tr1, tr2
+
+def centroid(points):
+    x_avg = sum((p[0] for p in points)) / len(points)
+    y_avg = sum((p[1] for p in points)) / len(points)
+    z_avg = sum((p[2] for p in points)) / len(points)
+
+    return x_avg, y_avg, z_avg
 
 def rotate(cx = 0,cy = 0,cz = 0):
     rx, ry, rz = np.radians((cx, cy, cz))
