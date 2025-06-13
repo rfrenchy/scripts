@@ -49,7 +49,28 @@ def wheel():
 
 # fire
 def tetrahedron():
-    print("tetrahedron")
+
+    unkn = 30 # average angle of each angle on inside of triangle?
+
+    pts1 = adaptors.vedo.equilateral_triangle()
+    pts1r = pts1 @ adaptors.vedo.rotate(unkn,0,0)
+    face1 = vedo.Line(pts1r, closed=True)
+
+    pts2 = adaptors.vedo.equilateral_triangle()
+    pts2r = pts2 @ adaptors.vedo.rotate(-unkn,-90,0)
+    face2 = vedo.Line(pts2r, closed=True)
+
+    pts3 = adaptors.vedo.equilateral_triangle()
+    pts3r = pts3 @ adaptors.vedo.rotate(-unkn,0,0)
+    pts3r_translate = [(x,y,z-1) for x,y,z in pts3r]
+    face3 = vedo.Line(pts3r_translate, closed=True)
+
+    pts4 = adaptors.vedo.equilateral_triangle()
+    pts4r = pts4 @ adaptors.vedo.rotate(unkn,-90,0)
+    pts4r_translate = [(x+1,y,z) for x,y,z in pts4r]
+    face4 = vedo.Line(pts4r_translate, closed=True)
+
+    vedo.show(face1, face2, face3, face4).close()
 
 # air
 def octahedron():
@@ -63,4 +84,5 @@ def icosahedron():
 def dodecahedron():
     print("dodecahedron")
 
-cube()
+# cube()
+tetrahedron()

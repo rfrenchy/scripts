@@ -4,6 +4,9 @@ import triangle_functions as tr
 def triangle(scale = 1):
     return tr.unit_trianglev3()
 
+def equilateral_triangle():
+    return  [(1,0,0),(0.5,1,0),(0,0,0)]
+
 def square():
     return [(1,0,0),(0,1,0),(0,0,0), (1,0,0),(0,1,0),(1,1,0)]
 
