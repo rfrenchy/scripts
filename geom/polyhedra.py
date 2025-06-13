@@ -70,11 +70,24 @@ def tetrahedron():
     pts4r_translate = [(x+1,y,z) for x,y,z in pts4r]
     face4 = vedo.Line(pts4r_translate, closed=True)
 
-    vedo.show(face1, face2, face3, face4).close()
+    return pts1r,pts2r,pts3r_translate,pts4r_translate
+
 
 # air
 def octahedron():
-    print("octahedron")
+    # top faces
+    P = tetrahedron()
+    faces_top = [vedo.Line(p, closed=True) for p in P]
+
+    # bottom faces
+    M = np.array([])
+    for p in P:
+        M = np.append(M, vedo.Line([(x,y*-1,z) for x,y,z in p], closed=True))
+    
+    fb1, fb2, fb3, fb4 = M.ravel()
+
+    vedo.show(faces_top, fb1, fb2, fb3, fb4).close()
+
 
 # water
 def icosahedron():
@@ -85,4 +98,4 @@ def dodecahedron():
     print("dodecahedron")
 
 # cube()
-tetrahedron()
+octahedron()
