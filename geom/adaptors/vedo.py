@@ -2,14 +2,10 @@ import numpy as np
 import triangle_functions as tr
 
 def triangle(scale = 1):
-    tr1 = tr.unit_trianglev3()
-    return tr1
-    tr2 = tr.unit_trianglev3() @ rotate(90,0,0).T
+    return tr.unit_trianglev3()
 
-    print(tr1)
-    print(tr2)
-
-    return tr1, tr2
+def square():
+    return [(1,0,0),(0,1,0),(0,0,0), (1,0,0),(0,1,0),(1,1,0)]
 
 def centroid(points):
     x_avg = sum((p[0] for p in points)) / len(points)
