@@ -67,7 +67,7 @@ def unit_circle(xtranslate = 0):
     points for a unit circle, uses cos and sin functions to gen
 """
 def unit_circlev2():
-    t_points = 90
+    t_points = 24
     
     seg = (np.pi * 2) / t_points
 

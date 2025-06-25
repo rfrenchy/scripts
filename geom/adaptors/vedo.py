@@ -1,5 +1,6 @@
 import numpy as np
 import triangle_functions as tr
+import circle_functions as circ
 
 def triangle(scale = 1):
     return tr.unit_trianglev3()
@@ -16,6 +17,28 @@ def centroid(points):
     z_avg = sum((p[2] for p in points)) / len(points)
 
     return x_avg, y_avg, z_avg
+
+# BROKEN
+def spiral():
+    t_points = 100
+
+    rad = (np.pi) / t_points
+
+    P = []
+
+
+    # half circle
+    for i in range(t_points):
+       P = P + [(-np.cos(rad*i),
+                 np.sin(rad*i),
+                 0)]
+    
+    return P
+
+def theodorus_spiral():
+    # right angled triangle
+    return[ (x*-1,y,z) for x,y,z in triangle()]
+
 
 def rotate(cx = 0,cy = 0,cz = 0):
     rx, ry, rz = np.radians((cx, cy, cz))
