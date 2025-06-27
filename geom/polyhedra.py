@@ -109,13 +109,14 @@ def cube():
         # axes=1,
         ).close()
 
-def wheel():
-    c = circle()
-
-    total_spokes = 7
+def wheel(total_spokes=7):
+    # work out angle of each spoke 
     theta = (np.pi*2) / total_spokes
 
+    # array of vedo lines
     spokes = []
+
+    # work out points of each spoke
     for i in range(total_spokes):
         # work out point on circle
         x = np.cos(theta*i)
@@ -125,31 +126,36 @@ def wheel():
         # add spoke
         spokes.append(vedo.Line([(0,0,0),(x, y, z)]))
     
-
-    vedo.show(c, spokes).close()
+    # show
+    vedo.show(circle, spokes).close()
 
 
 # plato: fire
-def tetrahedron():
+def tetrahedron(show=False):
     unkn = 30 # right triangle angle
+
+    faces = []
 
     pts1 = av.equilateral_triangle()
     pts1r = pts1 @ av.rotate(unkn,0,0)
-    face1 = vedo.Line(pts1r, closed=True)
+    faces.append(vedo.Line(pts1r, closed=True))
 
     pts2 = av.equilateral_triangle()
     pts2r = pts2 @ av.rotate(-unkn,-90,0)
-    face2 = vedo.Line(pts2r, closed=True)
+    faces.append(vedo.Line(pts2r, closed=True))
 
     pts3 = av.equilateral_triangle()
     pts3r = pts3 @ av.rotate(-unkn,0,0)
     pts3r_translate = [(x,y,z-1) for x,y,z in pts3r]
-    face3 = vedo.Line(pts3r_translate, closed=True)
+    faces.append(vedo.Line(pts3r_translate, closed=True))
 
     pts4 = av.equilateral_triangle()
     pts4r = pts4 @ av.rotate(unkn,-90,0)
     pts4r_translate = [(x+1,y,z) for x,y,z in pts4r]
-    face4 = vedo.Line(pts4r_translate, closed=True)
+    faces.append(vedo.Line(pts4r_translate, closed=True))
+
+    if show:
+        vedo.show(faces)
 
     return pts1r,pts2r,pts3r_translate,pts4r_translate
 
@@ -158,19 +164,16 @@ def tetrahedron():
 def octahedron():
     # top faces
     P = tetrahedron()
-    faces_top = [vedo.Line(p, closed=True) for p in P]
+    top = [vedo.Line(p, closed=True) for p in P]
 
     # bottom faces
-    M = np.array([])
+    bottom = []
     for p in P:
-        M = np.append(M, vedo.Line([(x,y*-1,z) for x,y,z in p], 
-                                   closed=True))
+        # flip the y points 
+        bottom.append(vedo.Line([(x,y*-1,z) for x,y,z in p], closed=True))
     
-    # the four individuals faces on the bottom half of octahedron
-    fb1, fb2, fb3, fb4 = M.ravel()
-
-    # show octahedron on screen
-    vedo.show(faces_top, fb1, fb2, fb3, fb4).close()
+    # show 
+    vedo.show(top, bottom).close()
 
 
 # plato: water
@@ -181,9 +184,11 @@ def icosahedron():
 def dodecahedron():
     print("dodecahedron")
 
+# 
 # cube()
+tetrahedron(show=True)
 # octahedron()
-wheel()
+#wheel(total_spokes=14)
 
 # spiral(increase_arc=True)
 # circle()
