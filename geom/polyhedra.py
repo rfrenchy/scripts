@@ -14,7 +14,6 @@ def vedo_plot(*p, axes=0):
     vedo.show(p, axes)
 
 def circle():
-    # diameter
     TOTAL_POINTS = 100
 
     segments = (np.pi*2)/ TOTAL_POINTS
@@ -26,6 +25,34 @@ def circle():
     p = [(x[i], y[i], z[i]) for i in range(TOTAL_POINTS)]
 
     vedo.show(vedo.Line(p, closed=True)).close()
+
+def spiral():
+    TOTAL_POINTS = 100   # total points
+    R = 0.1              # radius
+    O = 5                # oscillations
+
+    S = 0.1 # how many segments in an oscilation
+    L = []
+    start = 0           # start point of oscilation
+    stop = TOTAL_POINTS # end point of oscilation
+
+    for _ in range(O):
+        # calculate points of spiral
+        x = [(R*i) * np.cos(i*S) for i in range(start, stop)]
+        y = [(R*i) * np.sin(i*S) for i in range(start, stop)]
+        z = np.zeros(TOTAL_POINTS)
+
+        # add to list of lines to show
+        L.append(vedo.Line([(x[i], y[i], z[i]) for i in range(TOTAL_POINTS)]))
+
+        # reset start and stop range for next oscillation (-1 to start from end of last oscillation)
+        start = stop - 1                 
+        stop  = stop + TOTAL_POINTS - 1  
+
+        
+    vedo.show(L).close()
+
+#    vedo.show(vedo.Line(p)).close()
 
 # earth
 def cube():
@@ -65,22 +92,6 @@ def cube():
         face5, face6
         # axes=1,
         ).close()
-
-def spiral():
-    # center of universe
-    center = vedo.Point((0,0,0))
-
-    # pts = av.theodorus_spiral()
-    pts = av.spiral()
-
-    print((pts[0]))
-    print((pts[len(pts)-1]))
-
-    pts = [(x+1,y,z) for x,y,z in pts]
-    # pts = av.spiral()
-    spiral = vedo.Line(pts)
-
-    vedo.show(center, spiral).close()
 
 def wheel():
     print("wheel")
@@ -139,5 +150,5 @@ def dodecahedron():
 
 # cube()
 # octahedron()
-#spiral()
-circle()
+spiral()
+# circle()
