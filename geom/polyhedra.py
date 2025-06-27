@@ -26,29 +26,38 @@ def circle():
 
     vedo.show(vedo.Line(p, closed=True)).close()
 
-def spiral():
+def spiral(increase_arc = False):
     TOTAL_POINTS = 100   # total points
     R = 0.1              # radius
-    O = 5                # oscillations
+    osc = 5                # oscillations
 
     S = 0.1 # how many segments in an oscilation
     L = []
     start = 0           # start point of oscilation
     stop = TOTAL_POINTS # end point of oscilation
 
-    for _ in range(O):
-        # calculate points of spiral
-        x = [(R*i) * np.cos(i*S) for i in range(start, stop)]
-        y = [(R*i) * np.sin(i*S) for i in range(start, stop)]
-        z = np.zeros(TOTAL_POINTS)
+    r = R
+    for _ in range(osc):
+        X = []
+        Y = []
+        Z = []
+
+        for i in range(start, stop):
+            X.append((r*i) * np.cos(i*S))
+            Y.append((r*i) * np.sin(i*S))
+            Z.append(0)
+
+            # incress growth arc
+            if increase_arc:
+                r = r + R
+                
 
         # add to list of lines to show
-        L.append(vedo.Line([(x[i], y[i], z[i]) for i in range(TOTAL_POINTS)]))
+        L.append(vedo.Line([(X[i], Y[i], Z[i]) for i in range(TOTAL_POINTS)]))
 
         # reset start and stop range for next oscillation (-1 to start from end of last oscillation)
         start = stop - 1                 
         stop  = stop + TOTAL_POINTS - 1  
-
         
     vedo.show(L).close()
 
@@ -150,5 +159,5 @@ def dodecahedron():
 
 # cube()
 # octahedron()
-spiral()
+spiral(increase_arc=True)
 # circle()
