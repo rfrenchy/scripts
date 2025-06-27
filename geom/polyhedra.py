@@ -13,7 +13,7 @@ import circle_functions as cf
 def vedo_plot(*p, axes=0):
     vedo.show(p, axes)
 
-def circle():
+def circle(show=False):
     TOTAL_POINTS = 100
 
     segments = (np.pi*2)/ TOTAL_POINTS
@@ -24,7 +24,14 @@ def circle():
 
     p = [(x[i], y[i], z[i]) for i in range(TOTAL_POINTS)]
 
-    vedo.show(vedo.Line(p, closed=True)).close()
+    C = vedo.Line(p, closed=True)
+
+    if show:
+        vedo.show(vedo.Line(p, closed=True)).close()
+    
+    return C
+
+    
 
 def spiral(increase_arc = False):
     TOTAL_POINTS = 100   # total points
@@ -103,9 +110,26 @@ def cube():
         ).close()
 
 def wheel():
-    print("wheel")
+    c = circle()
 
-# fire
+    total_spokes = 7
+    theta = (np.pi*2) / total_spokes
+
+    spokes = []
+    for i in range(total_spokes):
+        # work out point on circle
+        x = np.cos(theta*i)
+        y = np.sin(theta*i)
+        z = 0
+
+        # add spoke
+        spokes.append(vedo.Line([(0,0,0),(x, y, z)]))
+    
+
+    vedo.show(c, spokes).close()
+
+
+# plato: fire
 def tetrahedron():
     unkn = 30 # right triangle angle
 
@@ -130,7 +154,7 @@ def tetrahedron():
     return pts1r,pts2r,pts3r_translate,pts4r_translate
 
 
-# air
+# plato: air
 def octahedron():
     # top faces
     P = tetrahedron()
@@ -149,15 +173,17 @@ def octahedron():
     vedo.show(faces_top, fb1, fb2, fb3, fb4).close()
 
 
-# water
+# plato: water
 def icosahedron():
     print("icosahedron")
 
-# cosmos
+# plato: cosmos
 def dodecahedron():
     print("dodecahedron")
 
 # cube()
 # octahedron()
-spiral(increase_arc=True)
+wheel()
+
+# spiral(increase_arc=True)
 # circle()
