@@ -31,32 +31,45 @@ def circle(show=False):
     
     return C
 
-    
+def nothing():
+    return
 
-def spiral(increase_arc = False):
-    TOTAL_POINTS = 100   # total points
-    R = 0.1              # radius
-    osc = 5                # oscillations
+def show(lines):
+    vedo.show(lines).close()
+
+def spiral(increase_arc = False,
+           r_growth = 0.1,
+           z_growth = 0, 
+           osc = 5,
+           side_effects = nothing):
+
+
+    TOTAL_POINTS = 100   # total points             
 
     S = 0.1 # how many segments in an oscilation
     L = []
     start = 0           # start point of oscilation
     stop = TOTAL_POINTS # end point of oscilation
 
-    r = R
+    r = r_growth
+    z = z_growth
     for _ in range(osc):
         X = []
         Y = []
         Z = []
 
         for i in range(start, stop):
+            # cacl x and y of spiral
             X.append((r*i) * np.cos(i*S))
             Y.append((r*i) * np.sin(i*S))
-            Z.append(0)
+
+            # add z_growth if any
+            z+=z_growth
+            Z.append(z)
 
             # incress growth arc
             if increase_arc:
-                r = r + R
+                r = r + r_growth
                 
 
         # add to list of lines to show
@@ -66,9 +79,34 @@ def spiral(increase_arc = False):
         start = stop - 1                 
         stop  = stop + TOTAL_POINTS - 1  
         
-    vedo.show(L).close()
+    side_effects(L)
 
-#    vedo.show(vedo.Line(p)).close()
+def coil(side_effects=show, z_growth=0.01, oscilations=10):
+    TOTAL_POINTS = 1000       # total points             
+    osc = (np.pi*2) * oscilations     # 3 oscilations
+    seg = osc / TOTAL_POINTS # all the angles to plot points on    
+
+    r = 1
+
+    L = []
+
+    X = []
+    Y = []
+    Z = []
+    z = z_growth
+    for i in range(TOTAL_POINTS):
+        current_seg = seg*i
+        X.append(r * np.cos(seg*i))
+        Y.append(r * np.sin(seg*i))
+
+        Z.append(z)
+        z += z_growth
+
+    L.append(vedo.Line([(X[i], Y[i], Z[i]) for i in range(TOTAL_POINTS)]))
+
+    side_effects(L)
+
+
 
 # earth
 def cube():
@@ -186,9 +224,15 @@ def dodecahedron():
 
 # 
 # cube()
-tetrahedron(show=True)
+# tetrahedron(show=True)
 # octahedron()
 #wheel(total_spokes=14)
 
-# spiral(increase_arc=True)
+# spiral(increase_arc=True, side_effects=show)
+
 # circle()
+
+def main():
+    coil(side_effects=show)
+
+main()
