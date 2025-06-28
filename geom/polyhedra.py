@@ -1,4 +1,5 @@
 import vedo
+import vedo.mesh
 import adaptors.vedo as av
 import numpy as np
 import math
@@ -82,20 +83,25 @@ def spiral(increase_arc = False,
     side_effects(L)
 
 def coil(side_effects=show, z_growth=0.01, oscilations=10):
-    TOTAL_POINTS = 1000       # total points             
-    osc = (np.pi*2) * oscilations     # 3 oscilations
-    seg = osc / TOTAL_POINTS # all the angles to plot points on    
+    TOTAL_POINTS = 1000           # total points             
+    osc = (np.pi*2) * oscilations # 3 oscilations
+    seg = osc / TOTAL_POINTS      # all the angles to plot points on    
 
+    # radius
     r = 1
 
+    # vedo lines
     L = []
 
+    # point arrays
     X = []
     Y = []
     Z = []
+
+    # z loop variable
     z = z_growth
+
     for i in range(TOTAL_POINTS):
-        current_seg = seg*i
         X.append(r * np.cos(seg*i))
         Y.append(r * np.sin(seg*i))
 
@@ -149,6 +155,7 @@ def cube():
 
 def wheel(total_spokes=7):
     # work out angle of each spoke 
+
     theta = (np.pi*2) / total_spokes
 
     # array of vedo lines
@@ -163,7 +170,7 @@ def wheel(total_spokes=7):
 
         # add spoke
         spokes.append(vedo.Line([(0,0,0),(x, y, z)]))
-    
+
     # show
     vedo.show(circle, spokes).close()
 
@@ -222,6 +229,49 @@ def icosahedron():
 def dodecahedron():
     print("dodecahedron")
 
+def sphere():
+    radius = 1
+    theta_steps = 40 # around z-axis
+    phi_steps = 20 # around y-axis
+
+    P = []
+
+    for i in range(phi_steps+1):
+        phi = np.pi*i / phi_steps
+        for j in range(theta_steps+1):
+            # draw a circle
+            theta = (2*np.pi) * (j / theta_steps)
+
+            x = radius * np.sin(phi) * np.cos(theta)
+            y = radius * np.sin(phi) * np.sin(theta)
+            z = radius * np.cos(phi)
+
+            P.append((x,y,z))
+        
+    print(P)
+
+    cloud = vedo.Points(P)
+
+    faces = []
+    for i in range(phi_steps):
+        for j in range(theta_steps):
+            p1 = i * (theta_steps + 1) + j
+            p2 = p1 + 1
+            p3 = p1 + (theta_steps + 1)
+            p4 = p3 + 1
+
+            # Two triangles per quad on sphere
+            faces.append([p1, p2, p4])
+            faces.append([p1, p4, p3])
+
+    # create a mesh along the surface of the sphere
+
+    mesh = vedo.Mesh([P, faces])
+
+    vedo.show(mesh).close()
+
+    print("sphere")
+
 # 
 # cube()
 # tetrahedron(show=True)
@@ -233,6 +283,7 @@ def dodecahedron():
 # circle()
 
 def main():
-    coil(side_effects=show)
+    #coil(side_effects=show)
+    sphere()
 
 main()
