@@ -13,7 +13,7 @@ import circle_functions as cf
 def vedo_plot(*p, axes=0):
     vedo.show(p, axes)
 
-def circle(x_scale=1, y_scale=1, show=False):
+def circle(x_scale=1, y_scale=1, show=False, points=False):
     TOTAL_POINTS = 100
 
     segments = (np.pi*2)/ TOTAL_POINTS
@@ -24,15 +24,40 @@ def circle(x_scale=1, y_scale=1, show=False):
 
     p = [(x[i], y[i], z[i]) for i in range(TOTAL_POINTS)]
 
+    # return just the points
+    if points:
+        return p
+
     C = vedo.Line(p, closed=True)
 
+    # optionally show the circle
     if show:
         vedo.show(vedo.Line(p, closed=True)).close()
     
     return C
 
+
 def ellipse(x_scale=1, y_scale=1):
     circle(x_scale=x_scale, y_scale=y_scale, show=True)
+
+def cylinder():
+    top = circle(points=True)
+    bottom_temp = circle(points=True)
+
+    bottom = []
+    for i in range(len(bottom_temp)):
+        x, y, z = bottom_temp[i]
+        bottom.append((x,y,z-3))
+
+    top_face = vedo.Line(top, closed=True)
+    bottom_face = vedo.Line(bottom, closed=True)
+
+    shell = []
+    for i in range(len(bottom)):
+        shell.append(vedo.Line([top[i], bottom[i]]))
+                   
+
+    vedo.show(top_face, bottom_face, shell).close()
 
 def nothing():
     return
@@ -317,7 +342,8 @@ def main():
     #coil(side_effects=show)
     #sphere()
     #pentagon()
-    ellipse(y_scale=2)
+    #ellipse(y_scale=2)
+    cylinder()
     return
 
 main()
