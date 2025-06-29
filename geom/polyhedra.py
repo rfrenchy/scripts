@@ -13,13 +13,13 @@ import circle_functions as cf
 def vedo_plot(*p, axes=0):
     vedo.show(p, axes)
 
-def circle(show=False):
+def circle(x_scale=1, y_scale=1, show=False):
     TOTAL_POINTS = 100
 
     segments = (np.pi*2)/ TOTAL_POINTS
 
-    x = [np.cos(i*segments) for i in range(TOTAL_POINTS)]
-    y = [np.sin(i*segments) for i in range(TOTAL_POINTS)]
+    x = [x_scale*np.cos(i*segments) for i in range(TOTAL_POINTS)]
+    y = [y_scale*np.sin(i*segments) for i in range(TOTAL_POINTS)]
     z = np.zeros(TOTAL_POINTS)
 
     p = [(x[i], y[i], z[i]) for i in range(TOTAL_POINTS)]
@@ -30,6 +30,9 @@ def circle(show=False):
         vedo.show(vedo.Line(p, closed=True)).close()
     
     return C
+
+def ellipse(x_scale=1, y_scale=1):
+    circle(x_scale=x_scale, y_scale=y_scale, show=True)
 
 def nothing():
     return
@@ -48,7 +51,18 @@ def pentagon():
         vedo.Line(p4, closed=True),
     ] 
 
-    vedo.show(L).close()
+    pts = np.array((p1, p2, p3, p4)) + 1
+
+    a, b, c, d = pts
+
+    L2 = [
+        vedo.Line(a, closed=True),
+        vedo.Line(b, closed=True),
+        vedo.Line(c, closed=True),
+        vedo.Line(d, closed=True),
+    ]
+
+    vedo.show(L, L2).close()
 
     return
 
@@ -302,7 +316,8 @@ def sphere():
 def main():
     #coil(side_effects=show)
     #sphere()
-    pentagon()
+    #pentagon()
+    ellipse(y_scale=2)
     return
 
 main()
