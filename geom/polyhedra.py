@@ -1,5 +1,4 @@
 import vedo
-import vedo.mesh
 import adaptors.vedo as av
 import numpy as np
 import math
@@ -33,6 +32,24 @@ def circle(show=False):
     return C
 
 def nothing():
+    return
+
+def pentagon():
+
+    p1 = ((1,0,0),(0,1,0),(-1,0,0))
+    p2 = ((1,0,0),(0.5,-1,0),(0,0,0))
+    p3 = ((-1,0,0),(-0.5,-1,0),(0,0,0))
+    p4 = ((0.5,-1,0),(-0.5,-1,0),(0,0,0))
+
+    L = [
+        vedo.Line(p1, closed=True),
+        vedo.Line(p2, closed=True),
+        vedo.Line(p3, closed=True),
+        vedo.Line(p4, closed=True),
+    ] 
+
+    vedo.show(L).close()
+
     return
 
 def show(lines):
@@ -284,6 +301,8 @@ def sphere():
 
 def main():
     #coil(side_effects=show)
-    sphere()
+    #sphere()
+    pentagon()
+    return
 
 main()
