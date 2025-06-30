@@ -55,17 +55,21 @@ def cylinder():
         shell.append(vedo.Line([top[i], bottom[i]]))
                    
 
+    
     vedo.show(top_face, bottom_face, shell).close()
 
 def nothing():
     return
 
-def pentagon():
+def pentagon(pts = True, show = False):
 
     p1 = ((1,0,0),(0,1,0),(-1,0,0))
     p2 = ((1,0,0),(0.5,-1,0),(0,0,0))
     p3 = ((-1,0,0),(-0.5,-1,0),(0,0,0))
     p4 = ((0.5,-1,0),(-0.5,-1,0),(0,0,0))
+
+    if pts:
+        return (p1,p2,p3,p4)
 
     L = [
         vedo.Line(p1, closed=True),
@@ -74,20 +78,12 @@ def pentagon():
         vedo.Line(p4, closed=True),
     ] 
 
-    pts = np.array((p1, p2, p3, p4)) + 1
-
-    a, b, c, d = pts
-
-    L2 = [
-        vedo.Line(a, closed=True),
-        vedo.Line(b, closed=True),
-        vedo.Line(c, closed=True),
-        vedo.Line(d, closed=True),
-    ]
-
-    vedo.show(L, L2).close()
+    if show:
+        vedo.show(L).close()
 
     return
+
+
 
 def show(lines):
     vedo.show(lines).close()
@@ -272,11 +268,31 @@ def octahedron():
 
 # plato: water
 def icosahedron():
-    print("icosahedron")
+    t1 = av.equilateral_triangle()
+    t2 = [(x+.5,y-1,z) for x,y,z in av.equilateral_triangle() ] @ av.rotate(cx=180)
+    t3 = [(x-.5,y-1,z) for x,y,z in av.equilateral_triangle() ] @ av.rotate(cx=180)
+    t4 = [(x,y,z) for x,y,z in av.equilateral_triangle() ] @ av.rotate(cx=180)
+
+    t_guide = av.equilateral_triangle()
+
+    f1 = vedo.Line(t1, closed=True)
+    f2 = vedo.Line(t2, closed=True)
+    f3 = vedo.Line(t3, closed=True)
+    f4 = vedo.Line(t4, closed=True)
+
+    f1_guide = vedo.Line(t_guide, closed=True, lw=2)
+
+    F = [f1, f2, f3, f4]
+
+    vedo.show(F).close()
 
 # plato: cosmos
 def dodecahedron():
-    print("dodecahedron")
+    pent1 = pentagon() 
+
+    P = vedo.Line(pent1, closed=True),
+
+    vedo.show(P)
 
 def sphere():
     radius = 1
@@ -326,7 +342,11 @@ def main():
     #sphere()
     #pentagon()
     #ellipse(y_scale=2)
-    cylinder()
+    #cylinder()
+    icosahedron()
+    # dodecahedron()
+    
+
     return
 
 main()
