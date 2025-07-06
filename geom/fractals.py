@@ -168,6 +168,11 @@ def koch_snowflake():
 
     ty1= [y + np.max(ty1) for y in ty1]
 
+    tx1_centroid = np.mean(tx1)
+    ty1_centroid = np.mean(ty1)
+
+    print(tx1_centroid, ty1_centroid)
+
     # rotate -45
 
     plt.plot(tx1, ty1, 'g')
