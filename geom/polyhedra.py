@@ -9,7 +9,6 @@ import circle_functions as cf
 
 ## constants
 
-
 def vedo_plot(*p, axes=0):
     vedo.show(p, axes)
 
@@ -35,7 +34,6 @@ def circle(x_scale=1, y_scale=1, show=False, points=False):
         vedo.show(vedo.Line(p, closed=True)).close()
     
     return C
-
 
 def ellipse(x_scale=1, y_scale=1):
     circle(x_scale=x_scale, y_scale=y_scale, show=True)
@@ -168,8 +166,6 @@ def coil(side_effects=show, z_growth=0.01, oscilations=10):
 
     side_effects(L)
 
-
-
 # earth
 def cube():
     # center of universe
@@ -230,7 +226,6 @@ def wheel(total_spokes=7):
     # show
     vedo.show(circle, spokes).close()
 
-
 # plato: fire
 def tetrahedron(show=False):
     unkn = 30 # right triangle angle
@@ -260,7 +255,6 @@ def tetrahedron(show=False):
 
     return pts1r,pts2r,pts3r_translate,pts4r_translate
 
-
 # plato: air
 def octahedron():
     # top faces
@@ -275,7 +269,6 @@ def octahedron():
     
     # show 
     vedo.show(top, bottom).close()
-
 
 # plato: water
 def icosahedron():
@@ -327,16 +320,6 @@ def sphere():
     vedo.show(mesh).close()
 
     print("sphere")
-
-# 
-# cube()
-# tetrahedron(show=True)
-# octahedron()
-#wheel(total_spokes=14)
-
-# spiral(increase_arc=True, side_effects=show)
-
-# circle()
 
 def main():
     #coil(side_effects=show)

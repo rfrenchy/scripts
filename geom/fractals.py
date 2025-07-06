@@ -144,13 +144,73 @@ def scatter(data):
     plt.axis("equal")
     plt.show()
 
+def koch_snowflake():
+    x, y = triangle.equilateral()
+
+    plt.plot(x, y, 'b')
+
+    # shrink triangle to half size
+
+    # find points to create new triangle
+
+    # point 1
+    tx1 = np.median((x[0],x[1]))
+    ty1 = np.median((y[0],y[1]))
+
+    # create new triangle with bottom centered at this point
+    kx, ky = triangle.equilateral()
+
+    tx1 = np.zeros(len(kx))    
+    ty1 = np.zeros(len(ky))    
+    for i in range(len(kx)):
+        tx1[i] = kx[i] * .5
+        ty1[i] = ky[i] * .5
+
+    ty1= [y + np.max(ty1) for y in ty1]
+
+    # rotate -45
+
+    plt.plot(tx1, ty1, 'g')
+
+    # create new triangle with bottom centered at this point
+
+    tx2 = np.array(tx1)
+    ty2 = np.array(ty1)
+    tx2 = [(x + np.max(tx2)) for x in tx2]
+
+    # rotate 45
+
+    plt.plot(tx2, ty2, 'g')
+
+    # point 3
+    tx3 = np.zeros(len(kx))    
+    ty3 = np.zeros(len(ky))    
+    for i in range(len(kx)):
+        tx3[i] = kx[i] * .5
+        ty3[i] = ky[i] * .5
+    
+    tx3= [x + np.median(tx3) for x in tx3]
+    # rotate 90
+
+    plt.plot(tx3, ty3, 'g')
+    # print(x, y)
+
+    # print(tx1, ty1)
+    # print(tx2, ty2)
+    # print(tx3, ty3)
+
+    plt.axis("equal")
+    plt.savefig("test")
 
 def show():
     plt.grid()
     plt.axis("equal")
     plt.show()
 
+
+koch_snowflake()
+
 # scatter(fractal_tree(3))
 # scatter(sierpinski_gasket_v2(3))
-scatter(sierpinski_carpet(3))
+# scatter(sierpinski_carpet(3))
 # show()
