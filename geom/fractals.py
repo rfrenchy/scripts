@@ -14,7 +14,7 @@ import square_functions     as square
 CUBE_1  = 3**1      # 3
 CUBE_2  = 3**2      # 9
 CUBE_N1 = 3**-1     # 0.333
-
+255
 def gasket_side_effects(n, x, y): 
     plt.plot(x, y, 'b')
     print(pd.DataFrame({'n': n, 'x': x, 'y': y}))
@@ -145,11 +145,11 @@ def scatter(data):
     plt.show()
 
 def koch_snowflake():
+    # create base triangle
     x, y = triangle.equilateral()
 
+    # plot base triangle
     plt.plot(x, y, 'b')
-
-    # shrink triangle to half size
 
     # find points to create new triangle
 
@@ -162,20 +162,26 @@ def koch_snowflake():
 
     tx1 = np.zeros(len(kx))    
     ty1 = np.zeros(len(ky))    
+
+    # shrink triangle to half size
     for i in range(len(kx)):
         tx1[i] = kx[i] * .5
         ty1[i] = ky[i] * .5
 
     ty1= [y + np.max(ty1) for y in ty1]
 
-    tx1_centroid = np.mean(tx1)
-    ty1_centroid = np.mean(ty1)
-
-    print(tx1_centroid, ty1_centroid)
-
     # rotate -45
 
-    plt.plot(tx1, ty1, 'g')
+    points = (tx1, ty1)
+
+    rtx1, rty1 = rotate_around_centroid_2d(points, 63.333)
+    for i in range(len(rtx1)):
+        rtx1[i] = rtx1[i] + -0.1
+
+
+    # translate slightly
+
+    plt.plot(rtx1, rty1, 'g')
 
     # create new triangle with bottom centered at this point
 
@@ -183,9 +189,15 @@ def koch_snowflake():
     ty2 = np.array(ty1)
     tx2 = [(x + np.max(tx2)) for x in tx2]
 
-    # rotate 45
+    points = (tx2, ty2)
 
-    plt.plot(tx2, ty2, 'g')
+    # rotate 45
+    rtx2, rty2 = rotate_around_centroid_2d(points, -63.333)
+
+    for i in range(len(rtx2)):
+        rtx2[i] = rtx2[i] + 0.1
+
+    plt.plot(rtx2, rty2, 'g')
 
     # point 3
     tx3 = np.zeros(len(kx))    
@@ -197,7 +209,14 @@ def koch_snowflake():
     tx3= [x + np.median(tx3) for x in tx3]
     # rotate 90
 
-    plt.plot(tx3, ty3, 'g')
+    points = (tx3, ty3)
+    rtx3, rty3 = rotate_around_centroid_2d(points, 180)
+
+    for i in range(len(rty3)):
+        rty3[i] = rty3[i] - 0.33333
+
+
+    plt.plot(rtx3, rty3, 'g')
     # print(x, y)
 
     # print(tx1, ty1)
@@ -212,6 +231,32 @@ def show():
     plt.axis("equal")
     plt.show()
 
+def rotate_around_centroid_2d(xy_tuple, angle_deg):
+    x_array, y_array = xy_tuple
+    x_array = np.array(x_array)
+    y_array = np.array(y_array)
+
+    # Stack into Nx2 array of (x, y) points
+    pts = np.column_stack((x_array, y_array))
+
+    # Compute centroid
+    centroid = pts.mean(axis=0)
+
+    # Translate to origin
+    translated = pts - centroid
+
+    # Rotation matrix
+    theta = np.radians(angle_deg)
+    R = np.array([[np.cos(theta), -np.sin(theta)],
+                  [np.sin(theta),  np.cos(theta)]])
+
+    # Apply rotation and translate back
+    rotated = (R @ translated.T).T + centroid
+
+    # Split back into x and y
+    x_rotated, y_rotated = rotated[:, 0], rotated[:, 1]
+
+    return x_rotated, y_rotated
 
 koch_snowflake()
 
