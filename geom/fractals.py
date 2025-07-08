@@ -168,18 +168,18 @@ def koch_snowflake():
         tx1[i] = kx[i] * .5
         ty1[i] = ky[i] * .5
 
-    ty1= [y + np.max(ty1) for y in ty1]
+    stx1 = [x - 0.1 for x in tx1] 
+    sty1 = [y + 0.4 for y in ty1]
 
     # rotate -45
 
-    points = (tx1, ty1)
+    points = (stx1, sty1)
 
     rtx1, rty1 = rotate_around_centroid_2d(points, 63.333)
     for i in range(len(rtx1)):
-        rtx1[i] = rtx1[i] + -0.1
+        rtx1[i] = rtx1[i] + -0.05
 
 
-    # translate slightly
 
     plt.plot(rtx1, rty1, 'g')
 
@@ -189,7 +189,11 @@ def koch_snowflake():
     ty2 = np.array(ty1)
     tx2 = [(x + np.max(tx2)) for x in tx2]
 
-    points = (tx2, ty2)
+    stx2 = [x + 0.05 for x in tx2]
+    sty2 = [y + 0.4 for y in ty2] 
+    # 0.4 = scaled triangle width - base triangle width
+
+    points = (stx2, sty2)
 
     # rotate 45
     rtx2, rty2 = rotate_around_centroid_2d(points, -63.333)
