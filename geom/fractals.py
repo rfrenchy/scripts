@@ -148,84 +148,108 @@ def koch_snowflake():
     # create base triangle
     x, y = triangle.equilateral()
 
-    # plot base triangle
     plt.plot(x, y, 'b')
 
-    # find points to create new triangle
+    def koch_recurse(kx, ky, n = 1):
+        # create first fractal part
+        tx1 = np.zeros(len(kx))    
+        ty1 = np.zeros(len(ky))    
 
-    # point 1
-    tx1 = np.median((x[0],x[1]))
-    ty1 = np.median((y[0],y[1]))
+        # shrink triangle to half size
+        for i in range(len(kx)):
+            tx1[i] = kx[i] / 2
+            ty1[i] = ky[i] / 2
 
-    # create new triangle with bottom centered at this point
-    kx, ky = triangle.equilateral()
+        stx1 = [x - 0.1 for x in tx1] 
+        sty1 = [y + 0.4 for y in ty1]
 
-    tx1 = np.zeros(len(kx))    
-    ty1 = np.zeros(len(ky))    
+        points = (stx1, sty1)
 
-    # shrink triangle to half size
-    for i in range(len(kx)):
-        tx1[i] = kx[i] * .5
-        ty1[i] = ky[i] * .5
+        rtx1, rty1 = rotate_around_centroid_2d(points, 63.333)
+        for i in range(len(rtx1)):
+            rtx1[i] = rtx1[i] + -0.05
 
-    stx1 = [x - 0.1 for x in tx1] 
-    sty1 = [y + 0.4 for y in ty1]
+        plt.plot(rtx1, rty1, 'g')
 
-    # rotate -45
+        # create new triangle with bottom centered at this point
 
-    points = (stx1, sty1)
+        tx2 = np.array(tx1)
+        ty2 = np.array(ty1)
+        tx2 = [(x + np.max(tx2)) for x in tx2]
 
-    rtx1, rty1 = rotate_around_centroid_2d(points, 63.333)
-    for i in range(len(rtx1)):
-        rtx1[i] = rtx1[i] + -0.05
+        stx2 = [x + 0.05 for x in tx2]
+        sty2 = [y + 0.4 for y in ty2] 
+        # 0.4 = scaled triangle width - base triangle width
 
+        points = (stx2, sty2)
 
+        # rotate 45
+        rtx2, rty2 = rotate_around_centroid_2d(points, -63.333)
 
-    plt.plot(rtx1, rty1, 'g')
+        for i in range(len(rtx2)):
+            rtx2[i] = rtx2[i] + 0.1
 
-    # create new triangle with bottom centered at this point
+        plt.plot(rtx2, rty2, 'g')
 
-    tx2 = np.array(tx1)
-    ty2 = np.array(ty1)
-    tx2 = [(x + np.max(tx2)) for x in tx2]
+        # point 3
+        tx3 = np.zeros(len(kx))    
+        ty3 = np.zeros(len(ky))    
+        for i in range(len(kx)):
+            tx3[i] = kx[i] * .5
+            ty3[i] = ky[i] * .5
+        
+        tx3= [x + np.median(tx3) for x in tx3]
+        # rotate 90
 
-    stx2 = [x + 0.05 for x in tx2]
-    sty2 = [y + 0.4 for y in ty2] 
-    # 0.4 = scaled triangle width - base triangle width
+        points = (tx3, ty3)
+        rtx3, rty3 = rotate_around_centroid_2d(points, 180)
 
-    points = (stx2, sty2)
-
-    # rotate 45
-    rtx2, rty2 = rotate_around_centroid_2d(points, -63.333)
-
-    for i in range(len(rtx2)):
-        rtx2[i] = rtx2[i] + 0.1
-
-    plt.plot(rtx2, rty2, 'g')
-
-    # point 3
-    tx3 = np.zeros(len(kx))    
-    ty3 = np.zeros(len(ky))    
-    for i in range(len(kx)):
-        tx3[i] = kx[i] * .5
-        ty3[i] = ky[i] * .5
-    
-    tx3= [x + np.median(tx3) for x in tx3]
-    # rotate 90
-
-    points = (tx3, ty3)
-    rtx3, rty3 = rotate_around_centroid_2d(points, 180)
-
-    for i in range(len(rty3)):
-        rty3[i] = rty3[i] - 0.33333
+        for i in range(len(rty3)):
+            rty3[i] = rty3[i] - 0.33333
 
 
-    plt.plot(rtx3, rty3, 'g')
-    # print(x, y)
+        plt.plot(rtx3, rty3, 'g')
+        n = n -1
+        if n > 0:
+            #koch_recurse(rtx1, rty1, n)
+            koch_recurse_2(rtx1, rty1)
 
-    # print(tx1, ty1)
-    # print(tx2, ty2)
-    # print(tx3, ty3)
+    def koch_recurse_2(kx, ky): 
+        print("koch recurse 2")
+        # create first fractal part
+        tx1 = np.zeros(len(kx))    
+        ty1 = np.zeros(len(ky))    
+
+        for i in range(0, len(kx)):
+            tx1[i] = kx[i] / 2
+            ty1[i] = ky[i] / 2
+
+
+        for i in range(0, len(kx), 6):
+            # translate        
+            pts = (kx[i], kx[i+1])
+            a = (np.max(pts) - np.min(pts)) / 6
+            print(a)
+
+            stx1 = [x + a for x in tx1] 
+            sty1 = [y + .516 for y in ty1]
+
+            #stx1 = tx1
+            #sty1 = ty1
+
+            # rotate
+            points = (stx1, sty1)
+
+            rtx1, rty1 = rotate_around_centroid_2d(points, -63)
+            for i in range(len(rtx1)):
+                kx
+    #            rtx1[i] = rtx1[i] + -0.05
+
+            plt.plot(rtx1, rty1, 'g')
+
+
+    n = 2
+    koch_recurse(x, y, n)
 
     plt.axis("equal")
     plt.savefig("test")
