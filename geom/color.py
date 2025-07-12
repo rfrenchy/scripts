@@ -1,4 +1,5 @@
 import vedo
+from colour.plotting import *
 
 primary = [
     {"name": "red", "rgb": (255, 0, 0), "hex":"#FF0000"},
@@ -37,5 +38,10 @@ def colors():
               secondary_points, 
               axes=1)
  
+def color_science():
+    colour_style()
+    plot_visible_spectrum()
 
-colors()
+color_science()
+
+# colors()
