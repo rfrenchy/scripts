@@ -1,5 +1,6 @@
+import numpy as np
 import vedo
-from colour.plotting import *
+import colour
 
 primary = [
     {"name": "red", "rgb": (255, 0, 0), "hex":"#FF0000"},
@@ -38,10 +39,42 @@ def colors():
               secondary_points, 
               axes=1)
  
-def color_science():
-    colour_style()
-    plot_visible_spectrum()
+def color_science_hello_world():
+    # perceptual color space
+    colour.plotting.colour_style()
+    colour.plotting.plot_visible_spectrum()
 
-color_science()
+def color_palette():
+    base_rgb = (0, 1, 0)  # normalized RGB (0-1)
+
+    # Convert to Lab (perceptual color space)
+    lab = colour.XYZ_to_Lab(colour.sRGB_to_XYZ(base_rgb))
+
+    # Generate palette by varying the Lightness (L*)
+    palette_lab = [(l, lab[1], lab[2]) for l in np.linspace(20, 90, 6)]
+
+    # Convert back to sRGB
+    palette_rgb = [colour.XYZ_to_sRGB(colour.Lab_to_XYZ(c)) for c in palette_lab]
+
+    # Clip values to valid range [0, 1] and convert to 8-bit RGB
+    palette_rgb_8bit = [tuple(int(max(0, min(1, c)) * 255) for c in rgb) for rgb in palette_rgb]
+
+    swatches = []
+    for i, rgb in enumerate(palette_rgb_8bit):
+        # Covert RGB to hex format for vedo
+        hex_color = "#{:02x}{:02x}{:02x}".format(*rgb)
+
+        r = vedo.Rectangle(
+                p1=(i*1.1,0), 
+                p2=((i*1.1)+1, 1),
+                c=hex_color)
+        
+        swatches.append(r)
+
+    print(palette_rgb_8bit)
+    vedo.show(swatches, "color palette", size=(800,200), bg="white")
+    
+
+color_palette()
 
 # colors()
