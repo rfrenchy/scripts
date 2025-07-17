@@ -1,0 +1,15 @@
+/home/ryan/scripts/c#/q4/bin/Debug/net8.0/q4
+/home/ryan/scripts/c#/q4/bin/Debug/net8.0/q4.deps.json
+/home/ryan/scripts/c#/q4/bin/Debug/net8.0/q4.runtimeconfig.json
+/home/ryan/scripts/c#/q4/bin/Debug/net8.0/q4.dll
+/home/ryan/scripts/c#/q4/bin/Debug/net8.0/q4.pdb
+/home/ryan/scripts/c#/q4/obj/Debug/net8.0/q4.GeneratedMSBuildEditorConfig.editorconfig
+/home/ryan/scripts/c#/q4/obj/Debug/net8.0/q4.AssemblyInfoInputs.cache
+/home/ryan/scripts/c#/q4/obj/Debug/net8.0/q4.AssemblyInfo.cs
+/home/ryan/scripts/c#/q4/obj/Debug/net8.0/q4.csproj.CoreCompileInputs.cache
+/home/ryan/scripts/c#/q4/obj/Debug/net8.0/q4.sourcelink.json
+/home/ryan/scripts/c#/q4/obj/Debug/net8.0/q4.dll
+/home/ryan/scripts/c#/q4/obj/Debug/net8.0/refint/q4.dll
+/home/ryan/scripts/c#/q4/obj/Debug/net8.0/q4.pdb
+/home/ryan/scripts/c#/q4/obj/Debug/net8.0/q4.genruntimeconfig.cache
+/home/ryan/scripts/c#/q4/obj/Debug/net8.0/ref/q4.dll
