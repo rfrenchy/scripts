@@ -1,0 +1,15 @@
+/home/ryan/scripts/c#/q3/bin/Debug/net8.0/q3
+/home/ryan/scripts/c#/q3/bin/Debug/net8.0/q3.deps.json
+/home/ryan/scripts/c#/q3/bin/Debug/net8.0/q3.runtimeconfig.json
+/home/ryan/scripts/c#/q3/bin/Debug/net8.0/q3.dll
+/home/ryan/scripts/c#/q3/bin/Debug/net8.0/q3.pdb
+/home/ryan/scripts/c#/q3/obj/Debug/net8.0/q3.GeneratedMSBuildEditorConfig.editorconfig
+/home/ryan/scripts/c#/q3/obj/Debug/net8.0/q3.AssemblyInfoInputs.cache
+/home/ryan/scripts/c#/q3/obj/Debug/net8.0/q3.AssemblyInfo.cs
+/home/ryan/scripts/c#/q3/obj/Debug/net8.0/q3.csproj.CoreCompileInputs.cache
+/home/ryan/scripts/c#/q3/obj/Debug/net8.0/q3.sourcelink.json
+/home/ryan/scripts/c#/q3/obj/Debug/net8.0/q3.dll
+/home/ryan/scripts/c#/q3/obj/Debug/net8.0/refint/q3.dll
+/home/ryan/scripts/c#/q3/obj/Debug/net8.0/q3.pdb
+/home/ryan/scripts/c#/q3/obj/Debug/net8.0/q3.genruntimeconfig.cache
+/home/ryan/scripts/c#/q3/obj/Debug/net8.0/ref/q3.dll

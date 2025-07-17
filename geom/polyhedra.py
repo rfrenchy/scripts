@@ -2,8 +2,10 @@ import vedo
 import adaptors.vedo as av
 import numpy as np
 import math
+import matplotlib.pyplot as plt
 
 import circle_functions as cf
+import triangle_functions as tf
 
 ### platonic solids
 
@@ -166,7 +168,7 @@ def coil(side_effects=show, z_growth=0.01, oscilations=10):
 
     side_effects(L)
 
-# earth
+# plato: earth
 def cube():
     # center of universe
     center = vedo.Point((0,0,0))
@@ -321,12 +323,28 @@ def sphere():
 
     print("sphere")
 
+def star():
+    # create points
+    tx, ty = tf.equilateral()
+
+    tx_west, ty_west = tf.equilateral()
+
+    # create lines
+    # lines = vedo.Line(points, closed=True)
+    plt.plot(tx, ty)
+
+    # show on screen
+    # vedo.show(lines).closed()
+    plt.savefig("test.jpg")
+
+
 def main():
     #coil(side_effects=show)
     #sphere()
     #pentagon()
     #ellipse(y_scale=2)
-    cylinder()
+   # cylinder()
+    star()
     return
 
 main()
