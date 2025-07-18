@@ -20,33 +20,28 @@ r – 1
 d – 1
 */
 
+// get env input
 string[] cli_args = Environment.GetCommandLineArgs();
 string input = cli_args[1];
 
+// find character counts
 Dictionary<char, int> character_counts = [];
-
 for (int i = 0; i < input.Length; i++)
 {
     if (input[i] == ' ')
-    {
         continue;
-    }
 
+    // to lower case, i.e. w and W treated the same when found
     char input_lower = input[i].ToString().ToLower().ToCharArray()[0];
 
     if (character_counts.TryGetValue(input_lower, out int value))
-    {
         character_counts[input_lower] = ++value;
-    }
     else
-    {
         character_counts[input_lower] = 1;
-    }
 }
 
+// print
 foreach (var key in character_counts.Keys)
-{
     Console.WriteLine(key + " - " + character_counts[key]);   
-}
 
 
