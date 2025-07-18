@@ -45,7 +45,7 @@ def color_science_hello_world():
     colour.plotting.plot_visible_spectrum()
 
 def color_palette():
-    base_rgb = (0, 1, 0)  # normalized RGB (0-1)
+    base_rgb = (1, 1, 0)  # normalized RGB (0-1)
 
     # Convert to Lab (perceptual color space)
     lab = colour.XYZ_to_Lab(colour.sRGB_to_XYZ(base_rgb))

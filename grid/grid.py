@@ -42,7 +42,7 @@ dw = w / wid
 dwx = dw
 
 for i in range(wid):
-	drw.line([(dwx, 0),(dwx, h)], fill=(0,0,50,50), width=16) # down
+	drw.line([(dwx, 0),(dwx, h)], fill=(0,0,0,85), width=16) # down
 	dwx = dwx + dw
 
 # draw line vertical 'hei' times
@@ -50,7 +50,7 @@ dh = h / hei
 dhx = dh
 
 for i in range(hei):
-	drw.line([(0, dhx), (w, dhx)], fill=(0,0,50,50), width=16) 
+	drw.line([(0, dhx), (w, dhx)], fill=(0,0,0,85), width=16) 
 	dhx = dhx + dh
 
 # save output
