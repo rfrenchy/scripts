@@ -54,4 +54,4 @@ def sierpinski_carpet(n = 1, side_effects = carpet_side_effects):
     # recurse
     carpet_recurse(n-1, x2, y2, TX)
 
-sierpinski_carpet(4)
+sierpinski_carpet(3)
