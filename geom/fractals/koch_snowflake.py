@@ -39,7 +39,7 @@ def koch_snowflake():
         dy = y[1] - y[0]
         deg = np.degrees(np.arctan2(dy, dx))
 
-        # grow outward from -2x original angle
+        # TODO grow outward from -2x original angle
         print(deg)
 
         # grow outward from median at angle
