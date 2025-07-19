@@ -10,8 +10,15 @@ input: abcd , output : a ab abc abcd b bc bcd c cd d
 string[] cli_args = Environment.GetCommandLineArgs();
 string input = cli_args[1];
 
+List<string> K = [];
 for (int i = 0; i < input.Length; i++)
-{ 
-    
+{
+    for (int j = i; j < input.Length; j++)
+    {
+        // K.Add(input.Substring(j, i));
+    }
 }
+
+foreach (var s in K)
+    Console.Write(s + " ");
 
