@@ -53,6 +53,18 @@ app.get('/person/name/:firstname', function(req, res) {
    }) 
 })
 
+app.get('/lettercount/:word', function(req, res) {
+    const chars = req.params.word.split("")
+    const keys = {};
+    chars.forEach(c => {
+        const k = keys[c];
+        if (!k) keys[c] = 1;
+        else keys[c] = keys[c] + 1
+    })
+    
+    res.send(JSON.stringify(keys) + "\n")
+})
+
 // var app = express();
 
 app.listen(3000, function () {
