@@ -1,0 +1,17 @@
+{
+	"name": "webgl",
+	"version": "1.0.0",
+	"description": "",
+	"scripts": {
+		"start": "node app.js"
+	},
+	"dependencies": {
+		"@types/express": "^5.0.3",
+		"@types/mysql": "^2.15.27",
+		"express": "^5.1.0",
+		"mysql": "^2.18.1"
+	},
+	"devDependencies": {
+		"typescript": "^5.0.0"
+	}
+}
