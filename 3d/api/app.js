@@ -1,36 +1,19 @@
 
-var express = require('express');
-var mysql = require('mysql');
+const express = require('express');
+const mysql = require('mysql');
 
-var connection = mysql.createConnection({
+const connection = mysql.createConnection({
     host: 'localhost',
     user:  'debian-sys-maint',
     password: 'QCRt3iJIpawP714C',
     database: '3d'
 });
 
-var app = express();
+const app = express();
 
 app.get('/data', function (req, res) {
     console.log("Received a request for /data");
     res.send("test\n");
-
-    /**
-    const x = connection.query('SELECT * FROM Person WHERE id = 2');
-
-    const names = []
-    let count = 0;
-    
-    x.on('result', function (row) { 
-        
-        if (row.Firstname != null) {
-            names.push(row.Firstname);
-            res.send(names[count] + "\n");
-            count++;
-        }
-    })
-        //});
-    */
 })
 
 app.get('/reverse/:word', function(req, res) {
@@ -64,8 +47,6 @@ app.get('/lettercount/:word', function(req, res) {
     
     res.send(JSON.stringify(keys) + "\n")
 })
-
-// var app = express();
 
 app.listen(3000, function () {
   console.log('listening on port 3000');
