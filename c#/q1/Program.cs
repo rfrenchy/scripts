@@ -23,7 +23,20 @@ if (cli_args.Length > 1)
 
     Console.WriteLine(output);
 }
+public class Questions
+{
+    public string Q1(string input)
+    {
+        string output = "";
 
+        for (int i = input.Length; i > 0; i--)
+        {
+            output += input[i - 1];
+        }
+
+        return output;
+    }
+}
 
 
 
