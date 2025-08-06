@@ -144,19 +144,73 @@ it automatically
 
 ### 4. What are some design patterns you've used (e.g. Singleton, Factory, Repository)?
 
+I've uesd builder classes to create complex objects, keeping the complexity of creating the class in the builder class.
+
 ### 5. How do you implement the Repository and Unit of Work patterns?
 
 ## ASP.NET & Web Development
 
 ### 1. What is the difference between ASP.NET MVC and ASP.NET Web API?
 
+ASP.NET MVC is used to build web applications using the Model, View Controller pattern.
+e.g. web endpoint `{controller/action/id}`
+
+ASP.NET Web API is used to build RESTful http services, returning data rather than
+building a frontend.
+e.g. route `["Route("api/products/{id})"]`
+
+In ASP.NET Core, these two are now unified under one. ASP.NET Core is the most modern.
+
 ### 2. How does routing work in ASP.NET Core?
+
+Routing in ASP.NET Core is how incoming HTTP requests are mapped to either: controller actions, razor pages, or endpoints. You can either use conventional routing or attribute based routing
+
+in ASP.NET Core 3+, these are all unified and usable under Attribute based routing only, using MapControllers() and [ApiController].
 
 ### 3. What is middleware in ASP.NET Core?
 
+Middleware is placable code within the pipeline of a http request to a ASP.NET Core web service. You can put code to inspect, modify, pass onto the next middleware, or act on the response before it reaches the controller. A common use case is authentication/authorization
+
+Built in Middlwares: `UseRouting()`, `UseAuthentication()`, `UseAuthorization()`
+
 ### 4. How do you handle authentication and authorization in ASP.NET Core?
 
+You can register the type of auth you are using when first starting the app, e.g. JWT bearer tokens, and then add [authorize] tags onto your endpoints for whatever you want to auth.
+
+e.g.
+
+```
+var builder = WebApplication.CreateBuilder(args);
+
+// Register authentication and authorization services
+builder.Services.AddAuthentication("Bearer")
+    .AddJwtBearer("Bearer", options =>
+    {
+        options.Authority = "https://your-auth-server";
+        options.Audience = "your-api";
+    });
+
+builder.Services.AddAuthorization();
+
+var app = builder.Build();
+
+// 🔁 Middleware pipeline
+app.UseRouting();
+
+app.UseAuthentication(); // Must be before UseAuthorization
+app.UseAuthorization();
+
+app.MapControllers();
+
+app.Run();
+
+```
+
 ### 5. What are Tag helpers and View Components?
+
+Tag helpers are Razor language you can use in .cshtml files to make your code more readable and tied to your backend logic
+
+e.g. `<a asp-controller="home">` generates `<a href="/Home>/>`
 
 ## Database & Entity Framework
 
