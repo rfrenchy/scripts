@@ -1,9 +1,11 @@
 ﻿namespace Questions;
 
-
 // https://ankitsharmablogs.com/csharp-coding-questions-for-technical-interviews/
-public static class Qs
+public static class Questions
 {
+    public static void Main(string[] args)
+    { }
+
     /**
         How to reverse a string?
         Ans.: The user will input a string and the method should return the reverse of that string
@@ -58,7 +60,7 @@ public static class Qs
         for (int i = words.Length - 1; i >= 0; i--)
             reversed_input += words[i] + " ";
 
-        return reversed_input;
+        return reversed_input.Trim();
     }
 
     /**
@@ -81,7 +83,7 @@ public static class Qs
             reversed_words += " ";
         }
 
-        return reversed_words;
+        return reversed_words.Trim();
     }
 
     /**
@@ -122,7 +124,9 @@ public static class Qs
         for (int i = 0; i < input.Length; i++)
         {
             if (occurrenced.Where(x => x == input[i]).Any())
-                occurrenced.Add(input[i]);
+                break;
+                
+            occurrenced.Add(input[i]);
         }
 
         string word = "";
