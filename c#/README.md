@@ -212,6 +212,8 @@ Tag helpers are Razor language you can use in .cshtml files to make your code mo
 
 e.g. `<a asp-controller="home">` generates `<a href="/Home>/>`
 
+
+
 ## Database & Entity Framework
 
 ### 1. What is Entity Framework (EF)?

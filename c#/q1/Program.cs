@@ -123,17 +123,11 @@ public static class Questions
         List<char> occurrenced = [];
         for (int i = 0; i < input.Length; i++)
         {
-            if (occurrenced.Where(x => x == input[i]).Any())
-                break;
-                
-            occurrenced.Add(input[i]);
+            if (!occurrenced.Where(x => x == input[i]).Any())
+                occurrenced.Add(input[i]);
         }
 
-        string word = "";
-        foreach (char c in occurrenced)
-            word += c;
-
-        return word;
+        return string.Concat(occurrenced.Select(x => x));
     }
 }
 
