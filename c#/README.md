@@ -80,7 +80,41 @@ which is therefore less performant than IEnumerables, as they ensure they are on
 
 ### 13. Explain boxing and unboxing
 
+boxing is the process of converting a value type into a object
+
+e.g. 
+
+```
+int number = 42;
+object boxed = number; // boxing
+```
+
+unboxing is the process of converting an object into a value type
+implicit, lose information
+e.g.
+
+```
+object boxed = 42;
+int number = (int)boxed; // unboxing
+```
+explicit, gain information/more restrictive as to what type the 'number' variable is
+
 ### 14. How does dependency injection work in .NET Core
+
+Depedency injeciton became built into the ecosystem, treated as a first-class feature
+You register services via an interface and an implementation of that interface
+into the DI Container
+
+``` builder.services.AddTransient<IMessageService, EmailService>();```
+- transient = new instance everyime
+- scoped = one instance per request, 
+- singleton = one instance per application lifetime
+
+Then can inject the service into the constructor of other objects
+and its handled by .NET to supply it via the DI Container, it resolves
+it automatically
+
+.NET Core has the Microsoft.Extensions.DependencyInjection package by default
 
 ## OOP & Design Patterns
 
