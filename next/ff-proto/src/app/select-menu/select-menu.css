@@ -19,3 +19,7 @@
 .not-selectable {
     color: grey;
 }
+
+.selectable:hover {
+    cursor: pointer;
+}
