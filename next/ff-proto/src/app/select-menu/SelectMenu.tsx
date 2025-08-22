@@ -1,5 +1,6 @@
 'use client';
 
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import "./select-menu.css"
 import { useRouter } from "next/navigation";
 
@@ -7,11 +8,16 @@ import { useRouter } from "next/navigation";
 
 export default function SelectMenu() {
     return (<div className="select-menu">
-        {selectMenuData.map(x => <MenuItem name={x.name} key={x.name} selectable={x.selectable}/>)}
+        {selectMenuData.map(x => <MenuItem 
+            name={x.name} 
+            key={x.name} 
+            selectable={x.selectable}
+            onClick={x.onClick}
+            />)}
     </div>);
 }
 
-type MenuData = { name: string, selectable: boolean }
+type MenuData = { name: string, selectable: boolean, onClick?: (r: AppRouterInstance) => void }
 
 function MenuItem(props: MenuData) {
     const router = useRouter();
@@ -19,15 +25,15 @@ function MenuItem(props: MenuData) {
     return (
         <div 
             className={`select-menu-item ${props.selectable ? "selectable" : "not-selectable"}`} 
-            onClick={() => { console.log(props.name); router.push("/items");}}    
+            onClick={() => props.onClick && props.onClick(router)}    
         >
                 <span>{props.name}</span>
     </div>)
 }
 
 const selectMenuData = [
-    { name: "Item", selectable: true },
-    { name: "Magic", selectable: true },
+    { name: "Item", selectable: true, onClick: (router: AppRouterInstance) => router.push('/items') },
+    { name: "Magic", selectable: true, onClick: (router: AppRouterInstance) => router.push('/magic') },
     { name: "Materia", selectable: true },
     { name: "Equip", selectable: true },
     { name: "Status", selectable: true },
