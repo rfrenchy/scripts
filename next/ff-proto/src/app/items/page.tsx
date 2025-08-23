@@ -2,21 +2,28 @@
 
 import "./layout.css"
 
-import { useState } from 'react';
-
-
+import { Dispatch, SetStateAction, useState } from 'react';
 
 export default function Items() {
+
+    const [selectedItem, selectItemDescription] =
+        useState(items[0].description)
+
     return (
         <div className="item-page">
             <div className="top-bar">
                 <MenuNav />
                 <PageName />
             </div>
-            <div className="description-bar"></div>
+            <div className="description-bar">
+                <span>{selectedItem}</span>
+            </div>
             <div className="main-view">
                 <div className="character-screen"></div>
-                <ItemList items={items}/> 
+                <ItemList
+                    items={items}
+                    selectItemDescription={selectItemDescription}
+                />
             </div>
         </div>)
 }
@@ -37,42 +44,62 @@ function PageName() {
     )
 }
 
+type ItemSelect = Dispatch<SetStateAction<string | undefined>>
+
 type ItemListProps = {
     items: Item[];
+    selectItemDescription: ItemSelect
 }
 
-type Item = { name: string, amount: number, selectable: boolean }
+type Item = {
+    name: string,
+    amount: number,
+    selectable: boolean,
+    description?: string
+}
 
-function ItemList (props: ItemListProps) {
 
 
+function ItemList(props: ItemListProps) {
     return (<div className="item-list">
         <ul>
-            {props.items.map(x => <ItemListItem key={x.name} {...x}/>)}
+            {props.items.map(x =>
+                <ItemListItem
+                    key={x.name}
+                    selectItem={props.selectItemDescription}
+                    item={x}
+                />)}
         </ul>
     </div>);
 }
 
+type ItemListItemProps = {
+    item: Item,
+    selectItem: ItemSelect
+}
 
-function ItemListItem(props: Item) {
-    const [amount, setAmount] = useState(props.amount);
+function ItemListItem(props: ItemListItemProps) {
+    const [amount, setAmount] = useState(props.item.amount);
 
-    const selectable = props.selectable ? "selectable" : "unselectable";
+    const selectable = props.item.selectable ? "selectable" : "unselectable";
 
-    return (<li 
-                    className={`item-list-item ${selectable}`} 
-                    onClick={() => {
-                        if (props.selectable) setAmount(amount - 1);
-                    }}
-                >
-                    <span>{props.name}</span><span>:</span><span>{amount}</span>
-                </li>)
+    return (<li
+        className={`item-list-item ${selectable}`}
+        onClick={() => {
+            if (props.item.selectable) {
+                setAmount(amount - 1)
+                props.selectItem(props.item.description)
+            };
+        }}
+    >
+        <span>{props.item.name}</span><span>:</span><span>{amount}</span>
+    </li>)
 
 }
 
 const items: Item[] = [
-    { name: "Soft", amount: 6, selectable: false },
-    { name: "Turbo Ether", amount: 18, selectable: true },
+    { name: "Soft", amount: 6, selectable: false, description: "Cures [Petrify]" },
+    { name: "Turbo Ether", amount: 18, selectable: true, description: "Restores MP" },
     { name: "Ether", amount: 10, selectable: true },
     { name: "Phoenix Down", amount: 29, selectable: true },
     { name: "X-Potion", amount: 9, selectable: true },
