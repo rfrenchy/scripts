@@ -1,9 +1,9 @@
 'use client';
 
-import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import "./select-menu.css"
+
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { useRouter } from "next/navigation";
-import { Router } from "next/router";
 
 // todo make menu item seperate file
 
