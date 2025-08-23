@@ -84,3 +84,18 @@
 .arrange-menu > ul {
     margin-left: 8px;
 }
+
+.key-item-list {
+    display: flex;
+    flex-wrap: wrap;
+    max-height: 100%;
+    height: max-content;
+}
+
+.key-item-list > .key-item-data {
+    flex: 50%;
+    height: 36px;
+    padding: 16px;
+}
+
+

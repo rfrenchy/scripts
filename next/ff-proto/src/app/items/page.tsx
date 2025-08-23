@@ -4,46 +4,59 @@ import "./layout.css"
 
 import { Dispatch, SetStateAction, useState } from 'react';
 
+type MainViewPages = "use" | "key-items";
+
 export default function Items() {
 
     const [selectedItem, selectItemDescription] =
         useState(items[0].description)
 
     const [arrangeMenuHidden, arrangeMenuSetHidden] = useState(true)
-        
+
+    const [activePage, changeActivePage] = useState("use" as MainViewPages);
+
+    const CurrentActivePage = getCurrentActivePage(activePage);
+
+
     return (
         <div className="item-page">
             <div className="top-bar">
                 <MenuNav 
                     arrangeHidden={arrangeMenuHidden} 
+                    activePage={activePage}
                     clickArrange={arrangeMenuSetHidden}
+                    changeActivePage={changeActivePage}
                 />
                 <PageName />
             </div>
             <div className="description-bar">
                 <span>{selectedItem}</span>
             </div>
-            <div className="main-view">
-                <div className="character-screen"></div>
-                <ItemList
-                    items={items}
-                    selectItemDescription={selectItemDescription}
-                />
-            </div>
+            {CurrentActivePage}
             <MenuNavArrange hidden={arrangeMenuHidden}/>
         </div>)
 }
 
 type MenuNavProps = {
     arrangeHidden: boolean
+    activePage: MainViewPages
+
     clickArrange: MenuHiddenSelect
+    changeActivePage: ChangeActivePage
+}
+
+function getCurrentActivePage(activePage: MainViewPages) {
+    switch (activePage) {
+        case "use": return <UseView />;
+        case "key-items": return <KeyItems keyItems={keyItemData}/>;
+    }
 }
 
 function MenuNav(props: MenuNavProps) {
     return (<div className="menu-nav">
-        <span>Use</span>
-        <span onClick={() => { props.clickArrange(!props.arrangeHidden); console.log("test")}}>Arrange</span>
-        <span>Key Items</span>
+        <span onClick={() => props.changeActivePage("use")}>Use</span>
+        <span onClick={() => props.clickArrange(!props.arrangeHidden)}>Arrange</span>
+        <span onClick={() => props.changeActivePage("key-items")}>Key Items</span>
     </div>)
 }
 
@@ -76,7 +89,7 @@ function PageName() {
 
 type ItemSelect = Dispatch<SetStateAction<string | undefined>>
 type MenuHiddenSelect = Dispatch<SetStateAction<boolean>>
-
+type ChangeActivePage = Dispatch<SetStateAction<MainViewPages>> 
 
 type ItemListProps = {
     items: Item[];
@@ -139,3 +152,47 @@ const items: Item[] = [
     { name: "Megalixir", amount: 6, selectable: true },
     { name: "Elixir", amount: 12, selectable: true },
 ]
+
+type KeyItem = {
+    name: string;
+    description: string;
+}
+
+const keyItemData: KeyItem[] = [
+    { name: "Silk Dress", description: "Dress made of silk"},
+    { name: "Blonde Wig", description: ""},
+    { name: "Glass Tiara", description: ""},
+    { name: "Cologne", description: ""},
+    { name: "Key to Ancients", description: ""},
+    { name: "Lunar Harp", description: ""},
+    { name: "Basement Key", description: ""},
+    { name: "PHS", description: ""},
+    { name: "Gold Ticket", description: ""},
+    { name: "Keystone", description: ""},
+    { name: "Leviathan Scales", description: ""},
+    { name: "Glacier Map", description: ""},
+    { name: "Snowboard", description: ""},
+]
+
+type KeyItemProps = {
+    keyItems: KeyItem[]
+}
+
+function KeyItems(props: KeyItemProps) {
+    return (<div className="key-item-list">
+        {props.keyItems.map((k) => 
+            <div key={k.name} className="key-item-data"><span>{k.name}</span></div>
+        )}
+    </div>)
+
+}
+
+function UseView(props :any) {
+    return <div className="main-view">
+        <div className="character-screen"></div>
+         <ItemList
+            items={items}
+            selectItemDescription={props.selectItemDescription}
+         />
+    </div>
+}
