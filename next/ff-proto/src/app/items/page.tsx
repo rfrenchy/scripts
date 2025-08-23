@@ -9,10 +9,15 @@ export default function Items() {
     const [selectedItem, selectItemDescription] =
         useState(items[0].description)
 
+    const [arrangeMenuHidden, arrangeMenuSetHidden] = useState(true)
+        
     return (
         <div className="item-page">
             <div className="top-bar">
-                <MenuNav />
+                <MenuNav 
+                    arrangeHidden={arrangeMenuHidden} 
+                    clickArrange={arrangeMenuSetHidden}
+                />
                 <PageName />
             </div>
             <div className="description-bar">
@@ -25,14 +30,39 @@ export default function Items() {
                     selectItemDescription={selectItemDescription}
                 />
             </div>
+            <MenuNavArrange hidden={arrangeMenuHidden}/>
         </div>)
 }
 
-function MenuNav() {
+type MenuNavProps = {
+    arrangeHidden: boolean
+    clickArrange: MenuHiddenSelect
+}
+
+function MenuNav(props: MenuNavProps) {
     return (<div className="menu-nav">
         <span>Use</span>
-        <span>Arrange</span>
+        <span onClick={() => { props.clickArrange(!props.arrangeHidden); console.log("test")}}>Arrange</span>
         <span>Key Items</span>
+    </div>)
+}
+
+type MenuNavArrangeProps = {
+    hidden: boolean
+}
+
+function MenuNavArrange(props: MenuNavArrangeProps) {
+    return (<div className="arrange-menu" hidden={props.hidden}>
+        <ul>
+            <li>Customise</li>
+            <li>Field</li>
+            <li>Battle</li>
+            <li>Throw</li>
+            <li>Type</li>
+            <li>Name</li>
+            <li>Most</li>
+            <li>Least</li>
+        </ul>
     </div>)
 }
 
@@ -45,6 +75,8 @@ function PageName() {
 }
 
 type ItemSelect = Dispatch<SetStateAction<string | undefined>>
+type MenuHiddenSelect = Dispatch<SetStateAction<boolean>>
+
 
 type ItemListProps = {
     items: Item[];
@@ -57,8 +89,6 @@ type Item = {
     selectable: boolean,
     description?: string
 }
-
-
 
 function ItemList(props: ItemListProps) {
     return (<div className="item-list">
