@@ -8,7 +8,9 @@ import MiscMenu from "./misc-menu/MiscMenu";
 
 export default function Home() {
   return (
-    <div className="font-sans character-page">
+    <div 
+      className="font-sans character-page"
+    >
       <CharacterMenu/>
       <SelectMenu />
       <Location name={currentLocation} />

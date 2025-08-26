@@ -4,17 +4,67 @@ import "./select-menu.css"
 
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { useRouter } from "next/navigation";
+import { KeyboardEvent, useEffect, useState } from "react";
+
 
 // todo make menu item seperate file
 
 export default function SelectMenu() {
-    return (<div className="select-menu">
+    
+    const menuItems = selectMenuData
+        .filter(x => x.selectable)
+        .map(x => x.name);
+
+    const [selectedMenuItem, selectMenuItem] = useState(menuItems[0])
+
+    useEffect(() => {
+        const handleKeyDown = ((ev: any) => {
+            if (ev.key === "ArrowDown") {
+                console.log("arrow down")
+                
+                // debugger
+
+                let i = menuItems.indexOf(selectedMenuItem);
+                if (i + 1 == menuItems.length) {
+                    i = 0
+                    selectMenuItem(menuItems[i])
+                } else {
+                    selectMenuItem(menuItems[i+1]);
+                } 
+            }
+            else if (ev.key === "ArrowUp") {
+                console.log("arrow up")
+                 
+                let i = menuItems.indexOf(selectedMenuItem);
+                if (i - 1 < 0) {
+                    i = menuItems.length - 1;
+                    selectMenuItem(menuItems[i])
+                } else {
+                    selectMenuItem(menuItems[i-1]);
+                } 
+            }
+            else if (ev.key === "Enter") {
+                console.log("Enter")
+                // go to selected page
+            }
+        });
+
+        window.addEventListener('keydown', handleKeyDown)
+        
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, []);
+
+
+
+    return (<div 
+        className="select-menu">
         {selectMenuData.map(x => <MenuItem
             name={x.name}
             key={x.name}
             selectable={x.selectable}
             onClick={x.onClick}
         />)}
+        {selectedMenuItem}
     </div>);
 }
 
